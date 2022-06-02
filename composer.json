@@ -1,0 +1,8 @@
+{
+    "require": {
+        "ext-gmp": "*",
+        "phpmailer/phpmailer": "^6.5",
+        "paragonie/halite": "^4",
+        "web3p/web3.php": "dev-master"
+    }
+}
