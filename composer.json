@@ -1,4 +1,11 @@
 {
+    "name": "stevenlriv/php-skit",
+    "description": "A simple php toolset to launch almost any project in less than 24 hours.",
+    "type": "library",
+    "license": "MIT",
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
     "require": {
         "ext-gmp": "*",
         "phpmailer/phpmailer": "^6.5",
