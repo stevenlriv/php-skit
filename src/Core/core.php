@@ -1,6 +1,8 @@
 <?php
 define ( 'CORE', true );
 
+date_default_timezone_set('Etc/UTC');
+
 require './config/debug.php';
 if( DEBUG ) {
     ini_set('display_errors', 1);
@@ -17,6 +19,7 @@ require './src/vendor/autoload.php';
 require './config/site.php';
 require './config/privateKeys.php';
 require './config/database.php';
+require './config/emails.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
@@ -32,9 +35,8 @@ require './src/Functions/SEO.php';
 require './src/Functions/textSanitation.php';
 require './src/Functions/textValidation.php';
 
-if ( version_compare(PHP_VERSION, '8.0.0') <= 0 ) {
-    die('To run this code we need at least PHP version 8.0.0');
-}
+require './src/Emails/template.php';
+require './src/Emails/sendEmail.php';
 
 if ( !isset($_SESSION) ) { session_start(); }
 ?>
