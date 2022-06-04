@@ -1,26 +1,26 @@
 <?php
 define ( 'CORE', true );
 
-require '../../config/debug.php';
+require './config/debug.php';
 if( DEBUG ) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    if (file_exists('../../config/_debugEnviromentVariables.php')) {
-        require '../../config/_debugEnviromentVariables.php';
+    if (file_exists('./config/_debugEnviromentVariables.php')) {
+        require './config/_debugEnviromentVariables.php';
     }
 }
 
-require '../vendor/autoload.php';
+require './src/vendor/autoload.php';
 
-require '../../config/privateKeys.php';
-require '../../config/database.php';
+require './config/privateKeys.php';
+require './config/database.php';
 
-require 'MySQL.php';
-require 'privateKeys.php';
-require 'httpURI.php';
-require 'alertMessages.php';
+require './src/Core/MySQL.php';
+require './src/Core/privateKeys.php';
+require './src/Core/httpURI.php';
+require './src/Core/alertMessages.php';
 
 if ( version_compare(PHP_VERSION, '8.0.0') <= 0 ) {
     die('To run this code we need at least PHP version 8.0.0');
