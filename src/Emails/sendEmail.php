@@ -14,18 +14,18 @@ function send_email($from_name, $from_email, $to_email, $to_name, $subject, $bod
     $mail = new PHPMailer(true);
     $mail->CharSet = 'utf-8';
 
-    if(SMTP) {
+    if(SMTP=="true") {
         $mail->isSMTP();
         
         $mail->SMTPDebug = 0;
         $mail->Host = SMTP_HOST;
         $mail->Port = SMTP_PORT;
         
-        if ( SMTP_TLS ) {
+        if(SMTP_TLS=="true") {
             $mail->SMTPSecure = 'tls';
         }
         
-        if ( SMTP_USERNAME && SMTP_PASSWORD ) {
+        if(SMTP_USERNAME!='' && SMTP_PASSWORD!='') {
             $mail->SMTPAuth = true;
             $mail->Username = SMTP_USERNAME;
             $mail->Password = SMTP_PASSWORD;
@@ -44,7 +44,7 @@ function send_email($from_name, $from_email, $to_email, $to_name, $subject, $bod
     else {
         $mail->Body = $body;
     }
-    $mail->AltBody = $comments;
+    $mail->AltBody = $body;
 
     if(!empty($attachment)) {
         $mail->addAttachment($attachment);
