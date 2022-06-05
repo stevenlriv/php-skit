@@ -50,11 +50,15 @@ function send_email($from_name, $from_email, $to_email, $to_name, $subject, $bod
         $mail->addAttachment($attachment);
     }
     
+    $record = array("from name=$from_name", "from email=$from_email", "to email=$to_email", "to name=$to_name", "subject=$subject", "body=$mail->AltBody");
+
     if($mail->send()) {
-        //new_record('New Email Sent', '{from_name:"'.$from_name.'",from_email:"'.$from_email.'",to_email:"'.$to_email.'",to_name:"'.$to_name.'",subject:"'.$subject.'",content:"'.$mail->AltBody.'"}');
+        new_record('Email Was Successfully Sent', json_encode($record));
+
         return true;
-    } 
+    }
     
+    new_record('Email Failed To Be Sent', json_encode($record));
     return false;
 }
 ?>

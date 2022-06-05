@@ -27,6 +27,9 @@ switch ($http_uri) {
             "http_uri" => $http_uri,
         );
         http_response_code(404);
+
+        new_record('New 404 Page Visit', $_SERVER['REQUEST_URI']);
+
         ob_start("ob_html_compress");
             require './public/404.php';
         ob_end_flush();

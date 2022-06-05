@@ -38,5 +38,14 @@ require './src/Functions/textValidation.php';
 require './src/Emails/template.php';
 require './src/Emails/sendEmail.php';
 
+require './src/MySQL/select.php';
+require './src/MySQL/insert.php';
+require './src/MySQL/update.php';
+require './src/MySQL/delete.php';
+
+require './src/Records/newRecord.php';
+require './src/Records/updateRecord.php';
+require './src/Records/deleteRecord.php';
+
 if ( !isset($_SESSION) ) { session_start(); }
 ?>
