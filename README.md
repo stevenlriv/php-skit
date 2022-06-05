@@ -25,6 +25,8 @@ Install php-skit on an app deploment enviroment like Digital Ocean. Follow the s
 
 4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in config/_debugEnviromentVariables.php. On production that file will not work.
 
+5. Upload MySQL.sql to your database
+
 ### For local installation
 
 Make sure these files are in a php server like MAMP PRO and follow the steps below:
@@ -36,6 +38,8 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 3. Update the rest of the configuration variables that are not enviroment variables. They can be found on:
     - config/emails.php
     - config/site.php
+
+4. Upload MySQL.sql to your database
 
 ## How to generate new keys
 
@@ -55,3 +59,4 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Missing
 
 - Web3 Wallet Connect with Infura
+- Create a MySQL.sql file

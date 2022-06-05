@@ -4,6 +4,7 @@ require './src/Core/_coreRequired.php';
 $pagination = new Pagination(get_all_records('count'));
 $query = get_all_records('all', "LIMIT {$pagination->get_offset()}, {$pagination->get_records_per_page()}");
 ?>
+<a href="/"><< Go Back To Homepage</a> <br /><br />
 
 Example of pagination! <br /><br />
 
