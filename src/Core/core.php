@@ -43,9 +43,15 @@ require './src/MySQL/insert.php';
 require './src/MySQL/update.php';
 require './src/MySQL/delete.php';
 
+require './src/Records/getRecord.php';
 require './src/Records/newRecord.php';
 require './src/Records/updateRecord.php';
 require './src/Records/deleteRecord.php';
+
+require './src/Config/getConfig.php';
+require './src/Config/newConfig.php';
+require './src/Config/updateConfig.php';
+require './src/Config/deleteConfig.php';
 
 if ( !isset($_SESSION) ) { session_start(); }
 ?>
