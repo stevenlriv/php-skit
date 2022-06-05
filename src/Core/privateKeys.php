@@ -8,9 +8,8 @@
     use \ParagonIE\Halite\HiddenString;
     $encryptionKey = KeyFactory::generateEncryptionKey();
     $key_hex = KeyFactory::export($encryptionKey)->getString();
-    
-    //TO USE THE KEYS THE FOLLOWING FUNCTION WILL HELP YOU
-    $enc_key = KeyFactory::importEncryptionKey(new HiddenString($key_hex));
+
+    echo $key_hex;
 */
 if( !defined('GENERAL_KEY') || !defined('COOKIES_KEY') || !defined('PASSWORD_KEY') ) {
     die ('Keys are missing, generate them before continuing');

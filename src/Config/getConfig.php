@@ -7,7 +7,7 @@ function get_config($id_config) {
     return select_mysql_data('configs', '', 'LIMIT 1', $array);
 }
 
-function get_all_configs() {
-    return select_mysql_data('configs', 'all');
+function get_all_configs($type = 'all', $extra = '', $query = '') {
+    return select_mysql_data('configs', $type, $extra, $query);
 }
 ?>

@@ -7,7 +7,7 @@ function get_record($id_record) {
     return select_mysql_data('records', '', 'LIMIT 1', $array);
 }
 
-function get_all_records() {
-    return select_mysql_data('records', 'all');
+function get_all_records($type = 'all', $extra = '', $query = '') {
+    return select_mysql_data('records', $type, $extra, $query);
 }
 ?>

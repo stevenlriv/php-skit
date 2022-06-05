@@ -10,8 +10,12 @@ switch ($http_uri) {
             "http_uri" => $http_uri,
         );
         ob_start("ob_html_compress");
-            // home content
-            echo 'home';
+            require './public/index.php';
+        ob_end_flush();
+        break;
+    case '/example-of-pagination' :
+        ob_start("ob_html_compress");
+            require './public/example-of-pagination.php';
         ob_end_flush();
         break;
     case '/logout' :
