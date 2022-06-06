@@ -1,17 +1,14 @@
 <?php
 class Pagination {
-    public $total_results;
-    public $records_per_page;
-    public $url;
-    public $this_page;
-
+    private $total_results;
+    private $records_per_page;
     private $offset;
     private $total_pages;
     private $current_page;
+    private $url;
 
-    function __construct($total_results, $url = '') {
+    function __construct($total_results) {
         $this->total_results = $total_results;
-        $this->url = $url;
 
         // establish records per page
         if(!empty($_GET['show']) && is_numeric($_GET['show']) && $_GET['show']>=10) {
@@ -65,6 +62,10 @@ class Pagination {
         return $url;
     }
 
+    function print_button($page, $text, $css_class = '') {
+        echo '<p><a href="?page='.$page.$this->url.'" class="'.$css_class.'">'.$text.'</a></p>';
+    }
+
     function print() {
         if($this->total_results>10) {
             echo '<p>Show</p>';
@@ -72,8 +73,8 @@ class Pagination {
 
             if(isset($_GET)) {
                 foreach($_GET as $id => $value) {
-                    // we avoid pages because they change once you change the amount to show       
-                    if($id!='page') {
+                    // we avoid pages and show because they change once you change the amount to show       
+                    if($id!='page' && $id!='show') {
                         echo '<input type="hidden" name="'.$id.'" value="'.$value.'">';
                      }
                 }
@@ -128,14 +129,14 @@ class Pagination {
 
         // previous page
         if($this->current_page > 1) {
-            echo '<p><a href="?page='.($this->current_page-1).$this->url.'"> << </a></p>';
+            $this->print_button($this->current_page-1, '<<');
         }
 
         if($this->total_pages > 1) {
 
             // first page
             if ($this->current_page != 1) {
-                echo '<p><a href="?page=1'.$this->url.'">1</a></p>';
+                $this->print_button(1, '1');
             }
 
             // place holder, we don't show it in the first 3 pages
@@ -145,10 +146,10 @@ class Pagination {
 
             // backward pages
             if ($this->current_page - 2 >= 2) {
-                echo '<p><a href="?page='.($this->current_page - 2).$this->url.'">'.($this->current_page - 2).'</a></p>';
+                $this->print_button($this->current_page-2, $this->current_page-2);
             }
             if ($this->current_page - 1 > 1) {
-                echo '<p><a href="?page='.($this->current_page + - 1).$this->url.'">'.($this->current_page - 1).'</a></p>';
+                $this->print_button($this->current_page-1, $this->current_page-1);
             }
 
             // show current page
@@ -156,10 +157,10 @@ class Pagination {
 
             // foward pages
             if ($this->current_page + 1 < $this->total_pages) {
-                echo '<p><a href="?page='.($this->current_page + 1).$this->url.'">'.($this->current_page + 1).'</a></p>';
+                $this->print_button($this->current_page+1, $this->current_page+1);
             }
             if ($this->current_page + 2 < $this->total_pages) {
-                echo '<p><a href="?page='.($this->current_page + 2).$this->url.'">'.($this->current_page + 2).'</a></p>';
+                $this->print_button($this->current_page+2, $this->current_page+2);
             }
 
             // place holder, we don't show it is its the last 3 pages
@@ -169,13 +170,13 @@ class Pagination {
 
             // last page
             if($this->current_page != $this->total_pages) {
-                echo '<p><a href="?page='.$this->total_pages.$this->url.'">'.$this->total_pages.'</a></p>';
+                $this->print_button($this->total_pages, $this->total_pages);
             }
         }
 
         // next page
         if($this->current_page < $this->total_pages) {
-            echo '<p><a href="?page='.($this->current_page+1).$this->url.'""> >> </a></p>';
+            $this->print_button($this->current_page+1, '>>');
         }
     }
 }

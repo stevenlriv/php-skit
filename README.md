@@ -19,9 +19,7 @@ Install php-skit on an app deploment enviroment like Digital Ocean. Follow the s
 
 2. Generate new private keys. You can learn below how to do it.
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on:
-    - config/emails.php
-    - config/site.php
+3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/site.php"
 
 4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in config/_debugEnviromentVariables.php. On production that file will not work.
 
@@ -35,9 +33,7 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 2. Edit all the enviroment variables on "config/_debugEnviromentVariables.php
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on:
-    - config/emails.php
-    - config/site.php
+3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/site.php"
 
 4. Upload MySQL.sql to your database
 
@@ -56,17 +52,22 @@ Key generation must be done in a local server and added directly to your product
 
 Then take the key generated and use it for one of them. You will need to do this 3 times.
 
+## Files That Need CSS Style depending on your website
+
+- src/Functions/alertMessages.php
+- src/Functions/pagination.php
+
 ## Other Tools
 
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
 ## Missing
 
+- [NF] Example of submitting a form
+- PHP Text Cache for forms with JS and Ajax
+- [HB] Upload Images and Files
+- [HB] Users Infrastructure [reset password, new user, login, user page, logout]
+- [HB] Referal system for users
 - Web3 Wallet Connect with Infura
 - Users Web3 wallet Auth support
 - Create a MySQL.sql file
-- [HB] Users Infrastructure [reset password, new user, login, user page, logout]
-- [HB] Referal system for users
-- Upload Images and Files
-- [NF] Example of submitting a form with formPostSanitation.php also show_messages
-- PHP Text Cache for forms with JS and Ajax

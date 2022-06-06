@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
-function send_email($from_name, $from_email, $to_email, $to_name, $subject, $body, $bootstrapemail_template = true, $attachment = '') {
+function send_email($from_name, $from_email, $to_email, $to_name, $subject, $body, $bootstrapemail_template = 1, $attachment = '') {
     if(empty($from_name) or !is_email($from_email) or !is_email($to_email) or empty($to_name) or empty($subject) or empty($body)) {
         return false;
     }
@@ -38,8 +38,8 @@ function send_email($from_name, $from_email, $to_email, $to_name, $subject, $bod
     $mail->Subject = $subject;
 
     $mail->isHTML(true);
-    if($bootstrapemail_template) {
-        $mail->Body = bootstrapemail_template($subject, $body);
+    if($bootstrapemail_template==1) {
+        $mail->Body = standard_template($subject, $body);
     }
     else {
         $mail->Body = $body;

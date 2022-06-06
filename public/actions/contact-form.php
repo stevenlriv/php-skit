@@ -1,0 +1,8 @@
+<?php
+require './src/Forms/postVariablesSanitation.php';
+
+if(isset($submit)) {
+    $alert_messages['success'] = 'Yes!!';
+    $alert_messages['error'] = 'No!!';
+}
+?>
