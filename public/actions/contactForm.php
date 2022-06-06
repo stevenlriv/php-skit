@@ -3,7 +3,10 @@ require_once './src/Core/_coreRequired.php';
 require './src/Forms/postVariablesSanitation.php';
 
 if(isset($submit)) {
-    $alert_messages['success'] = 'Yes!!';
-    $alert_messages['error'] = 'No!!';
+    //$first_name;
+    //$last_name;
+    //$email;
+    //$message;
+    $alert_messages->new_info('Lolo');
 }
 ?>

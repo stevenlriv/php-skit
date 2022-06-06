@@ -1,6 +1,7 @@
 <?php
 define ( 'CORE', true );
 
+if ( !isset($_SESSION) ) { session_start(); }
 date_default_timezone_set('Etc/UTC');
 
 require './config/debug.php';
@@ -25,17 +26,17 @@ require './config/twilio.php';
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
 require './src/Core/httpURI.php';
-require './src/Core/alertMessages.php';
 
-require './src/Functions/alertMessages.php';
 require './src/Functions/baseURL.php';
 require './src/Functions/dates.php';
 require './src/Functions/encryption.php';
 require './src/Functions/htmlCompress.php';
-require './src/Functions/pagination.php';
 require './src/Functions/randomString.php';
 require './src/Functions/textMessage.php';
-require './src/Functions/SEO.php';
+
+require './src/Classes/pagination.php';
+require './src/Classes/alertMessages.php';
+require './src/Classes/SEO.php';
 
 require './src/Forms/textSanitation.php';
 require './src/Forms/textValidation.php';
@@ -62,5 +63,6 @@ require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
 require './src/Cookies/deleteCookie.php';
 
-if ( !isset($_SESSION) ) { session_start(); }
+$alert_messages = new AlertMessages();
+$SEO = new SEO(SITE_NAME, get_domain_url(), $http_uri);
 ?>

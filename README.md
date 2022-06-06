@@ -5,7 +5,7 @@ A simple php toolset to launch almost any project in less than 24 hours.
 ## Folder/Files Structure
 
 - config/ script configuration before deployment. Most are enviroment variables
-- public/ php/html files that are included from index.php
+- public/ php/html files that are included from index.php and templates for some classes
 - src/ all php files required for the toolset to work
 - index.php web server router
 
@@ -52,17 +52,13 @@ Key generation must be done in a local server and added directly to your product
 
 Then take the key generated and use it for one of them. You will need to do this 3 times.
 
-## Files That Need CSS Style depending on your website
-
-- src/Functions/alertMessages.php
-- src/Functions/pagination.php
-
 ## Other Tools
 
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
 ## Missing
 
+- JSON API access to a public database
 - [NF] Example of submitting a form
 - PHP Text Cache for forms with JS and Ajax
 - [HB] Upload Images and Files

@@ -1,5 +1,5 @@
 <?php
-require './src/Core/_coreRequired.php';
+require_once './src/Core/_coreRequired.php';
 ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo GOOGLE_ANALYTICS_GTAG; ?>"></script>

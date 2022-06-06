@@ -1,5 +1,6 @@
 <?php
 require_once './src/Core/_coreRequired.php';
+require_once './public/templates/pagination.php';
 
 $pagination = new Pagination(get_all_records('count'));
 $query = get_all_records('all', "LIMIT {$pagination->get_offset()}, {$pagination->get_records_per_page()}");
@@ -13,5 +14,5 @@ foreach($query as $id => $value) {
     echo "{$value['id_record']} is {$value['short_description']}<br />";
 }
 
-$pagination->print(); 
+$pagination->print($pagination_template); 
 ?>

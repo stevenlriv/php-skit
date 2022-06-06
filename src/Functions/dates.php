@@ -10,10 +10,10 @@ function unix_to_date($unix, $date_format = '') {
 /**
  * Get a relative date
  *
- * get_relative_time($unix, 1); // 3 months ago
- * get_relative_time($unix, 2); // 3 months and 1 day ago
- * get_relative_time($unix, 3); // 3 months, 1 day and 20 hours ago
- * get_relative_time($unix, 4); // 3 months, 1 day, 20 hours and 2 minutes ago
+ * $depth = 1 // 3 months ago
+ * $depth = 2 // 3 months and 1 day ago
+ * $depth = 3 // 3 months, 1 day and 20 hours ago
+ * $depth = 4 // 3 months, 1 day, 20 hours and 2 minutes ago
  */
 function get_relative_time($unix, $depth = 1) {
 	if(!ctype_digit($unix)) {
