@@ -10,18 +10,23 @@ switch ($http_uri) {
             "http_uri" => $http_uri,
         );
         ob_start("ob_html_compress");
+            require './public/template/header.php';
             require './public/index.php';
+            require './public/template/footer.php';
         ob_end_flush();
         break;
     case '/example-of-pagination' :
+        $SEO = array(
+            "title" => "Example of Pagination",
+            "description" => "",
+            "imageURL" => "",
+            "http_uri" => $http_uri,
+        );
         ob_start("ob_html_compress");
+            require './public/template/header.php';
             require './public/example-of-pagination.php';
+            require './public/template/footer.php';
         ob_end_flush();
-        break;
-    case '/logout' :
-        // user logout functions here
-
-        header('Location: /');
         break;
     default :
         $SEO = array(

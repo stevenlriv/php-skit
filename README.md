@@ -1,4 +1,4 @@
-# PHP Skirt
+# PHP Skit
 
 A simple php toolset to launch almost any project in less than 24 hours.
 
@@ -56,7 +56,17 @@ Key generation must be done in a local server and added directly to your product
 
 Then take the key generated and use it for one of them. You will need to do this 3 times.
 
+## Other Tools
+
+- Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
+
 ## Missing
 
 - Web3 Wallet Connect with Infura
+- Users Web3 wallet Auth support
 - Create a MySQL.sql file
+- [HB] Users Infrastructure [reset password, new user, login, user page, logout]
+- [HB] Referal system for users
+- Upload Images and Files
+- [NF] Example of submitting a form with formPostSanitation.php also show_messages
+- PHP Text Cache for forms with JS and Ajax

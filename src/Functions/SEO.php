@@ -17,8 +17,7 @@ function title_SEO($array) {
 }
 
 function print_SEO($array) {
-    title_SEO($array);
-    echo '<meta name="description" content="'.$array['description'].'">';
+    echo '<meta name="description" content="'.$array['description'].'" />';
 
     echo '<link rel="canonical" href="'.get_canonical_url($array['http_uri']).'" />';
 
