@@ -1,5 +1,5 @@
 <?php
-require './src/Core/_coreRequired.php';
+require_once './src/Core/_coreRequired.php';
 require './public/actions/contact-form.php';
 ?>
 <a href="/"><< Go Back To Homepage</a> <br /><br />
