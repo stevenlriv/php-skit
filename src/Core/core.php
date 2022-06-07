@@ -17,7 +17,7 @@ if( DEBUG == true ) {
 
 require './src/vendor/autoload.php';
 
-require './config/site.php';
+require './config/general.php';
 require './config/privateKeys.php';
 require './config/database.php';
 require './config/SMTP.php';
@@ -27,31 +27,28 @@ require './config/Web3.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
-require './src/Core/httpURI.php';
 
-require './src/Functions/baseURL.php';
+require './src/MySQL/insert.php';
+require './src/MySQL/select.php';
+require './src/MySQL/update.php';
+require './src/MySQL/delete.php';
+
 require './src/Functions/dates.php';
 require './src/Functions/encryption.php';
 require './src/Functions/htmlCompress.php';
 require './src/Functions/randomString.php';
 require './src/Functions/textMessage.php';
 
+require './src/Classes/httpURI.php';
 require './src/Classes/pagination.php';
 require './src/Classes/alertMessages.php';
 require './src/Classes/SEO.php';
 require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 
-require './src/Forms/sanitation.php';
-require './src/Forms/validation.php';
-
-require './src/Emails/standardTemplate.php';
-require './src/Emails/sendEmail.php';
-
-require './src/MySQL/insert.php';
-require './src/MySQL/select.php';
-require './src/MySQL/update.php';
-require './src/MySQL/delete.php';
+require './src/Cookies/newCookie.php';
+require './src/Cookies/getCookie.php';
+require './src/Cookies/deleteCookie.php';
 
 require './src/Records/newRecord.php';
 require './src/Records/getRecord.php';
@@ -63,20 +60,23 @@ require './src/Config/getConfig.php';
 require './src/Config/updateConfig.php';
 require './src/Config/deleteConfig.php';
 
-require './src/Cookies/newCookie.php';
-require './src/Cookies/getCookie.php';
-require './src/Cookies/deleteCookie.php';
+require './src/Forms/sanitation.php';
+require './src/Forms/validation.php';
+
+require './src/Emails/standardTemplate.php';
+require './src/Emails/sendEmail.php';
 
 require './src/ExternalAPICalls/getJson.php';
 require './src/ExternalAPICalls/getHtmlElement.php';
 
-require './src/Web3/readSmartContract.php';
-require './src/Web3/ChainLink.php';
 require './src/Web3/address.php';
+require './src/Web3/ChainLink.php';
 require './src/Web3/decimals.php';
+require './src/Web3/readSmartContract.php';
 
+$http = new HttpURI();
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();
 $files = new Files(DO_KEY, DO_SECRETS, DO_REGION, DO_ENDPOINT, DO_BUCKET, DO_CLIENT_URL);
-$SEO = new SEO(SITE_NAME, get_domain_url(), $http_uri);
+$SEO = new SEO(SITE_NAME, $http->get_domain_url(), $http->get_uri());
 ?>

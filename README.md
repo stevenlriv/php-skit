@@ -19,9 +19,9 @@ Install php-skit on an app deploment enviroment like Digital Ocean. Follow the s
 
 2. Generate new private keys. You can learn below how to do it.
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/site.php"
+3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in config/_debugEnviromentVariables.php. On production that file will not work.
+4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in config/_debugEnviromentVariables.php. On production this file will not work.
 
 5. Upload MySQL.sql to your database
 
@@ -33,7 +33,7 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 2. Edit all the enviroment variables on "config/_debugEnviromentVariables.php
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/site.php"
+3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
 4. Upload MySQL.sql to your database
 
@@ -63,6 +63,4 @@ Then take the key generated and use it for one of them. You will need to do this
 - [NF?] Users Web3 wallet Auth support
 
 - PHP REST API
-
-- Organize core.php
 - Create a MySQL.sql file

@@ -1,7 +1,7 @@
 <?php
 require './src/Core/core.php';
 
-switch ($http_uri) {
+switch ($http->get_uri()) {
     case '/' :
         ob_start("ob_html_compress");
             require './public/templates/header.php';
@@ -35,7 +35,7 @@ switch ($http_uri) {
         break;
     default :
         http_response_code(404);
-        new_record('New 404 Page Visit', $_SERVER['REQUEST_URI']);
+        new_record('New 404 Page Visit', $http->get_full_uri());
 
         $SEO->set('Oops! Page not found');
         ob_start("ob_html_compress");
