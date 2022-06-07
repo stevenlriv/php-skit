@@ -8,7 +8,7 @@ require_once './public/templates/alertMessages.php';
 Example of contact form! <br /><br />
 
 <?php
-$alert_messages->print($alert_messages_template);
+$alert_messages->print();
 ?>
 
 <?php $form_cache->start_form('POST', 'contactForm'); ?>

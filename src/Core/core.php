@@ -21,8 +21,9 @@ require './config/site.php';
 require './config/privateKeys.php';
 require './config/database.php';
 require './config/SMTP.php';
-require './config/twilio.php';
+require './config/Twilio.php';
 require './config/DigitalOcean.php';
+require './config/Web3.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
@@ -65,6 +66,14 @@ require './src/Config/deleteConfig.php';
 require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
 require './src/Cookies/deleteCookie.php';
+
+require './src/ExternalAPICalls/getJson.php';
+require './src/ExternalAPICalls/getHtmlElement.php';
+
+require './src/Web3/readSmartContract.php';
+require './src/Web3/ChainLink.php';
+require './src/Web3/address.php';
+require './src/Web3/decimals.php';
 
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();

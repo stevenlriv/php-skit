@@ -7,7 +7,18 @@ class Pagination {
     private $current_page;
     private $url;
 
-    function __construct($total_results) {
+    private $template_header;
+    private $template_body;
+    private $template_footer;
+
+    private $template_show_header;
+    private $template_show_footer;
+    
+    private $template_button_css_class;
+    private $template_placeholder_css_class;
+    private $template_currentpage_css_class;
+
+    public function __construct($total_results) {
         $this->total_results = $total_results;
 
         // establish records per page
@@ -35,16 +46,110 @@ class Pagination {
         $this->total_pages = ceil($this->total_results / $this->records_per_page);
     }
 
-    function get_page() {
+    public function set_template_header($html) {
+        $this->template_header = $html;
+    }
+
+    public function set_template_body($html) {
+        $this->template_body= $html;
+    }
+
+    public function set_template_footer($html) {
+        $this->template_footer = $html;
+    }
+
+    public function set_template_show_header($html) {
+        $this->template_show_header = $html;
+    }
+
+    public function set_template_show_footer($html) {
+        $this->template_show_footer = $html;
+    }
+
+    public function set_template_button_css_class($html) {
+        $this->template_button_css_class = $html;
+    }
+
+    public function set_template_placeholder_css_class($html) {
+        $this->template_placeholder_css_class = $html;
+    }
+
+    public function set_template_currentpage_css_class($html) {
+        $this->template_currentpage_css_class = $html;
+    }
+
+    public function get_page() {
         return $this->current_page;
     }
 
-    function get_offset() {
+    public function get_offset() {
         return $this->offset;
     }
 
-    function get_records_per_page() {
+    public function get_records_per_page() {
         return $this->records_per_page;
+    }
+
+    public function print() {
+
+        echo $this->template_header;
+
+        $this->print_show_form();
+
+        echo $this->template_body;
+
+        // previous page
+        if($this->current_page > 1) {
+            $this->print_button($this->current_page-1, '<<');
+        }
+
+        if($this->total_pages > 1) {
+            // first page
+            if ($this->current_page != 1) {
+                $this->print_button(1, '1');
+            }
+
+            // place holder, we don't show it in the first 3 pages
+            if ($this->current_page != 1 && $this->current_page != 2 && $this->current_page != 3) {
+                echo '<span class="'.$this->template_placeholder_css_class.'">...</span>';
+            }
+
+            // backward pages
+            if ($this->current_page - 2 >= 2) {
+                $this->print_button($this->current_page-2, $this->current_page-2);
+            }
+            if ($this->current_page - 1 > 1) {
+                $this->print_button($this->current_page-1, $this->current_page-1);
+            }
+
+            // show current page
+            echo '<span class="'.$this->template_currentpage_css_class.'">'.$this->current_page.'</span>';
+
+            // foward pages
+            if ($this->current_page + 1 < $this->total_pages) {
+                $this->print_button($this->current_page+1, $this->current_page+1);
+            }
+            if ($this->current_page + 2 < $this->total_pages) {
+                $this->print_button($this->current_page+2, $this->current_page+2);
+            }
+
+            // place holder, we don't show it is its the last 3 pages
+            if ($this->current_page != $this->total_pages && $this->current_page != $this->total_pages - 1 && $this->current_page != $this->total_pages - 2) {
+                echo '<span class="'.$this->template_placeholder_css_class.'">...</span>';
+            }
+
+            // last page
+            if($this->current_page != $this->total_pages) {
+                $this->print_button($this->total_pages, $this->total_pages);
+            }
+        }
+
+        // next page
+        if($this->current_page < $this->total_pages) {
+            $this->print_button($this->current_page+1, '>>');
+        }
+
+        echo $this->template_footer;
     }
 
     private function get_url() {
@@ -62,13 +167,13 @@ class Pagination {
         return $url;
     }
 
-    private function print_button($page_number, $text, $button_css_class = '') {
-        echo '<a href="?page='.$page_number.$this->url.'" class="'.$button_css_class.'">'.$text.'</a>';
+    private function print_button($page_number, $text) {
+        echo '<a href="?page='.$page_number.$this->url.'" class="'.$this->template_button_css_class.'">'.$text.'</a>';
     }
 
-    private function print_show_form($show_form_html_header = '', $show_form_html_footer = '') {
+    private function print_show_form() {
         if($this->total_results>10) {
-            echo $show_form_html_header;
+            echo $this->template_show_header;
 
             echo '<p>Show</p>';
             echo '<form method="GET" id="show_form">';
@@ -129,70 +234,8 @@ class Pagination {
             });
             </script>';
 
-            echo $show_form_html_footer;
+            echo $this->template_show_footer;
         }
-    }
-
-    function print($pagination_template) {
-
-        echo $pagination_template['pagination_html_header'];
-
-        $this->print_show_form($pagination_template['show_form_html_header'], $pagination_template['show_form_html_footer']);
-
-        echo $pagination_template['pagination_html_body'];
-
-        // previous page
-        if($this->current_page > 1) {
-            $this->print_button($this->current_page-1, '<<', $pagination_template['pagination_button_css_class']);
-        }
-
-        if($this->total_pages > 1) {
-            // first page
-            if ($this->current_page != 1) {
-                $this->print_button(1, '1', $pagination_template['pagination_button_css_class']);
-            }
-
-            // place holder, we don't show it in the first 3 pages
-            if ($this->current_page != 1 && $this->current_page != 2 && $this->current_page != 3) {
-                echo '<span class="'.$pagination_template['pagination_placeholder_css_class'].'">...</span>';
-            }
-
-            // backward pages
-            if ($this->current_page - 2 >= 2) {
-                $this->print_button($this->current_page-2, $this->current_page-2, $pagination_template['pagination_button_css_class']);
-            }
-            if ($this->current_page - 1 > 1) {
-                $this->print_button($this->current_page-1, $this->current_page-1, $pagination_template['pagination_button_css_class']);
-            }
-
-            // show current page
-            echo '<span class="'.$pagination_template['pagination_currentpage_css_class'].'">'.$this->current_page.'</span>';
-
-            // foward pages
-            if ($this->current_page + 1 < $this->total_pages) {
-                $this->print_button($this->current_page+1, $this->current_page+1, $pagination_template['pagination_button_css_class']);
-            }
-            if ($this->current_page + 2 < $this->total_pages) {
-                $this->print_button($this->current_page+2, $this->current_page+2, $pagination_template['pagination_button_css_class']);
-            }
-
-            // place holder, we don't show it is its the last 3 pages
-            if ($this->current_page != $this->total_pages && $this->current_page != $this->total_pages - 1 && $this->current_page != $this->total_pages - 2) {
-                echo '<span class="'.$pagination_template['pagination_placeholder_css_class'].'">...</span>';
-            }
-
-            // last page
-            if($this->current_page != $this->total_pages) {
-                $this->print_button($this->total_pages, $this->total_pages, $pagination_template['pagination_button_css_class']);
-            }
-        }
-
-        // next page
-        if($this->current_page < $this->total_pages) {
-            $this->print_button($this->current_page+1, '>>', $pagination_template['pagination_button_css_class']);
-        }
-
-        echo $pagination_template['pagination_html_footer'];
     }
 }
 ?>

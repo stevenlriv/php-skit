@@ -1,14 +1,14 @@
 <?php
 require_once './src/Core/_coreRequired.php';
 
-$pagination_template['pagination_html_header'] = '';
-$pagination_template['pagination_html_footer'] = '';
-$pagination_template['pagination_html_body'] = '';
+$pagination->set_template_header('');
+$pagination->set_template_body('');
+$pagination->set_template_footer('');
 
-$pagination_template['pagination_button_css_class'] = '';
-$pagination_template['pagination_currentpage_css_class'] = '';
-$pagination_template['pagination_placeholder_css_class'] = '';
+$pagination->set_template_show_header('');
+$pagination->set_template_show_footer('');
 
-$pagination_template['show_form_html_header'] = '';
-$pagination_template['show_form_html_footer'] = '';
+$pagination->set_template_button_css_class('');
+$pagination->set_template_placeholder_css_class('');
+$pagination->set_template_currentpage_css_class('');
 ?>

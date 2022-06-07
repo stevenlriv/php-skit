@@ -3,7 +3,7 @@ class FormCache {
     private $form_name;
     private $inputs = array();
 
-    function start_form($method, $form_name = '', $extra = '', $css_class = '') {
+    public function start_form($method, $form_name = '', $extra = '', $css_class = '') {
         $this->form_name = $form_name;
 
         echo '<script>
@@ -23,7 +23,7 @@ class FormCache {
         echo '<form method="'.$method.'" id="'.$form_name.'" class="'.$css_class.'" '.$extra.'>';
     }
 
-    function end_form($reset_form = false) {
+    public function end_form($reset_form = false) {
         echo '</form>';
 
         echo '<script> window.onload = function(){';
@@ -49,18 +49,7 @@ class FormCache {
         }
     }
 
-    private function reset() {
-        echo '<script> window.onload = function(){';
-
-        foreach($this->inputs as $id => $name) {
-            $js_variable_name = $this->form_name.'_input_'.$id.'_'.$name;
-            echo 'removeData("'.$js_variable_name.'");';
-        }
-
-        echo '}; </script>';
-    }
-
-    function print_input($type, $name, $extra = '', $css_class = '') {
+    public function print_input($type, $name, $extra = '', $css_class = '') {
         $this->inputs[] = $name;
 
         if($type=="textarea") {
@@ -71,8 +60,19 @@ class FormCache {
         }
     }
 
-    function print_button($text = 'Submit', $name = 'submit', $extra = '', $css_class = '') {
+    public function print_button($text = 'Submit', $name = 'submit', $extra = '', $css_class = '') {
         echo '<button type="submit" name="'.$name.'" id="'.$name.'" class="'.$css_class.'">'.$text.'</button>';
+    }
+
+    private function reset() {
+        echo '<script> window.onload = function(){';
+
+        foreach($this->inputs as $id => $name) {
+            $js_variable_name = $this->form_name.'_input_'.$id.'_'.$name;
+            echo 'removeData("'.$js_variable_name.'");';
+        }
+
+        echo '}; </script>';
     }
 }
 ?>

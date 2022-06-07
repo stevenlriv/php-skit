@@ -7,26 +7,30 @@ class AlertMessages {
     private $color;
     private $alert;
 
-    function __construct() {
+    private $template_color_array = array();
+    private $template_header;
+    private $template_footer;
+
+    public function __construct() {
     }
 
-    function new_error($alert) {
+    public function new_error($alert) {
         $this->error[] = $alert;
     }
 
-    function new_danger($alert) {
+    public function new_danger($alert) {
         $this->danger[] = $alert;
     }
 
-    function new_success($alert) {
+    public function new_success($alert) {
         $this->success[] = $alert;
     }
 
-    function new_info($alert) {
+    public function new_info($alert) {
         $this->info[] = $alert;
     }
 
-    function is_error() {
+    public function is_error() {
         if($this->get_type()=="red") {
             return true;
         }
@@ -34,12 +38,34 @@ class AlertMessages {
         return false;
     }
 
-    function is_success() {
+    public function is_success() {
         if($this->get_type()=="green") {
             return true;
         }
 
         return false;
+    }
+
+    public function set_template_color_array($array) {
+        $this->template_color_array = $array;
+    }
+
+    public function set_template_header($html) {
+        $this->template_header = $html;
+    }
+
+    public function set_template_footer($html) {
+        $this->template_footer = $html;
+    }
+    
+    public function print() {
+        $this->get_alert();
+
+        if($this->alert) {
+            echo $this->template_header;
+            echo '<span style="color:'.$this->color.'">'.$this->alert.'</span>';
+            echo $this->template_footer;
+        }
     }
 
     private function get_type() {
@@ -48,12 +74,12 @@ class AlertMessages {
         return $this->color;
     }
 
-    private function get_alert($color_array = '') {
+    private function get_alert() {
         $alert = '';
 
         if(!empty($this->error)) {
-            if(!empty($color_array['red'])) {
-                $this->color = $color_array['red'];
+            if(!empty($this->template_color_array['red'])) {
+                $this->color = $this->template_color_array['red'];
             }
             else {
                 $this->color = 'red';
@@ -61,8 +87,8 @@ class AlertMessages {
             $alert = $this->error;
         }
         elseif(!empty($this->danger)) {
-            if(!empty($color_array['orange'])) {
-                $this->color = $color_array['orange'];
+            if(!empty($this->template_color_array['orange'])) {
+                $this->color = $this->template_color_array['orange'];
             }
             else {
                 $this->color = 'orange';
@@ -70,8 +96,8 @@ class AlertMessages {
             $alert = $this->danger;
         }
         elseif(!empty($this->success)) {
-            if(!empty($color_array['green'])) {
-                $this->color = $color_array['green'];
+            if(!empty($this->template_color_array['green'])) {
+                $this->color = $this->template_color_array['green'];
             }
             else {
                 $this->color = 'green';
@@ -79,8 +105,8 @@ class AlertMessages {
             $alert = $this->success;
         }
         elseif(!empty($this->info)) {
-            if(!empty($color_array['blue'])) {
-                $this->color = $color_array['blue'];
+            if(!empty($this->template_color_array['blue'])) {
+                $this->color = $this->template_color_array['blue'];
             }
             else {
                 $this->color = 'blue';
@@ -93,16 +119,6 @@ class AlertMessages {
         }
 
         return $this->alert;
-    }
-    
-    function print($alert_messages_template) {
-        $this->get_alert($alert_messages_template['color_array']);
-
-        if($this->alert) {
-            echo $alert_messages_template['html_header'];
-            echo '<span style="color:'.$this->color.'">'.$this->alert.'</span>';
-            echo $alert_messages_template['html_footer'];
-        }
     }
 }
 ?>

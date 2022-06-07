@@ -10,7 +10,7 @@ class SEO {
     private $extra_title;
     private $imageURL;
 
-    function __construct($site_name, $site_url, $http_uri, $imageURL = '') {
+    public function __construct($site_name, $site_url, $http_uri, $imageURL = '') {
         $this->site_name = $site_name;
         $this->site_url = $site_url;
         $this->http_uri = $http_uri;
@@ -19,7 +19,7 @@ class SEO {
         $this->canonical_url = $site_url.$http_uri;
     }
 
-    function set($title = '', $description = '', $extra_title = '', $imageURL = '') {
+    public function set($title = '', $description = '', $extra_title = '', $imageURL = '') {
         $this->title = $title;
         $this->description = $description;
         $this->extra_title = $extra_title;
@@ -29,7 +29,7 @@ class SEO {
         }
     }
 
-    function print_title() {
+    public function print_title() {
         if($this->extra_title!='') { 
             echo $this->extra_title." &bull; "; 
         }	 
@@ -40,7 +40,7 @@ class SEO {
         echo $this->site_name;
     }
 
-    function print() {
+    public function print() {
         echo '<meta name="description" content="'.$this->description.'" />';
 
         echo '<link rel="canonical" href="'.$this->canonical_url.'" />';

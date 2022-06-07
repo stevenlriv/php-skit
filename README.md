@@ -60,9 +60,9 @@ Then take the key generated and use it for one of them. You will need to do this
 
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]
 - [HB] Referal system for users
-
-- Web3 Wallet Connect with Infura
 - Users Web3 wallet Auth support
 
 - PHP REST API
+
+- Organize core.php
 - Create a MySQL.sql file

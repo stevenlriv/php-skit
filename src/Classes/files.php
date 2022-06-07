@@ -17,7 +17,7 @@ class Files {
     private $last_file_url;
     private $upload_status = false;
 
-    function __construct($key, $secret, $region, $endpoint, $bucket, $client_url = '') {
+    public function __construct($key, $secret, $region, $endpoint, $bucket, $client_url = '') {
         $this->region = $region;
         $this->endpoint = $endpoint;
         $this->bucket = $bucket;
@@ -37,13 +37,13 @@ class Files {
         $this->filesystem = new Filesystem($this->adapter);     
     }
 
-    function get_last_file_url() {
+    public function get_last_file_url() {
         $this->last_file_url = $this->client_url.'/'.$this->upload_path;
 
         return $this->last_file_url;
     }
 
-    function is_success() {
+    public function is_success() {
         if($this->upload_status) {
             return true;
         }
@@ -51,7 +51,7 @@ class Files {
         return false;
     }
 
-    function upload_file($file_data, $dirname) {
+    public function upload_file($file_data, $dirname) {
         $this->file_dir  = "uploads/$dirname/".date('Y').'/'.date('F').'/'.date('d').'/';
         $random_filename = generateNotSecureRandomString()."_".$file_data['name'];
         $this->upload_path = $this->file_dir.$random_filename;
@@ -65,8 +65,7 @@ class Files {
         return false;
     }
 
-    // we will explode on "https://[subdomain].nyc3.digitaloceanspaces.com/" and get the file path
-    function delete_file($file_url) {
+    public function delete_file($file_url) {
         $path = explode(".com/", $file_url);
         $path = $path[1];
 
