@@ -45,6 +45,5 @@ switch ($http_uri) {
         ob_end_flush();
         break;
 }
-
 $db->close();
 ?>

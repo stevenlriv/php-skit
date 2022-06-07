@@ -58,10 +58,11 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- Review all my code to simplify it and/or make it better
-- Upload multiple files using js and php
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]
 - [HB] Referal system for users
+
 - Web3 Wallet Connect with Infura
 - Users Web3 wallet Auth support
+
+- PHP REST API
 - Create a MySQL.sql file

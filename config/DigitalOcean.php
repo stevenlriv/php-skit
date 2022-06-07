@@ -4,4 +4,5 @@ define( 'DO_SECRETS', getenv('DO_SECRETS') );
 define( 'DO_REGION', getenv('DO_REGION') );
 define( 'DO_ENDPOINT', getenv('DO_ENDPOINT') );
 define( 'DO_BUCKET', getenv('DO_BUCKET') );
+define( 'DO_CLIENT_URL', getenv('DO_CLIENT_URL') );
 ?>

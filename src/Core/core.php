@@ -68,6 +68,6 @@ require './src/Cookies/deleteCookie.php';
 
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();
-$files = new Files();
+$files = new Files(DO_KEY, DO_SECRETS, DO_REGION, DO_ENDPOINT, DO_BUCKET, DO_CLIENT_URL);
 $SEO = new SEO(SITE_NAME, get_domain_url(), $http_uri);
 ?>

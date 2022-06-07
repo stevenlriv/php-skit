@@ -8,7 +8,7 @@ function is_email($email) {
 }
 
 function is_image($file_data) {
-    if(empty($file_data['tmp_name'])) {
+    if(empty($file_data['name'])) {
         return false;
     }
 

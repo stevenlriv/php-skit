@@ -10,7 +10,7 @@ Home Page!
 <a href="/example-of-contact-form">Go to Example of Contact Form</a>
 <br />
 <br />
-<a href="/example-of-image-upload">Go to Example of Image Upload</a>
+<a href="/example-of-image-upload">Go to Example of Single Image Upload</a>
 <br />
 <br />
 <?php

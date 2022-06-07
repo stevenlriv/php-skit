@@ -4,37 +4,47 @@ use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
 
 class Files {
-    private $file_dir;
-    private $upload_filename;
-    private $last_file_url;
-    private $status = false;
+    private $region;
+    private $endpoint;
+    private $bucket;
+    private $client_url;
+
     private $filesystem;
     private $adapter;
 
-    function __construct() {
+    private $file_dir;
+    private $upload_path;
+    private $last_file_url;
+    private $upload_status = false;
+
+    function __construct($key, $secret, $region, $endpoint, $bucket, $client_url = '') {
+        $this->region = $region;
+        $this->endpoint = $endpoint;
+        $this->bucket = $bucket;
+        $this->client_url = $client_url;
+
         $client = S3Client::factory([
             'credentials' => [
-                'key' => DO_KEY,
-                'secret' => DO_SECRETS
+                'key' => $key,
+                'secret' => $secret
             ],
-            'region' => DO_REGION,
-            'endpoint' => DO_ENDPOINT,
+            'region' => $this->region,
+            'endpoint' => $this->endpoint,
             'version' => 'latest'
         ]);
     
-        $this->adapter = new AwsS3V3Adapter($client, DO_BUCKET);
+        $this->adapter = new AwsS3V3Adapter($client, $this->bucket);
         $this->filesystem = new Filesystem($this->adapter);     
     }
 
     function get_last_file_url() {
-        $url = 'https://'.DO_BUCKET.'.'.DO_REGION.'.digitaloceanspaces.com/';
+        $this->last_file_url = $this->client_url.'/'.$this->upload_path;
 
-        $this->last_file_url = $url.$this->upload_filename;
         return $this->last_file_url;
     }
 
     function is_success() {
-        if($this->status) {
+        if($this->upload_status) {
             return true;
         }
         
@@ -44,12 +54,11 @@ class Files {
     function upload_file($file_data, $dirname) {
         $this->file_dir  = "uploads/$dirname/".date('Y').'/'.date('F').'/'.date('d').'/';
         $random_filename = generateNotSecureRandomString()."_".$file_data['name'];
-
-        $this->upload_filename = $this->file_dir.$random_filename;
+        $this->upload_path = $this->file_dir.$random_filename;
     
-        $this->filesystem->writeStream($this->upload_filename, fopen($file_data['tmp_name'], 'r+'), ['visibility' => 'public']);
-        if($this->filesystem->has($this->upload_filename)) {
-            $this->status = true;
+        $this->filesystem->writeStream($this->upload_path, fopen($file_data['tmp_name'], 'r+'), ['visibility' => 'public']);
+        if($this->filesystem->has($this->upload_path)) {
+            $this->upload_status = true;
             return true;
         }
     
@@ -57,16 +66,13 @@ class Files {
     }
 
     // we will explode on "https://[subdomain].nyc3.digitaloceanspaces.com/" and get the file path
-    // example: https://[subdomain].nyc3.digitaloceanspaces.com/uploads/listings/2020/May/26/1.jpg
-    // explode [0] = https://[subdomain].nyc3.digitaloceanspaces.com/
-    // explode [1] = uploads/listings/2020/May/26/1.jpg
     function delete_file($file_url) {
         $path = explode(".com/", $file_url);
         $path = $path[1];
 
         $this->filesystem->delete($path);
         if(!$this->filesystem->has($path)) {
-            $this->status = true;
+            $this->upload_status = true;
             return true;
         }
         
