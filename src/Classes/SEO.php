@@ -36,6 +36,8 @@ class SEO {
         if($this->title!='') { 
             echo $this->title." &bull; "; 
         }
+
+        echo $this->site_name;
     }
 
     function print() {

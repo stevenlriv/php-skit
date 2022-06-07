@@ -37,6 +37,7 @@ require './src/Functions/textMessage.php';
 require './src/Classes/pagination.php';
 require './src/Classes/alertMessages.php';
 require './src/Classes/SEO.php';
+require './src/Classes/formCache.php';
 
 require './src/Forms/textSanitation.php';
 require './src/Forms/textValidation.php';

@@ -1,13 +1,13 @@
 <?php
 require_once './src/Core/_coreRequired.php';
 
-$color_array = array(
-    "red" => "#40010a",
-    "orange" => "#edba5a",
-    "green" => "#5aed5d",
-    "blue" => "#4082ed"
+$alert_messages_template['color_array'] = array(
+    "red" => "",
+    "orange" => "",
+    "green" => "",
+    "blue" => ""
 );
 
-$alert_messages_header = '<p>';
-$alert_messages_footer = '</p>';
+$alert_messages_template['html_header'] = '<p>';
+$alert_messages_template['html_footer'] = '</p>';
 ?>

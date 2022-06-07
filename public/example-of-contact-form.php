@@ -2,13 +2,20 @@
 require_once './src/Core/_coreRequired.php';
 require_once './public/actions/contactForm.php';
 require_once './public/templates/alertMessages.php';
+
+$form_cache = new FormCache();
 ?>
 <a href="/"><< Go Back To Homepage</a> <br /><br />
 
 Example of contact form! <br /><br />
 
 <?php
-$alert_messages->print($color_array, $alert_messages_header, $alert_messages_footer);
+$alert_messages->print($alert_messages_template);
+
+if($alert_messages->is_success()) {
+    // clear form cache
+    echo 'clear cache';
+}
 ?>
 
 <form method="POST">

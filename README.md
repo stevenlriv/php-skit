@@ -59,7 +59,6 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Missing
 
 - JSON API access to a public database
-- [NF] Example of submitting a form
 - PHP Text Cache for forms with JS and Ajax
 - [HB] Upload Images and Files
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]

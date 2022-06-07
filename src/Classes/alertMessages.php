@@ -26,6 +26,28 @@ class AlertMessages {
         $this->info[] = $alert;
     }
 
+    function is_error() {
+        if($this->get_type()=="red") {
+            return true;
+        }
+
+        return false;
+    }
+
+    function is_success() {
+        if($this->get_type()=="green") {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function get_type() {
+        $this->get_alert();
+        
+        return $this->color;
+    }
+
     private function get_alert($color_array = '') {
         $alert = '';
 
@@ -72,20 +94,14 @@ class AlertMessages {
 
         return $this->alert;
     }
-
-    function get_type() {
-        $this->get_alert();
-        
-        return $this->color;
-    }
     
-    function print($color_array = '', $html_header = '', $html_footer = '') {
-        $this->get_alert($color_array);
-        
+    function print($alert_messages_template) {
+        $this->get_alert($alert_messages_template['color_array']);
+
         if($this->alert) {
-            echo $html_header;
+            echo $alert_messages_template['html_header'];
             echo '<span style="color:'.$this->color.'">'.$this->alert.'</span>';
-            echo $html_footer;
+            echo $alert_messages_template['html_footer'];
         }
     }
 }
