@@ -58,9 +58,21 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- [HB] Users Infrastructure [reset password, new user, login, user page, logout; user media table like wordpress]
+- forms captcha & avoiding bots in forms
+
+- [HB] Users Infrastructure [user media table like wordpress]
+        - new user [email, phone or web3wallet]
+        - reset password
+        - login with password
+        - login with email code
+        - login with phone code
+        - 2fa with google app
+        - user page
+        - logout
+- [NF?] Users Web3
+        - allow to link wallets to the user account
+        - allow to login with those wallets linked to account
 - [HB] Referal system for users
-- [NF?] Users Web3 wallet Auth support
 
 - PHP REST API
 - Create a MySQL.sql file
