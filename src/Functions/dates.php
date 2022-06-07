@@ -7,6 +7,30 @@ function unix_to_date($unix, $date_format = '') {
 	return date($date_format, $unix)." UTC";
 }
 
+// @ return the dates from "00:00" to "00:00 AM/PM"
+function get_readable_time($time) {
+	$time = date("g:i a", strtotime($time));
+
+	return $time;
+}
+
+// @ return the dates from "m/d/yyyy" to "Month Day of Year"
+function get_readable_date($date, $type = '') {
+	$date = new DateTime($date);
+
+	if($type == 'Year') {
+		$date = $date->format('M').' '.$date->format('d').' of '.$date->format('Y');
+	}
+	elseif($type == 'Day') {
+		$date = $date->format('d');
+	}
+	else {
+		$date = $date->format('M').' '.$date->format('d');
+	}
+
+	return $date;
+}
+
 /**
  * Get a relative date
  *

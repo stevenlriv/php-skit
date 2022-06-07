@@ -58,7 +58,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- [HB] Users Infrastructure [reset password, new user, login, user page, logout]
+- [HB] Users Infrastructure [reset password, new user, login, user page, logout; user media table like wordpress]
 - [HB] Referal system for users
 - [NF?] Users Web3 wallet Auth support
 
