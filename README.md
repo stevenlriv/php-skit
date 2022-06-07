@@ -60,7 +60,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]
 - [HB] Referal system for users
-- Users Web3 wallet Auth support
+- [NF?] Users Web3 wallet Auth support
 
 - PHP REST API
 
