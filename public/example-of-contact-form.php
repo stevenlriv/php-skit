@@ -35,7 +35,7 @@ $alert_messages->print($alert_messages_template);
 
     <div>
         <label>Message*</label>
-        <?php $form_cache->print_input('textarea', 'message', '8'); ?>
+        <?php $form_cache->print_input('textarea', 'message', 'rows="8" cols="50"'); ?>
     </div>
 
     <br />

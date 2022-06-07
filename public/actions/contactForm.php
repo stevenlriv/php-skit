@@ -1,6 +1,6 @@
 <?php
 require_once './src/Core/_coreRequired.php';
-require './src/Forms/postVariablesSanitation.php';
+require './src/Forms/getPostVariables.php';
 
 if(isset($submit)) {
     if(empty($first_name)) {
@@ -15,7 +15,7 @@ if(isset($submit)) {
         $alert_messages->new_error('Please enter your email');
     }
 
-    if(!is_email($email)) {
+    if(!empty($email) && !is_email($email)) {
         $alert_messages->new_error('Please enter a valid email');
     }
 

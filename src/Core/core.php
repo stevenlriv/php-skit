@@ -22,6 +22,7 @@ require './config/privateKeys.php';
 require './config/database.php';
 require './config/SMTP.php';
 require './config/twilio.php';
+require './config/DigitalOcean.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
@@ -38,9 +39,10 @@ require './src/Classes/pagination.php';
 require './src/Classes/alertMessages.php';
 require './src/Classes/SEO.php';
 require './src/Classes/formCache.php';
+require './src/Classes/files.php';
 
-require './src/Forms/textSanitation.php';
-require './src/Forms/textValidation.php';
+require './src/Forms/sanitation.php';
+require './src/Forms/validation.php';
 
 require './src/Emails/standardTemplate.php';
 require './src/Emails/sendEmail.php';
@@ -66,5 +68,6 @@ require './src/Cookies/deleteCookie.php';
 
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();
+$files = new Files();
 $SEO = new SEO(SITE_NAME, get_domain_url(), $http_uri);
 ?>

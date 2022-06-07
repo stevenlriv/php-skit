@@ -17,6 +17,14 @@ switch ($http_uri) {
             require './public/templates/footer.php';
         ob_end_flush();
         break;
+    case '/example-of-image-upload' :
+        $SEO->set('Example of Image Upload');
+        ob_start("ob_html_compress");
+            require './public/templates/header.php';
+            require './public/example-of-image-upload.php';
+            require './public/templates/footer.php';
+        ob_end_flush();
+        break;
     case '/example-of-pagination' :
         $SEO->set('Example of Pagination');
         ob_start("ob_html_compress");

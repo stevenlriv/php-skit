@@ -3,7 +3,7 @@ class FormCache {
     private $form_name;
     private $inputs = array();
 
-    function start_form($method, $form_name = '', $css_class = '') {
+    function start_form($method, $form_name = '', $extra = '', $css_class = '') {
         $this->form_name = $form_name;
 
         echo '<script>
@@ -20,7 +20,7 @@ class FormCache {
         }
         </script>';
 
-        echo '<form method="'.$method.'" id="'.$form_name.'" class="'.$css_class.'">';
+        echo '<form method="'.$method.'" id="'.$form_name.'" class="'.$css_class.'" '.$extra.'>';
     }
 
     function end_form($reset_form = false) {
@@ -64,7 +64,7 @@ class FormCache {
         $this->inputs[] = $name;
 
         if($type=="textarea") {
-            echo '<textarea name="'.$name.'" id="'.$name.'" rows="'.$extra.'" class="'.$css_class.'"></textarea>';
+            echo '<textarea name="'.$name.'" id="'.$name.'" '.$extra.' class="'.$css_class.'"></textarea>';
         }
         else {
             echo '<input type="'.$type.'" name="'.$name.'" id="'.$name.'" class="'.$css_class.'" />';

@@ -58,11 +58,10 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- JSON API access to a public database
-- [HB] Upload Images and Files
+- Review all my code to simplify it and/or make it better
+- Upload multiple files using js and php
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]
 - [HB] Referal system for users
 - Web3 Wallet Connect with Infura
 - Users Web3 wallet Auth support
-
 - Create a MySQL.sql file
