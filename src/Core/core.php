@@ -64,6 +64,7 @@ require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
 require './src/Cookies/deleteCookie.php';
 
+$form_cache = new FormCache();
 $alert_messages = new AlertMessages();
 $SEO = new SEO(SITE_NAME, get_domain_url(), $http_uri);
 ?>

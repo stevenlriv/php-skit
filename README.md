@@ -59,10 +59,10 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Missing
 
 - JSON API access to a public database
-- PHP Text Cache for forms with JS and Ajax
 - [HB] Upload Images and Files
 - [HB] Users Infrastructure [reset password, new user, login, user page, logout]
 - [HB] Referal system for users
 - Web3 Wallet Connect with Infura
 - Users Web3 wallet Auth support
+
 - Create a MySQL.sql file

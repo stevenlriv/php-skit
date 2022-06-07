@@ -2,8 +2,6 @@
 require_once './src/Core/_coreRequired.php';
 require_once './public/actions/contactForm.php';
 require_once './public/templates/alertMessages.php';
-
-$form_cache = new FormCache();
 ?>
 <a href="/"><< Go Back To Homepage</a> <br /><br />
 
@@ -11,41 +9,36 @@ Example of contact form! <br /><br />
 
 <?php
 $alert_messages->print($alert_messages_template);
-
-if($alert_messages->is_success()) {
-    // clear form cache
-    echo 'clear cache';
-}
 ?>
 
-<form method="POST">
+<?php $form_cache->start_form('POST', 'contactForm'); ?>
     <div>
         <label>First name*</label>
-        <input type="text" name="first_name">
+        <?php $form_cache->print_input('text', 'first_name'); ?>
     </div>
 
     <br />
 
     <div>
         <label>Last name*</label>
-        <input type="text" name="last_name">
+        <?php $form_cache->print_input('text', 'last_name'); ?>
     </div>
 
     <br />
 
     <div>
         <label>Email*</label>
-        <input type="email" name="email">
+        <?php $form_cache->print_input('email', 'email'); ?>
     </div>
 
     <br />
 
     <div>
         <label>Message*</label>
-        <textarea name="message" rows="8"></textarea>
+        <?php $form_cache->print_input('textarea', 'message', '8'); ?>
     </div>
 
     <br />
 
-    <button type="submit" name="submit">Send Message</button>
-</form>
+    <?php $form_cache->print_button('Send Message'); ?>
+<?php $form_cache->end_form($alert_messages->is_success()); ?>

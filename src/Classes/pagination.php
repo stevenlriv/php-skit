@@ -71,7 +71,7 @@ class Pagination {
             echo $show_form_html_header;
 
             echo '<p>Show</p>';
-            echo '<form method="GET" id="show">';
+            echo '<form method="GET" id="show_form">';
 
             if(isset($_GET)) {
                 foreach($_GET as $id => $value) {
@@ -82,7 +82,7 @@ class Pagination {
                 }
             }
             
-            echo '<select name="show" onchange="changeShowAmount();">';
+            echo '<select name="show" id="show_amount">';
 
             if($this->records_per_page==10) {
                 echo '<option value="10" selected>10</option>';
@@ -123,9 +123,10 @@ class Pagination {
             echo "<p>of $this->total_results</p>";
 
             echo '<script>
-            function changeShowAmount() {
-                document.getElementById("show").submit();
-            }
+            const show_amount = document.querySelector("#show_amount");
+            show_amount.addEventListener("change", (e) => {
+                document.getElementById("show_form").submit();
+            });
             </script>';
 
             echo $show_form_html_footer;
