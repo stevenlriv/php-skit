@@ -52,13 +52,23 @@ Key generation must be done in a local server and added directly to your product
 
 Then take the key generated and use it for one of them. You will need to do this 3 times.
 
+## MySQL
+
+- users
+- users_meta: metadata for the users
+    - cookies_track: used to track messages showed to users
+    - time_zone: users time zone
+    - profile_bio
+    - profile_image
+- configs: script configuration that could be updated using an UI in the frontend
+- records: records any data action in the script
+
 ## Other Tools
 
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
 ## Missing
 
-- Study my users sql tables
 - [HB] Users Infrastructure [user media table like wordpress]
         - new user [email, phone or web3wallet]
         - reset password
@@ -74,4 +84,4 @@ Then take the key generated and use it for one of them. You will need to do this
 - [HB] Referal system for users
 
 - PHP REST API for json connections to backend like from react native
-- Create a MySQL.sql file
+- Update the MySQL.sql file
