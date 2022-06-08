@@ -2,14 +2,27 @@
 class HttpURI {
     private $full_uri;
     private $uri;
+    private $user;
 
     public function __construct() {
         $this->full_uri = $_SERVER['REQUEST_URI'];
         $this->uri = $this->full_uri;
+        $this->user = new User();
 
         if (substr_count($this->uri, "?") > 0) {
             $pieces = explode("?", $this->uri);
             $this->uri = $pieces[0];
+        }
+    }
+
+    public function user_logout() {
+        $this->user->logout();
+        header('Location: /');
+    }
+
+    public function user_logged_in() {
+        if(!$this->user->is_logged_in()) {
+            header('Location: /');
         }
     }
 

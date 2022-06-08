@@ -1,7 +1,8 @@
 <?php
 $qr = new QR();
-$otp = new OTP();
+$otp = new OTP(SITE_NAME);
 $date = new DATE();
+$user = new User();
 $http = new HttpURI();
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();

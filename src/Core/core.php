@@ -35,6 +35,7 @@ require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 require './src/Classes/QR.php';
 require './src/Classes/OTP.php';
+require './src/Classes/user.php';
 require './src/Core/classes.php';
 
 require './src/Cookies/newCookie.php';
@@ -66,4 +67,6 @@ require './src/Web3/decimals.php';
 require './src/Web3/readSmartContract.php';
 
 require './src/Users/newUser.php';
+require './src/Users/getUser.php';
+require './src/Users/updateUser.php';
 ?>

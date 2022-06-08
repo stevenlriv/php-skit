@@ -33,6 +33,18 @@ switch ($http->get_uri()) {
             require './public/templates/footer.php';
         ob_end_flush();
         break;
+    case '/example-of-user-page' :
+        $http->user_logged_in();
+        $SEO->set('Example of User Page');
+        ob_start("ob_html_compress");
+            require './public/templates/header.php';
+            require './public/example-of-user-page.php';
+            require './public/templates/footer.php';
+        ob_end_flush();
+        break;
+    case '/logout' :
+        $http->user_logout();
+        break;
     default :
         http_response_code(404);
         new_record('New 404 Page Visit', $http->get_full_uri());

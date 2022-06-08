@@ -4,8 +4,10 @@ use OTPHP\TOTP;
 class OTP {
     private $qr_image_uri;
     private $secret;
+    private $site_name;
 
-    public function __construct() {
+    public function __construct($site_name) {
+        $this->site_name = $site_name;
     }
 
     public function get_secret() {
@@ -33,7 +35,7 @@ class OTP {
         $this->secret = $otp->getSecret();
 
         $otp->setLabel($label);
-        $otp->setIssuer(SITE_NAME);
+        $otp->setIssuer($this->site_name);
     
         if($qr->create($otp->getProvisioningUri())) {
             $this->qr_image_uri = $qr->get_image_uri();

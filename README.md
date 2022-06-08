@@ -69,15 +69,15 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- [HB] Users Infrastructure [user media table like wordpress]
-        - new user [email, phone or web3wallet]
-        - reset password
-        - login with password
-        - login with email code
-        - login with phone code
-        - 2fa with google app
-        - user page
-        - logout
+- [HB] Users Infrastructure
+        x- new user [email, phone or web3wallet]
+        x- reset password
+        x- login with password
+        x- login with email code
+        x- login with phone code
+        x- 2fa with google app
+        x- user page
+        x- logout
 - [NF?] Users Web3
         - allow to link wallets to the user account
         - allow to login with those wallets linked to account
