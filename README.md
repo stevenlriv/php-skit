@@ -58,8 +58,6 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- forms captcha & avoiding bots in forms
-
 - [HB] Users Infrastructure [user media table like wordpress]
         - new user [email, phone or web3wallet]
         - reset password
