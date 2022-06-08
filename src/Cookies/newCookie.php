@@ -16,7 +16,7 @@ use \ParagonIE\Halite\{
  *   $http - If true disable cookie use via JavaScript
  */
 function new_cookie($name, $value, $expire = '') {
-	global $http;
+	$http = new HttpURI();
 
 	$key = KeyFactory::importEncryptionKey(new HiddenString(COOKIES_KEY));
 	$cookie = new Cookie($key);

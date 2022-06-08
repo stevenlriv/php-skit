@@ -58,8 +58,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- OTP implementation
-
+- Study my users sql tables
 - [HB] Users Infrastructure [user media table like wordpress]
         - new user [email, phone or web3wallet]
         - reset password
@@ -74,5 +73,5 @@ Then take the key generated and use it for one of them. You will need to do this
         - allow to login with those wallets linked to account
 - [HB] Referal system for users
 
-- PHP REST API
+- PHP REST API for json connections to backend like from react native
 - Create a MySQL.sql file

@@ -36,7 +36,6 @@ require './src/MySQL/delete.php';
 require './src/Functions/dates.php';
 require './src/Functions/encryption.php';
 require './src/Functions/htmlCompress.php';
-require './src/Functions/OTP.php';
 require './src/Functions/randomString.php';
 require './src/Functions/textMessage.php';
 
@@ -47,6 +46,7 @@ require './src/Classes/SEO.php';
 require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 require './src/Classes/QR.php';
+require './src/Classes/OTP.php';
 
 require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
@@ -78,10 +78,5 @@ require './src/Web3/readSmartContract.php';
 
 require './src/Users/newUser.php';
 
-$qr = new QR();
-$http = new HttpURI();
-$form_cache = new FormCache();
-$alert_messages = new AlertMessages();
-$SEO = new SEO(SITE_NAME, $http->get_domain_url(), $http->get_uri());
-$file = new Files(DO_KEY, DO_SECRETS, DO_REGION, DO_ENDPOINT, DO_BUCKET, DO_CLIENT_URL);
+require './src/Core/classes.php';
 ?>

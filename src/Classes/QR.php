@@ -34,7 +34,7 @@ class QR {
     }
 
     public function create($string) {
-        global $http;
+        $http = new HttpURI();
     
         $renderer = new ImageRenderer(
             new RendererStyle(400),
