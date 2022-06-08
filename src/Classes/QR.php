@@ -11,7 +11,7 @@ class QR {
 
     public function __construct() {
         $this->dirname = 'public/_temp/QR';
-        $this->upload_path = $this->dirname.'/'.generate_not_secure_random_string(50).'_qrcode.png';
+        $this->upload_path = $this->dirname.'/'.generate_not_secure_random_string(75).'_qrcode.png';
 
         if(!is_dir($this->dirname)) {
             mkdir($this->dirname, 0755, true);
