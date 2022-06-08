@@ -11,7 +11,7 @@
 
     echo $key_hex;
 */
-if( !defined('GENERAL_KEY') || !defined('COOKIES_KEY') || !defined('PASSWORD_KEY') ) {
+if( !defined('GENERAL_KEY') || !defined('COOKIES_KEY') || !defined('USER_KEY') ) {
     die ('Keys are missing, generate them before continuing');
 }
 ?>
