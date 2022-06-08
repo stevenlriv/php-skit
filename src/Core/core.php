@@ -1,20 +1,8 @@
 <?php
 define ( 'CORE', true );
+if(!isset($_SESSION)) { session_start(); }
 
-if ( !isset($_SESSION) ) { session_start(); }
-date_default_timezone_set('Etc/UTC');
-
-require './config/debug.php';
-if( DEBUG == true ) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-    if (file_exists('./config/_debugEnviromentVariables.php')) {
-        require './config/_debugEnviromentVariables.php';
-    }
-}
-
+require './src/Core/debug.php';
 require './src/vendor/autoload.php';
 
 require './config/general.php';
@@ -33,12 +21,12 @@ require './src/MySQL/select.php';
 require './src/MySQL/update.php';
 require './src/MySQL/delete.php';
 
-require './src/Functions/dates.php';
 require './src/Functions/encryption.php';
 require './src/Functions/htmlCompress.php';
 require './src/Functions/randomString.php';
 require './src/Functions/textMessage.php';
 
+require './src/Classes/date.php';
 require './src/Classes/httpURI.php';
 require './src/Classes/pagination.php';
 require './src/Classes/alertMessages.php';
@@ -47,6 +35,7 @@ require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 require './src/Classes/QR.php';
 require './src/Classes/OTP.php';
+require './src/Core/classes.php';
 
 require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
@@ -77,6 +66,4 @@ require './src/Web3/decimals.php';
 require './src/Web3/readSmartContract.php';
 
 require './src/Users/newUser.php';
-
-require './src/Core/classes.php';
 ?>
