@@ -8,10 +8,13 @@
     },
     "require": {
         "php": ">=8",
+        "ext-imagick": "*",
         "phpmailer/phpmailer": "^6.5",
         "paragonie/halite": "^4",
         "web3p/web3.php": "dev-master",
         "twilio/sdk": "^6.37",
-        "league/flysystem-aws-s3-v3": "^3.0"
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "spomky-labs/otphp": "^10.0",
+        "bacon/bacon-qr-code": "^2.0"
     }
 }

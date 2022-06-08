@@ -53,7 +53,7 @@ class Files {
 
     public function upload_file($file_data, $dirname) {
         $this->file_dir  = "uploads/$dirname/".date('Y').'/'.date('F').'/'.date('d').'/';
-        $random_filename = generateNotSecureRandomString()."_".$file_data['name'];
+        $random_filename = generate_not_secure_random_string()."_".$file_data['name'];
         $this->upload_path = $this->file_dir.$random_filename;
     
         $this->filesystem->writeStream($this->upload_path, fopen($file_data['tmp_name'], 'r+'), ['visibility' => 'public']);

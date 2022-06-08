@@ -58,6 +58,8 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
+- OTP implementation
+
 - [HB] Users Infrastructure [user media table like wordpress]
         - new user [email, phone or web3wallet]
         - reset password
