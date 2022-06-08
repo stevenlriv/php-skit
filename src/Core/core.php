@@ -76,6 +76,8 @@ require './src/Web3/ChainLink.php';
 require './src/Web3/decimals.php';
 require './src/Web3/readSmartContract.php';
 
+require './src/Users/newUser.php';
+
 $qr = new QR();
 $http = new HttpURI();
 $form_cache = new FormCache();

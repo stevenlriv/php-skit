@@ -1,24 +1,24 @@
 <?php
-// mysql database
+// mysql database connection details
 putenv('MYSQL_HOST=localhost');
 putenv('MYSQL_USER=root');
 putenv('MYSQL_PASSWORD=root');
 putenv('MYSQL_DATABASE=new_db');
 putenv('MYSQL_PORT=8889');
 
-// send grid
-putenv('SMTP=false');
-putenv('SMTP_TLS=');
-putenv('SMTP_HOST=');
-putenv('SMTP_USERNAME=');
+// send grid or any other SMTP provider
+putenv('SMTP=true');
+putenv('SMTP_TLS=true');
+putenv('SMTP_HOST=smtp.sendgrid.net');
+putenv('SMTP_USERNAME=apikey');
 putenv('SMTP_PASSWORD=');
-putenv('SMTP_PORT=');
+putenv('SMTP_PORT=587');
 
 // twilio
 putenv('TWILIO_SID=');
 putenv('TWILIO_TOKEN=');
 
-// digital ocean spaces for images uploads
+// digital ocean spaces for images uploads or any other provider
 putenv('DO_KEY=');
 putenv('DO_SECRETS=');
 putenv('DO_REGION=sfo3');
