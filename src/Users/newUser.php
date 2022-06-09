@@ -63,6 +63,9 @@ function new_user(  $status = 1,
     if($nonce=='') {
         $nonce = text_encryption(generate_not_secure_random_string(6), USER_KEY);
     }
+    if($two_factor_verification!='') {
+        $two_factor_verification = text_encryption($two_factor_verification, USER_KEY);
+    }
 
     $array = array(
         0 => array('column' => 'status', 'value' => $status),

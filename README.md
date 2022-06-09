@@ -73,6 +73,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
+- User update stuff by function
 - User metadata filess
 - [HB] Users Infrastructure
         x- new user [email, phone or web3wallet]
