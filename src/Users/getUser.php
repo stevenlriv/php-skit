@@ -17,6 +17,10 @@ function get_user_by_email($value) {
     return get_user('email', $value);
 }
 
+function get_user_by_id($value) {
+    return get_user('id_user', $value);
+}
+
 function get_user($column, $value) {
     $array = array(
         0 => array('column' => $column, 'condition' => 'AND', 'command' => '=', 'value' => $value)
