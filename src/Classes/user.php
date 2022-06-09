@@ -1,6 +1,7 @@
 <?php
 class User {
     private $is_logged_in = false;
+    private $array = array();
 
     public $id_user;
     public $status;
@@ -48,23 +49,30 @@ class User {
     }
 
     public function login_with_email_code() {
-
+        //update_nonce($id_user)
     }
 
     public function login_with_phone_code() {
+        //update_nonce($id_user)
+        //get_user_by_phone_number($value)
+    }
 
+    public function login_with_eth_address() {
+        //update_nonce($id_user)
+        //get_user_by_eth_address($value)
+    }
+
+    public function login_with_sol_address() {
+        //update_nonce($id_user)
+        //get_user_by_sol_address($value)
     }
 
     public function two_factor_verification() {
 
     }
 
-    public function reset_password_with_email() {
-
-    }
-
-    public function reset_password_with_phone() {
-
+    public function reset_password() {
+        //update_password($id_user, $password)
     }
 
     public function logout() {

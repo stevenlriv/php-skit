@@ -73,8 +73,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- User update stuff by function
-- User metadata filess
+- Go to new/update and verify there are no repeat identifiers
 - [HB] Users Infrastructure
         x- new user [email, phone or web3wallet]
         x- reset password
@@ -89,11 +88,11 @@ Then take the key generated and use it for one of them. You will need to do this
         - allow to login with those wallets linked to account
 - [HB] Referal system for users
 
-- PHP REST API for json connections to backend like from react native
 - Update the MySQL.sql file
 
 ## Future Integrations
 
+- PHP REST API for json connections to backend like from react native
 - Validate if there is an NFT in your wallet
 - Stripe
 - Coinbase Commerce

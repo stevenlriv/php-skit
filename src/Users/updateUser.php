@@ -1,5 +1,22 @@
 <?php
-function update_user(   $id_user,
+function update_password($id_user, $password) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', $password, '', '')) {
+        return true;
+    }
+
+    return false;
+}
+
+// used for email/phone code verification and web3 wallets login
+function update_nonce($id_user) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', generate_not_secure_random_string(6), '')) {
+        return true;
+    }
+
+    return false;
+}
+
+function update_user(   $id_user = '',
                         $status = '', 
                         $first_name = '', 
                         $last_name = '', 

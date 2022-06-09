@@ -69,4 +69,9 @@ require './src/Web3/ethereumSmartContract.php';
 require './src/Users/newUser.php';
 require './src/Users/getUser.php';
 require './src/Users/updateUser.php';
+
+require './src/UsersMetadata/newUsersMetadata.php';
+require './src/UsersMetadata/getUsersMetadata.php';
+require './src/UsersMetadata/updateUsersMetadata.php';
+require './src/UsersMetadata/deleteUsersMetadata.php';
 ?>
