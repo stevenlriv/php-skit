@@ -55,11 +55,15 @@ Then take the key generated and use it for one of them. You will need to do this
 ## MySQL
 
 - users
+        - status:
+                - 1: active users
 - users_meta: metadata for the users
-    - cookies_track: used to track messages showed to users
-    - time_zone: users time zone
-    - profile_bio
-    - profile_image
+        - cookies_track: used to track messages hidden showed to users
+        - time_zone: users time zone
+        - profile_bio
+        - profile_image
+        - email_verified: used to verify the user email verification on demand
+        - phone_number_verified: used to get the status of the user phone verification on demand
 - configs: script configuration that could be updated using an UI in the frontend
 - records: records any data action in the script
 
@@ -69,6 +73,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
+- User metadata filess
 - [HB] Users Infrastructure
         x- new user [email, phone or web3wallet]
         x- reset password

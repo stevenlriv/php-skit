@@ -1,9 +1,17 @@
 <?php
 use \ParagonIE\Halite\{
 	KeyFactory,
+    Password,
 	HiddenString,
 	Symmetric\Crypto as Symmetric
 };
+
+function generate_user_password($password) {
+    $key = KeyFactory::importEncryptionKey(new HiddenString(USER_KEY));
+    $password = Password::hash(new HiddenString($password), $key);
+
+    return $password;
+}
 
 function text_encryption($text, $encryption_key = '') {
     if($encryption_key == '') {

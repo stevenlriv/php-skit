@@ -92,8 +92,23 @@ function update_mysql_data($table_name, $extra = '', $query = '') {
 	elseif($array_count == 15) {
 		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14]  );
 	}
-	else {
-		die('The function delete_mysql_data() needs to be expanded to more than 15 bind_param_values');
+	elseif($array_count == 16) {
+		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14], $bind_param_values[15]  );
+	}
+	elseif($array_count == 17) {
+		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14], $bind_param_values[15], $bind_param_values[16]  );
+	}
+	elseif($array_count == 18) {
+		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14], $bind_param_values[15], $bind_param_values[16], $bind_param_values[17]  );
+	}
+	elseif($array_count == 19) {
+		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14], $bind_param_values[15], $bind_param_values[16], $bind_param_values[17], $bind_param_values[18]  );
+	}
+	elseif($array_count == 20) {
+		$q->bind_param ( $bind_param_type, $bind_param_values[0], $bind_param_values[1], $bind_param_values[2], $bind_param_values[3], $bind_param_values[4], $bind_param_values[5], $bind_param_values[6], $bind_param_values[7], $bind_param_values[8], $bind_param_values[9], $bind_param_values[10], $bind_param_values[11], $bind_param_values[12], $bind_param_values[13], $bind_param_values[14], $bind_param_values[15], $bind_param_values[16], $bind_param_values[17], $bind_param_values[18], $bind_param_values[19]  );
+	}
+	elseif($array_count > 20) {
+		die('The function delete_mysql_data() needs to be expanded to more than 20 bind_param_values');
 	}
 
     if($q->execute()) {

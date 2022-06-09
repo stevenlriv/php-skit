@@ -18,8 +18,11 @@ class User {
     public $date;
 
     public function __construct() {
-        // set all the public variables if the user is logged in using
-        // check_if_user_is_logged_in()
+        $this->check_if_user_is_logged_in();
+
+        if($this->is_logged_in) {
+            // set all the public variables if the user is logged in
+        }
     }
 
     public function is_logged_in() {
@@ -30,23 +33,13 @@ class User {
         return false;
     }
 
+    public function get_some_name() {
+        // get some type of name for the user based on the data available in the database
+        // best one will be first name and or display name
+        return 'Cat';
+    }
+
     public function get_metadata() {
-
-    }
-
-    public function new_user_with_password() {
-
-    }
-
-    public function new_user_with_email_code() {
-
-    }
-
-    public function new_user_with_phone_code() {
-
-    }
-
-    public function new_user_with_web3_wallet() {
 
     }
 
