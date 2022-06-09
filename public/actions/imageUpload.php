@@ -1,6 +1,6 @@
 <?php
-require_once './src/Core/_coreRequired.php';
-require './src/Forms/getPostVariables.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php';
+require_once './src/Forms/getPostVariables.php';
 
 if(isset($submit)) {
     if(empty($_FILES['file_data']['tmp_name'])) {

@@ -1,5 +1,6 @@
 <?php
-require './config/debug.php';
+require $_SERVER['DOCUMENT_ROOT'].'/config/debug.php';
+
 if( DEBUG == true ) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);

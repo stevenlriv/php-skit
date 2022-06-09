@@ -42,21 +42,36 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'display_name', 'value' => $display_name);
     }
     if($username!='') {
+        if(get_user_by_username($username) && get_user_by_username($username)['id_user']!=$id_user) {
+            return false;
+        }
         $array[] = array('column' => 'username', 'value' => $username);
     }
     if($email!='') {
         if(!is_email($email)) {
             return false;
         }
+        if(get_user_by_email($email) && get_user_by_email($email)['id_user']!=$id_user) {
+            return false;
+        }
         $array[] = array('column' => 'email', 'value' => $email);
     }
     if($eth_address!='') {
+        if(get_user_by_eth_address($eth_address) && get_user_by_eth_address($eth_address)['id_user']!=$id_user) {
+            return false;
+        }
         $array[] = array('column' => 'eth_address', 'value' => $eth_address);
     }
     if($sol_address!='') {
+        if(get_user_by_sol_address($sol_address) && get_user_by_sol_address($sol_address)['id_user']!=$id_user) {
+            return false;
+        }
         $array[] = array('column' => 'sol_address', 'value' => $sol_address);
     }
     if($phone_number!='') {
+        if(get_user_by_phone_number($phone_number) && get_user_by_phone_number($phone_number)['id_user']!=$id_user) {
+            return false;
+        }
         $array[] = array('column' => 'phone_number', 'value' => $phone_number);
     }
     if($password!='') {

@@ -1,8 +1,8 @@
 <?php
-require_once './src/Core/_coreRequired.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php';
 
 $pagination = new Pagination(get_all_records('count'));
-require_once './public/templates/pagination.php';
+require './public/templates/pagination.php';
 
 $query = get_all_records('all', "LIMIT {$pagination->get_offset()}, {$pagination->get_records_per_page()}");
 ?>

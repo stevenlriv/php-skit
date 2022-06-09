@@ -1,10 +1,5 @@
 <?php
 function new_user_with_password($email, $password) {
-    if(!is_email($email)) {
-        return false;
-    }
-    $password = generate_user_password($password);
-
     if(new_user(1, '', '', '', '', $email, '', '', '', $password, '', '')) {
         return true;
     }
@@ -13,10 +8,6 @@ function new_user_with_password($email, $password) {
 }
 
 function new_user_with_email_code($email) {
-    if(!is_email($email)) {
-        return false;
-    }
-
     if(new_user(1, '', '', '', '', $email, '', '', '', '', '', '')) {
         return true;
     }
@@ -60,13 +51,41 @@ function new_user(  $status = 1,
                     $password = '',
                     $nonce = '',
                     $two_factor_verification = '') {
-    if($nonce=='') {
-        $nonce = text_encryption(generate_not_secure_random_string(6), USER_KEY);
+
+    if($username!='' && get_user_by_username($username)) {
+        return false;
+    }
+
+    if($email!='' && !is_email($email)) {
+        return false;
+    }
+    if($email!='' && get_user_by_email($email)) {
+        return false;
+    }
+
+    if($eth_address!='' && get_user_by_eth_address($eth_address)) {
+        return false;
+    }
+
+    if($sol_address!='' && get_user_by_sol_address($sol_address)) {
+        return false;
+    }
+
+    if($phone_number!='' && get_user_by_phone_number($phone_number)) {
+        return false;
+    }
+
+    if($password!='') {
+        $password = generate_user_password($password);
     }
     if($two_factor_verification!='') {
         $two_factor_verification = text_encryption($two_factor_verification, USER_KEY);
     }
 
+    if($nonce=='') {
+        $nonce = text_encryption(generate_not_secure_random_string(6), USER_KEY);
+    }
+    
     $array = array(
         0 => array('column' => 'status', 'value' => $status),
         1 => array('column' => 'first_name', 'value' => $first_name),

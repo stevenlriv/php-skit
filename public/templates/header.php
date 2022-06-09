@@ -1,5 +1,5 @@
 <?php
-require_once './src/Core/_coreRequired.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

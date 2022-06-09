@@ -1,5 +1,5 @@
-<?php
-require_once './src/Core/_coreRequired.php';
+<?php 
+require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php'; 
 ?>
 Home Page!
 <br />

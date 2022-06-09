@@ -1,7 +1,7 @@
 <?php
-require_once './src/Core/_coreRequired.php';
-require_once './public/actions/imageUpload.php';
-require_once './public/templates/alertMessages.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php';
+require './public/actions/imageUpload.php';
+require './public/templates/alertMessages.php';
 ?>
 <a href="/"><< Go Back To Homepage</a> <br /><br />
 
