@@ -64,7 +64,7 @@ require './src/ExternalAPICalls/getHtmlElement.php';
 require './src/Web3/address.php';
 require './src/Web3/ChainLink.php';
 require './src/Web3/decimals.php';
-require './src/Web3/readSmartContract.php';
+require './src/Web3/ethereumSmartContract.php';
 
 require './src/Users/newUser.php';
 require './src/Users/getUser.php';

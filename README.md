@@ -85,3 +85,9 @@ Then take the key generated and use it for one of them. You will need to do this
 
 - PHP REST API for json connections to backend like from react native
 - Update the MySQL.sql file
+
+## Future Integrations
+
+- Validate if there is an NFT in your wallet
+- Stripe
+- Coinbase Commerce

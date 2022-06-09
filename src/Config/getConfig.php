@@ -4,7 +4,7 @@ function get_config($id_config) {
         0 => array('column' => 'id_config', 'condition' => 'AND', 'command' => '=', 'value' => $id_config)
     );
 
-    return select_mysql_data('configs', '', 'LIMIT 1', $array);
+    return get_all_configs('', 'LIMIT 1', $array);
 }
 
 function get_all_configs($type = 'all', $extra = '', $query = '') {
