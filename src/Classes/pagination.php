@@ -1,5 +1,6 @@
 <?php
 class Pagination {
+    private $query;
     private $total_results;
     private $records_per_page;
     private $offset;
@@ -150,6 +151,14 @@ class Pagination {
         }
 
         echo $this->template_footer;
+    }
+
+    public function get_query() {
+        return $this->query;
+    }
+
+    public function set_query($query) {
+        $this->query = $query;
     }
 
     private function get_url() {

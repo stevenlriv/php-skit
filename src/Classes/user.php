@@ -166,14 +166,91 @@ class User {
 		return false;
     }
 
+    public function send_email_for_password_reset($email) {
+        $user = get_user_by_email($email);
+
+		if($user) {
+            update_nonce($user['id_user']);
+
+            $user = get_user_by_id($user['id_user']); // get new nonce to send
+            $this->array = $user;
+            $this->set_user_data();
+
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+			if(send_email_password_reset($user['email'], $this->get_some_name(), $user['nonce'], $code)) {
+				return true;
+            }
+		}
+
+		return false;
+    }
+
     public function send_text_message_with_code($phone_number) {
-        // Your SITE_NAME code is [xxxxx]
+        $user = get_user_by_phone_number($phone_number);
+
+		if($user) {
+            update_nonce($user['id_user']);
+
+            $user = get_user_by_id($user['id_user']); // get new nonce to send
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+			if(send_text_login_code($user['phone_number'], $code)) {
+				return true;
+            }
+		}
+
+		return false;
     }
 
-    public function two_factor_verification() {
+    public function set_two_factor_verification($id_user, $input, $secret) {
+        $user = get_user_by_id($id_user);
+
+        if($user) {
+            $otp = new OTP();
+            if($otp->verify($secret, $input)) {
+                if(update_two_factor_verification($user['id_user'], $secret)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
-    public function reset_password() {
+    public function verify_two_factor_verification($id_user, $input) {
+        $user = get_user_by_id($id_user);
+
+        if($user) {
+            $otp = new OTP();
+            if($otp->verify_user_login($user['two_factor_verification'], $input)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function reset_password($email, $new_password, $token) {
+        $user = get_user_by_email($email);
+
+        $encryption = new Encryption(GENERAL_KEY);
+        $token = $encryption->text_decrypt($token);
+
+		if($user) {
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+			if($this->validate_code($user['nonce'], $code)) {
+                if(update_password($user['id_user'], $new_password)) {
+				    return true;
+                }
+            }
+		}
+
+        return false;
     }
 
     public function change_password($email, $new_password, $old_password) {
@@ -247,20 +324,22 @@ class User {
     }
 
     private function set_user_data() {
-        $this->id_user = $this->array['id_user'];
-        $this->status = $this->array['status'];
-        $this->first_name = $this->array['first_name'];
-        $this->last_name = $this->array['last_name'];
-        $this->display_name = $this->array['display_name'];
-        $this->username = $this->array['username'];
-        $this->email = $this->array['email'];
-        $this->eth_address = $this->array['eth_address'];
-        $this->sol_address = $this->array['sol_address'];
-        $this->phone_number = $this->array['phone_number'];
-        $this->password = $this->array['password'];
-        $this->nonce = $this->array['nonce'];
-        $this->two_factor_verification = $this->array['two_factor_verification'];
-        $this->date = $this->array['date'];
+        if(is_array($this->array)) {
+            $this->id_user = $this->array['id_user'];
+            $this->status = $this->array['status'];
+            $this->first_name = $this->array['first_name'];
+            $this->last_name = $this->array['last_name'];
+            $this->display_name = $this->array['display_name'];
+            $this->username = $this->array['username'];
+            $this->email = $this->array['email'];
+            $this->eth_address = $this->array['eth_address'];
+            $this->sol_address = $this->array['sol_address'];
+            $this->phone_number = $this->array['phone_number'];
+            $this->password = $this->array['password'];
+            $this->nonce = $this->array['nonce'];
+            $this->two_factor_verification = $this->array['two_factor_verification'];
+            $this->date = $this->array['date'];
+        }
     }
 
     private function get_nonce($hash) {

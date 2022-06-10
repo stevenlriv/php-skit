@@ -1,6 +1,4 @@
 <?php
-$qr = new QR();
-$otp = new OTP(SITE_NAME);
 $date = new DATE();
 $user = new User();
 $http = new HttpURI();

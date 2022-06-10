@@ -17,4 +17,7 @@ define( 'SOCIAL_LINK_GITHUB', '' );
 // email templates
 define( 'EMAIL_REPLY_TO', 'info@neftify.com' );
 define( 'EMAIL_LOGO_URL', 'https://assets.bootstrapemail.com/logos/light/square.png' );
+
+// text messages
+define( 'TWILIO_CUSTOM_PHONE_NUMBER', '19706488523' );
 ?>

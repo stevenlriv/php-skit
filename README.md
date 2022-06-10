@@ -71,14 +71,11 @@ Then take the key generated and use it for one of them. You will need to do this
 
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
-## Missing
-
-- Users Infrastructure (classes/user.php)
-
-## Future Integrations
+## Next Integrations
 
 - Referal system for users
 - PHP REST API for json connections to backend like from react native
+- Metrics, track clicks on links and buttons and visitors, etc
 - 8 failed login 24 hour reset
 - Users Web3
         - allow to login with those wallets linked to account

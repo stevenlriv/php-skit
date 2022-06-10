@@ -17,4 +17,27 @@ Home Page!
 <br />
 <br />
 <?php
+
+if($user->verify_two_factor_verification(4, 'ss')) {
+    echo 'TRUE';
+}
+else {
+    echo 'FALSE';
+}
+
+/*
+if($user->set_two_factor_verification(4, '160060', 'XS7BTLIQGJBAYU2CFQHPZPXKDO23NSLFIEV3JSLKIMDCJ3LUHVRVWBGGMN3KIC6TSRTTY65JXDKOMS6BYTEKHPKTAFCG2VLXWG4AFGA')) {
+    echo 'TRUE';
+}
+else {
+    echo 'FALSE';
+}*/
+
+/*
+$otp = new OTP(); 
+$otp->create('steven@neftify.com');
+echo '<img src="'.$otp->get_image_uri().'" />';
+echo '<br /><br />';
+echo $otp->get_secret();*/
+
 ?>

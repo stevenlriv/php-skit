@@ -12,6 +12,8 @@ switch ($http->get_uri()) {
     case '/example-of-contact-form' :
         $SEO->set('Example of Contact Form');
         ob_start("ob_html_compress");
+            require './public/actions/contactForm.php';
+            require './public/templates/alertMessages.php';
             require './public/templates/header.php';
             require './public/example-of-contact-form.php';
             require './public/templates/footer.php';
@@ -20,6 +22,8 @@ switch ($http->get_uri()) {
     case '/example-of-image-upload' :
         $SEO->set('Example of Image Upload');
         ob_start("ob_html_compress");
+            require './public/actions/imageUpload.php';
+            require './public/templates/alertMessages.php';
             require './public/templates/header.php';
             require './public/example-of-image-upload.php';
             require './public/templates/footer.php';
@@ -28,6 +32,10 @@ switch ($http->get_uri()) {
     case '/example-of-pagination' :
         $SEO->set('Example of Pagination');
         ob_start("ob_html_compress");
+            $pagination = new Pagination(get_all_records('count'));
+            require './public/templates/pagination.php';
+            $pagination->set_query(get_all_records('all', "LIMIT {$pagination->get_offset()}, {$pagination->get_records_per_page()}"));
+
             require './public/templates/header.php';
             require './public/example-of-pagination.php';
             require './public/templates/footer.php';
@@ -39,6 +47,15 @@ switch ($http->get_uri()) {
         ob_start("ob_html_compress");
             require './public/templates/header.php';
             require './public/example-of-login.php';
+            require './public/templates/footer.php';
+        ob_end_flush();
+        break;
+    case '/reset-password' :
+        $http->no_user_logged_in();
+        $SEO->set('Reset Password');
+        ob_start("ob_html_compress");
+            require './public/templates/header.php';
+            require './public/example-of-reset-password.php';
             require './public/templates/footer.php';
         ob_end_flush();
         break;

@@ -1,4 +1,15 @@
 <?php
+function update_two_factor_verification($id_user, $two_factor_verification) {
+    $encryption = new Encryption(USER_KEY);
+    $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
+    
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', '', $two_factor_verification)) {
+        return true;
+    }
+
+    return false;
+}
+
 function update_password($id_user, $password) {
     if(update_user($id_user, '', '', '', '', '', '', '', '', '', $password, '', '')) {
         return true;
