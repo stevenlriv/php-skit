@@ -18,20 +18,4 @@ Home Page!
 <br />
 <?php
 
-//update_nonce(3);
-
-
-$nonce = get_user_by_id(3)['nonce'];
-$nonce = text_decryption($nonce, USER_KEY);
-$pieces = explode('|', $nonce);
-//print_r($pieces);
-
-if($user->login_with_email_code('lolo@gmail.com', '146372')) {
-    echo 'true';
-}
-else {
-    echo 'false';
-}
-
-
 ?>

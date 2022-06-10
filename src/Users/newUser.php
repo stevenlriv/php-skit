@@ -52,6 +52,20 @@ function new_user(  $status = 1,
                     $nonce = '',
                     $two_factor_verification = '') {
 
+    $encryption = new Encryption(USER_KEY);
+
+    if($phone_number!='') {
+        $phone_number = clean_phone_number($phone_number);
+    }
+
+    if($email!='') {
+        $email = strtolower($email); 
+    }
+
+    if($username!='') {
+        $username = strtolower($username); 
+    }
+
     if($username!='' && get_user_by_username($username)) {
         return false;
     }
@@ -76,15 +90,15 @@ function new_user(  $status = 1,
     }
 
     if($password!='') {
-        $password = generate_user_password($password);
+        $password = $encryption->generate_user_password($password);
     }
     if($two_factor_verification!='') {
-        $two_factor_verification = text_encryption($two_factor_verification, USER_KEY);
+        $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
     }
 
     if($nonce=='') {
         $nonce = generate_not_secure_random_numbers(6).'|'.time();
-        $nonce = text_encryption($nonce, USER_KEY);
+        $nonce = $encryption->text_encrypt($nonce);
     }
     
     $array = array(

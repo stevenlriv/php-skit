@@ -1,4 +1,9 @@
 <?php
+function clean_phone_number($phone_number) {
+	$phone_number = preg_replace('/[^0-9]/', '', $phone_number);
+
+	return $phone_number;
+}
 function xss_prevention($text) {
 	$text = trim($text);
 	$text = strip_tags($text);

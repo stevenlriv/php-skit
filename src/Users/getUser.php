@@ -14,6 +14,11 @@ function get_user_by_phone_number($value) {
 }
 
 function get_user_by_email($value) {
+    $value = strtolower($value);
+    if(!is_email($value)) {
+        return false;
+    }
+
     return get_user('email', $value);
 }
 

@@ -21,11 +21,11 @@ require './src/MySQL/select.php';
 require './src/MySQL/update.php';
 require './src/MySQL/delete.php';
 
-require './src/Functions/encryption.php';
 require './src/Functions/htmlCompress.php';
 require './src/Functions/randomString.php';
 require './src/Functions/textMessage.php';
 
+require './src/Classes/encryption.php';
 require './src/Classes/date.php';
 require './src/Classes/httpURI.php';
 require './src/Classes/pagination.php';

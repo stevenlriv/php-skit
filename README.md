@@ -73,26 +73,16 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- Functions to class?
-- [HB] Users Infrastructure
-        x- new user [email, phone or web3wallet]
-        x- reset password
-        x- login with password
-        x- login with email code
-        x- login with phone code
-        x- 2fa with google app
-        x- user page
-        x- logout
-- [NF?] Users Web3
-        - allow to login with those wallets linked to account
-        - allow to link wallets to the user account
-- [HB] Referal system for users
-
-- Update the MySQL.sql file
+- Users Infrastructure (classes/user.php)
 
 ## Future Integrations
 
+- Referal system for users
 - PHP REST API for json connections to backend like from react native
+- Users Web3
+        - allow to login with those wallets linked to account
+        - allow to link wallets to the user account
 - Validate if there is an NFT in your wallet
+- 8 failed login 24 hour reset
 - Stripe
 - Coinbase Commerce

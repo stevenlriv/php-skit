@@ -29,6 +29,9 @@ function update_user(   $id_user = '',
                         $password = '',
                         $nonce = '',
                         $two_factor_verification = '') {
+                            
+    $encryption = new Encryption(USER_KEY);
+
     if($status!='') {
         $array[] = array('column' => 'status', 'value' => $status);
     }
@@ -42,12 +45,14 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'display_name', 'value' => $display_name);
     }
     if($username!='') {
+        $username = strtolower($username); 
         if(get_user_by_username($username) && get_user_by_username($username)['id_user']!=$id_user) {
             return false;
         }
         $array[] = array('column' => 'username', 'value' => $username);
     }
     if($email!='') {
+        $email = strtolower($email); 
         if(!is_email($email)) {
             return false;
         }
@@ -69,22 +74,23 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'sol_address', 'value' => $sol_address);
     }
     if($phone_number!='') {
+        $phone_number = clean_phone_number($phone_number);
         if(get_user_by_phone_number($phone_number) && get_user_by_phone_number($phone_number)['id_user']!=$id_user) {
             return false;
         }
         $array[] = array('column' => 'phone_number', 'value' => $phone_number);
     }
     if($password!='') {
-        $password = generate_user_password($password);
+        $password = $encryption->generate_user_password($password);
         $array[] = array('column' => 'password', 'value' => $password);
     }
     if($nonce!='') {
         $nonce = $nonce.'|'.time();
-        $nonce = text_encryption($nonce, USER_KEY);
+        $nonce = $encryption->text_encrypt($nonce);
         $array[] = array('column' => 'nonce', 'value' => $nonce);
     }
     if($two_factor_verification!='') {
-        $two_factor_verification = text_encryption($two_factor_verification, USER_KEY);
+        $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
         $array[] = array('column' => 'two_factor_verification', 'value' => $two_factor_verification);
     }
     $array[] = array('column' => 'id_user', 'value' => $id_user);
