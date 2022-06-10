@@ -73,10 +73,10 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- Referal system for users
+- Referal system for users [table update]
 - PHP REST API for json connections to backend like from react native
 - Metrics, track clicks on links and buttons and visitors, etc
-- 8 failed login 24 hour reset
+- 12 failed login 24 hour reset
 - Users Web3
         - allow to login with those wallets linked to account
         - allow to link wallets to the user account
