@@ -1,4 +1,7 @@
 <?php
+use Elliptic\EC;
+use kornrunner\Keccak;
+
 use \ParagonIE\Halite\{
 	KeyFactory,
     Password,
@@ -9,7 +12,7 @@ use \ParagonIE\Halite\{
 class Encryption {
     private $halite_key;
 
-    public function __construct($private_key) {
+    public function __construct($private_key = GENERAL_KEY) {
         $this->halite_key = KeyFactory::importEncryptionKey(new HiddenString($private_key));
     }
 
@@ -45,6 +48,25 @@ class Encryption {
         $text = Symmetric::decrypt($cipher, $this->halite_key);
     
         return $text->getString();
+    }
+    
+    public function verify_ethereum_signature($message, $signature, $address) {
+        $msglen = strlen($message);
+        $hash   = Keccak::hash("\x19Ethereum Signed Message:\n{$msglen}{$message}", 256);
+        $sign   = ["r" => substr($signature, 2, 64), 
+                   "s" => substr($signature, 66, 64)];
+        $recid  = ord(hex2bin(substr($signature, 130, 2))) - 27; 
+        if ($recid != ($recid & 1)) 
+            return false;
+    
+        $ec = new EC('secp256k1');
+        $pubkey = $ec->recoverPubKey($hash, $sign, $recid);
+    
+        return $address == $this->public_ethereum_key_to_address($pubkey);
+    }
+
+    private function public_ethereum_key_to_address($pubkey) {
+        return "0x" . substr(Keccak::hash(substr(hex2bin($pubkey->encode("hex")), 1), 256), 24);
     }
 }
 ?>

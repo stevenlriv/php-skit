@@ -135,14 +135,30 @@ class User {
 		return false;
     }
 
-    public function login_with_eth_address() {
-        //update_nonce($id_user)
-        //get_user_by_eth_address($value)
+    public function login_with_eth_address($eth_address, $signature) {
+        $user = get_user_by_eth_address($eth_address);
+
+		if($user) {
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+            if($encryption->verify_ethereum_signature($code, $signature, $eth_address)) {
+                update_nonce($user['id_user']);
+                $user = get_user_by_id($user['id_user']); // get new nonce for cookie
+				if(new_cookie($this->cookie, 'by_eth_address|'.$user['eth_address'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    $this->array = $user;
+                    $this->set_user_data();
+                    $this->is_logged_in = true;
+
+					return true;
+                }
+            }
+		}
+
+		return false;
     }
 
-    public function login_with_sol_address() {
-        //update_nonce($id_user)
-        //get_user_by_sol_address($value)
+    public function login_with_sol_address($sol_address, $signature) {
     }
 
     public function send_email_with_code($email) {
@@ -310,6 +326,10 @@ class User {
             elseif($login_method=='by_phone_code') {
                 $user = get_user_by_phone_number($login_method_id);
                 $verification = $user['nonce'];
+            }
+            elseif($login_method=='by_eth_address') {
+                $user = get_user_by_eth_address($login_method_id);
+                $verification = $user['nonce'];     
             }
 
             if($login_hash==$verification) {

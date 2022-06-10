@@ -15,6 +15,7 @@
         "twilio/sdk": "^6.37",
         "league/flysystem-aws-s3-v3": "^3.0",
         "spomky-labs/otphp": "^10.0",
-        "bacon/bacon-qr-code": "^2.0"
+        "bacon/bacon-qr-code": "^2.0",
+        "simplito/elliptic-php": "^1.0"
     }
 }
