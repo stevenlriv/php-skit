@@ -83,7 +83,8 @@ function new_user(  $status = 1,
     }
 
     if($nonce=='') {
-        $nonce = text_encryption(generate_not_secure_random_string(6), USER_KEY);
+        $nonce = generate_not_secure_random_numbers(6).'|'.time();
+        $nonce = text_encryption($nonce, USER_KEY);
     }
     
     $array = array(

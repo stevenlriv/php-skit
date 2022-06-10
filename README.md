@@ -15,15 +15,15 @@ A simple php toolset to launch almost any project in less than 24 hours.
 
 Install php-skit on an app deploment enviroment like Digital Ocean. Follow the steps below:
 
-1. Set debug to false on config/debug.php
+1. Set debug to false on "config/debug.php"
 
 2. Generate new private keys. You can learn below how to do it.
 
 3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in config/_debugEnviromentVariables.php. On production this file will not work.
+4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in "config/_debugEnviromentVariables.php". On production this file will not work.
 
-5. Upload MySQL.sql to your database
+5. Upload MySQL.sql to your database & remove "config/_debugEnviromentVariables.php"
 
 ### For local installation
 
@@ -31,11 +31,11 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 1. Install all required libraries running "composer install" on the root server
 
-2. Edit all the enviroment variables on "config/_debugEnviromentVariables.php
+2. Edit all the enviroment variables on "config/_debugEnviromentVariables.php"
 
 3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-4. Upload MySQL.sql to your database
+4. Upload MySQL.sql to your database & remove "config/_debugEnviromentVariables.php"
 
 ## How to generate new keys
 
@@ -73,7 +73,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- Go to new/update and verify there are no repeat identifiers
+- Functions to class?
 - [HB] Users Infrastructure
         x- new user [email, phone or web3wallet]
         x- reset password
@@ -84,8 +84,8 @@ Then take the key generated and use it for one of them. You will need to do this
         x- user page
         x- logout
 - [NF?] Users Web3
-        - allow to link wallets to the user account
         - allow to login with those wallets linked to account
+        - allow to link wallets to the user account
 - [HB] Referal system for users
 
 - Update the MySQL.sql file

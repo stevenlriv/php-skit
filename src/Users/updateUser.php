@@ -9,7 +9,7 @@ function update_password($id_user, $password) {
 
 // used for email/phone code verification and web3 wallets login
 function update_nonce($id_user) {
-    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', generate_not_secure_random_string(6), '')) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', generate_not_secure_random_numbers(6), '')) {
         return true;
     }
 
@@ -79,6 +79,7 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'password', 'value' => $password);
     }
     if($nonce!='') {
+        $nonce = $nonce.'|'.time();
         $nonce = text_encryption($nonce, USER_KEY);
         $array[] = array('column' => 'nonce', 'value' => $nonce);
     }
