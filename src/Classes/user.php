@@ -33,7 +33,7 @@ class User {
 
         $this->is_user_cookie();
 
-        if(isset($_GET['email']) && isset($_GET['token'])) {
+        if(!$this->is_logged_in && isset($_GET['email']) && isset($_GET['token'])) {
             $encryption = new Encryption(GENERAL_KEY);
             $nonce = $encryption->text_decrypt($_GET['token']);
             $pieces = $this->get_nonce($nonce);
