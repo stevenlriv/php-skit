@@ -9,6 +9,10 @@ class DATE {
     }
 
     public function get_from_unix($unix, $date_format = '') {
+	    if(!ctype_digit($unix)) {
+		    $unix = strtotime($unix);
+	    }
+		
         if($date_format!='') {
             $this->format = $date_format;
         }

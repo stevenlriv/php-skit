@@ -7,7 +7,9 @@ use \ParagonIE\Halite\{
 };
 
 class User {
+    private $encryption_key = USER_KEY;
     private $is_logged_in = false;
+    private $cookie = 'UEMP';
     private $array = array();
 
     public $id_user;
@@ -56,14 +58,14 @@ class User {
     }
 
     public function login_with_password($email, $password) {
-        $encryption = new Encryption(USER_KEY);
+        $encryption = new Encryption($this->encryption_key);
         $user = get_user_by_email($email);
 
 		if($user) {
             if($encryption->validate_user_password($password, $user['password'])) {
                 $encryption->rehash_password($user['id_user'], $password, $user['password']);
 
-				if(new_cookie('UEMP', 'password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
 					return true;
                 }
 			} 
@@ -78,8 +80,8 @@ class User {
 		if($user) {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
-                $user = get_user_by_id($user['id_user']); // get new nonce
-				if(new_cookie('UEMP', 'email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                $user = get_user_by_id($user['id_user']); // get new nonce for cookie
+				if(new_cookie($this->cookie, 'email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
 					return true;
                 }
 			} 
@@ -94,8 +96,8 @@ class User {
 		if($user) {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
-                $user = get_user_by_id($user['id_user']); // get new nonce
-				if(new_cookie('UEMP', 'phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                $user = get_user_by_id($user['id_user']); // get new nonce for cookie
+				if(new_cookie($this->cookie, 'phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
 					return true;
                 }
 			} 
@@ -124,7 +126,7 @@ class User {
     }
 
     public function change_password($email, $new_password, $old_password) {
-        $encryption = new Encryption(USER_KEY);
+        $encryption = new Encryption($this->encryption_key);
         $user = get_user_by_email($email);
 
 		if($user) {
@@ -143,7 +145,7 @@ class User {
 
     public function logout() {
 		if($this->is_logged_in) {
-			if(delete_cookie('UEMP')) {
+			if(delete_cookie($this->cookie)) {
 				return true;
 			}
 		}
@@ -152,7 +154,7 @@ class User {
     }
 
     private function validate_code($nonce, $input) {
-        $encryption = new Encryption(USER_KEY);
+        $encryption = new Encryption($this->encryption_key);
         $nonce = $encryption->text_decrypt($nonce);
         $pieces = explode('|', $nonce);
 
@@ -167,8 +169,27 @@ class User {
         return false;
     }
     
-    private function check_if_user_is_logged_in() {
-        
+    private function is_user_cookie() {
+		if( get_cookie ( 'USMP' ) && !empty(get_cookie( 'USMP' )) ) {
+			$cookie = get_cookie ( 'USMP' );
+			$pieces = explode('|', $cookie);
+
+			$email = $pieces[0];
+			$password_hash = $pieces[1];
+
+			$q = $db->prepare ( "SELECT * FROM xvls_users WHERE email = ? LIMIT 1" );
+			$q->bind_param ( 's', $email );
+			$q->execute();
+			$result = $q->get_result();
+
+			while ( $o = $result->fetch_array(MYSQLI_ASSOC) ) {
+				if ( $email == $o['email'] && $password_hash == $o['password'] ) {
+					return $o;
+				}
+			}
+
+		}
+		return false;
     }
 }
 ?>

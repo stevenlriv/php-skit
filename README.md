@@ -73,16 +73,15 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- Users Infrastructure (classes/user.php)
+- Users Infrastructure (classes/users.php)
 
 ## Future Integrations
 
 - Referal system for users
 - PHP REST API for json connections to backend like from react native
+- 8 failed login 24 hour reset
 - Users Web3
         - allow to login with those wallets linked to account
         - allow to link wallets to the user account
-- Validate if there is an NFT in your wallet
-- 8 failed login 24 hour reset
 - Stripe
 - Coinbase Commerce
