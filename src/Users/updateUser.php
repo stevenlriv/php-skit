@@ -1,8 +1,13 @@
 <?php
+function remove_two_factor($id_user) {
+    if(update_two_factor_verification($id_user, 'delete')) {
+        return true;
+    }
+
+    return false;
+}
+
 function update_two_factor_verification($id_user, $two_factor_verification) {
-    $encryption = new Encryption(USER_KEY);
-    $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
-    
     if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', '', $two_factor_verification)) {
         return true;
     }
@@ -101,7 +106,12 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'nonce', 'value' => $nonce);
     }
     if($two_factor_verification!='') {
-        $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
+        if($two_factor_verification=='delete') {
+            $two_factor_verification = '';
+        }
+        else {
+            $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
+        }
         $array[] = array('column' => 'two_factor_verification', 'value' => $two_factor_verification);
     }
     $array[] = array('column' => 'id_user', 'value' => $id_user);
