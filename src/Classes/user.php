@@ -167,6 +167,7 @@ class User {
     }
 
     public function send_text_message_with_code($phone_number) {
+        // Your SITE_NAME code is [xxxxx]
     }
 
     public function two_factor_verification() {
