@@ -2,6 +2,13 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
+function send_email_default_settings($to_email, $to_name, $subject, $body) {
+    if(send_email(SITE_NAME, EMAIL_REPLY_TO, $to_email, $to_name, $subject, $body)) {
+        return true;
+    }
+    return false;
+}
+
 function send_email($from_name, $from_email, $to_email, $to_name, $subject, $body, $bootstrap_email_template = 1, $attachment = '') {
     if(empty($from_name) or !is_email($from_email) or !is_email($to_email) or empty($to_name) or empty($subject) or empty($body)) {
         return false;

@@ -1,6 +1,6 @@
 <?php
 // @generator https://bootstrapemail.com/editor
-// $body string|array(content, card, button_link, button_text, unsubscribe_link)
+// $body string|array(content, card, button_link, button_text, content_below_button, unsubscribe_link)
 function standard_template($subject, $body) {
     $http = new HttpURI();
 
@@ -23,11 +23,15 @@ function standard_template($subject, $body) {
     $template = $template.'</div>';
 
     if(!empty($body['card'])) {
-        $template = $template.'<br /><table class="card border-0 bg-light p-5" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-radius: 6px; border-collapse: separate !important; width: 100%; overflow: hidden; border: 0px solid #e2e8f0;" bgcolor="#f7fafc"> <tbody> <tr> <td style="line-height: 24px; font-size: 16px; width: 100%; margin: 0; padding: 20px;" align="left" bgcolor="#f7fafc"> '.$body['card'].' </td></tr></tbody> </table>';
+        $template = $template.'<br /><table class="card border-0 bg-light p-5 text-center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-radius: 6px; border-collapse: separate !important; width: 100%; overflow: hidden; text-align: center !important; border: 0px solid #e2e8f0;" bgcolor="#f7fafc"> <tbody> <tr> <td style="line-height: 24px; font-size: 16px; width: 100%; margin: 0; padding: 20px;" align="center" bgcolor="#f7fafc">'.$body['card'].' </td></tr></tbody> </table><br />';
     }
                                     
     if(!empty($body['button_link']) && !empty($body['button_text'])) {
-        $template = $template.'<table class="s-6 w-full" role="presentation" border="0" cellpadding="0" cellspacing="0" style="width: 100%;" width="100%"> <tbody> <tr> <td style="line-height: 24px; font-size: 24px; width: 100%; height: 24px; margin: 0;" align="left" width="100%" height="24"> &#160; </td></tr></tbody> </table> <table class="btn btn-primary fw-700 p-4" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-radius: 6px; border-collapse: separate !important; font-weight: 700 !important;"> <tbody> <tr> <td style="line-height: 24px; font-size: 16px; border-radius: 6px; font-weight: 700 !important; margin: 0;" align="center" bgcolor="#0d6efd"> <a href="'.$body['button_link'].'" style="color: #ffffff; font-size: 16px; font-family: Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 6px; line-height: 20px; display: block; font-weight: 700 !important; white-space: nowrap; background-color: #0d6efd; padding: 16px; border: 1px solid #0d6efd;">'.$body['button_text'].'</a> </td></tr></tbody> </table>';
+        $template = $template.'<table class="s-6 w-full" role="presentation" border="0" cellpadding="0" cellspacing="0" style="width: 100%;" width="100%"> <tbody> <tr> <td style="line-height: 24px; font-size: 24px; width: 100%; height: 24px; margin: 0;" align="left" width="100%" height="24"> &#160; </td></tr></tbody> </table> <table class="btn btn-primary ax-center fw-700 p-4" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-radius: 6px; border-collapse: separate !important; font-weight: 700 !important;"> <tbody> <tr> <td style="line-height: 24px; font-size: 16px; border-radius: 6px; font-weight: 700 !important; margin: 0;" align="center" bgcolor="#0d6efd"> <a href="'.$body['button_link'].'" style="color: #ffffff; font-size: 16px; font-family: Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 6px; line-height: 20px; display: block; font-weight: 700 !important; white-space: nowrap; background-color: #0d6efd; padding: 16px; border: 1px solid #0d6efd;">'.$body['button_text'].'</a> </td></tr></tbody> </table>';
+    }
+
+    if(!empty($body['content_below_button'])) {
+        $template = $template.'<br><br>'.$body['content_below_button'];
     }
 
     $template = $template.'</td></tr></tbody> </table> <table class="s-6 w-full" role="presentation" border="0" cellpadding="0" cellspacing="0" style="width: 100%;" width="100%"> <tbody> <tr> <td style="line-height: 24px; font-size: 24px; width: 100%; height: 24px; margin: 0;" align="left" width="100%" height="24"> &#160; </td></tr></tbody> </table> <div class="text-muted text-center space-y-4" style="color: #718096;" align="center"> <table class="stack-row gap-6 ax-center" role="presentation" align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;"> <tbody> <tr>';                                

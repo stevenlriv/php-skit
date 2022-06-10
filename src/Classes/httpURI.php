@@ -20,7 +20,13 @@ class HttpURI {
         header('Location: /');
     }
 
-    public function user_logged_in() {
+    public function no_user_logged_in() {
+        if($this->user->is_logged_in()) {
+            header('Location: /');
+        }
+    }
+
+    public function need_user_logged_in() {
         if(!$this->user->is_logged_in()) {
             header('Location: /');
         }

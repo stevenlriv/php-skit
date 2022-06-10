@@ -2,7 +2,6 @@
 use Twilio\Rest\Client;
 
 function send_text_message($to_number, $from_number, $body) {
-    // Your Account SID and Auth Token from twilio.com/console
     $sid = TWILIO_SID;
     $token = TWILIO_TOKEN;
 

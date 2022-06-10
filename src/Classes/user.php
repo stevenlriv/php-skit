@@ -10,7 +10,8 @@ class User {
     private $encryption_key = USER_KEY;
     private $is_logged_in = false;
     private $cookie = 'UEMP';
-    private $array = array();
+    private $array;
+    private $encryption;
 
     public $id_user;
     public $status;
@@ -28,14 +29,17 @@ class User {
     public $date;
 
     public function __construct($id_user = '') {
-        
-        //with id_user you can pull any user data, it does not has to be logged in
-        ///////
+        $this->encryption = new Encryption($this->encryption_key);
 
-        $this->check_if_user_is_logged_in();
+        $this->is_user_cookie();
 
-        if($this->is_logged_in) {
-            // set all the public variables if the user is logged in
+        if(isset($_GET['email']) && isset($_GET['token'])) {
+            $encryption = new Encryption(GENERAL_KEY);
+            $nonce = $encryption->text_decrypt($_GET['token']);
+            $pieces = $this->get_nonce($nonce);
+            $code = $pieces[0];
+
+            $this->login_with_email_code($_GET['email'], $code);
         }
     }
 
@@ -48,9 +52,23 @@ class User {
     }
 
     public function get_some_name() {
-        // get some type of name for the user based on the data available in the database
-        // best one will be first name and or display name
-        return 'Cat';
+        if($this->display_name) {
+            $name = $this->display_name;
+        }
+        elseif($this->first_name) {
+            $name = $this->first_name;
+        }
+        elseif($this->last_name) {
+            $name = $this->last_name;
+        }
+        elseif($this->username) {
+            $name = $this->username;
+        }
+        else {
+            $name = 'puzzle';
+        }
+
+        return $name;
     }
 
     public function get_metadata_by_key($meta_key) {
@@ -58,14 +76,17 @@ class User {
     }
 
     public function login_with_password($email, $password) {
-        $encryption = new Encryption($this->encryption_key);
         $user = get_user_by_email($email);
 
 		if($user) {
-            if($encryption->validate_user_password($password, $user['password'])) {
-                $encryption->rehash_password($user['id_user'], $password, $user['password']);
+            if($this->encryption->validate_user_password($password, $user['password'])) {
+                $this->encryption->rehash_password($user['id_user'], $password, $user['password']);
 
-				if(new_cookie($this->cookie, 'password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
+                    $this->array = $user;
+                    $this->set_user_data();
+                    $this->is_logged_in = true;
+
 					return true;
                 }
 			} 
@@ -81,7 +102,11 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    $this->array = $user;
+                    $this->set_user_data();
+                    $this->is_logged_in = true;
+
 					return true;
                 }
 			} 
@@ -97,7 +122,11 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    $this->array = $user;
+                    $this->set_user_data();
+                    $this->is_logged_in = true;
+
 					return true;
                 }
 			} 
@@ -117,6 +146,24 @@ class User {
     }
 
     public function send_email_with_code($email) {
+        $user = get_user_by_email($email);
+
+		if($user) {
+            update_nonce($user['id_user']);
+
+            $user = get_user_by_id($user['id_user']); // get new nonce to send
+            $this->array = $user;
+            $this->set_user_data();
+
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+			if(send_email_login_code($user['email'], $this->get_some_name(), $user['nonce'], $code)) {
+				return true;
+            }
+		}
+
+		return false;
     }
 
     public function send_text_message_with_code($phone_number) {
@@ -125,12 +172,14 @@ class User {
     public function two_factor_verification() {
     }
 
+    public function reset_password() {
+    }
+
     public function change_password($email, $new_password, $old_password) {
-        $encryption = new Encryption($this->encryption_key);
         $user = get_user_by_email($email);
 
 		if($user) {
-            if($encryption->validate_user_password($old_password, $user['password'])) {
+            if($this->encryption->validate_user_password($old_password, $user['password'])) {
                 if(update_password($user['id_user'], $new_password)) {
                     return true;
                 }
@@ -138,9 +187,6 @@ class User {
 		}
 
 		return false;
-    }
-
-    public function reset_password() {
     }
 
     public function logout() {
@@ -154,10 +200,7 @@ class User {
     }
 
     private function validate_code($nonce, $input) {
-        $encryption = new Encryption($this->encryption_key);
-        $nonce = $encryption->text_decrypt($nonce);
-        $pieces = explode('|', $nonce);
-
+        $pieces = $this->get_nonce($nonce);
         $code = $pieces[0];
         $time = $pieces[1]; 
 
@@ -170,26 +213,59 @@ class User {
     }
     
     private function is_user_cookie() {
-		if( get_cookie ( 'USMP' ) && !empty(get_cookie( 'USMP' )) ) {
-			$cookie = get_cookie ( 'USMP' );
+        $cookie = get_cookie($this->cookie);
+		if($cookie) {
 			$pieces = explode('|', $cookie);
 
-			$email = $pieces[0];
-			$password_hash = $pieces[1];
+			$login_method = $pieces[0];
+			$login_method_id = $pieces[1];
+            $login_hash = $pieces[2];
 
-			$q = $db->prepare ( "SELECT * FROM xvls_users WHERE email = ? LIMIT 1" );
-			$q->bind_param ( 's', $email );
-			$q->execute();
-			$result = $q->get_result();
+            if($login_method=='by_password') {
+                $user = get_user_by_email($login_method_id);
+                $verification = $user['password'];
+            }
+            elseif($login_method=='by_email_code') {
+                $user = get_user_by_email($login_method_id);
+                $verification = $user['nonce'];
+            }
+            elseif($login_method=='by_phone_code') {
+                $user = get_user_by_phone_number($login_method_id);
+                $verification = $user['nonce'];
+            }
 
-			while ( $o = $result->fetch_array(MYSQLI_ASSOC) ) {
-				if ( $email == $o['email'] && $password_hash == $o['password'] ) {
-					return $o;
-				}
-			}
+            if($login_hash==$verification) {
+                $this->array = $user;
+                $this->set_user_data();
+                $this->is_logged_in = true;
 
+                return true;
+            }
 		}
 		return false;
+    }
+
+    private function set_user_data() {
+        $this->id_user = $this->array['id_user'];
+        $this->status = $this->array['status'];
+        $this->first_name = $this->array['first_name'];
+        $this->last_name = $this->array['last_name'];
+        $this->display_name = $this->array['display_name'];
+        $this->username = $this->array['username'];
+        $this->email = $this->array['email'];
+        $this->eth_address = $this->array['eth_address'];
+        $this->sol_address = $this->array['sol_address'];
+        $this->phone_number = $this->array['phone_number'];
+        $this->password = $this->array['password'];
+        $this->nonce = $this->array['nonce'];
+        $this->two_factor_verification = $this->array['two_factor_verification'];
+        $this->date = $this->array['date'];
+    }
+
+    private function get_nonce($hash) {
+        $nonce = $this->encryption->text_decrypt($hash);
+
+        return explode('|', $nonce);
     }
 }
 ?>

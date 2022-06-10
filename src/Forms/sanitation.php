@@ -4,6 +4,7 @@ function clean_phone_number($phone_number) {
 
 	return $phone_number;
 }
+
 function xss_prevention($text) {
 	$text = trim($text);
 	$text = strip_tags($text);

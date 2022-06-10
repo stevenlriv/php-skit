@@ -33,8 +33,17 @@ switch ($http->get_uri()) {
             require './public/templates/footer.php';
         ob_end_flush();
         break;
+    case '/login' :
+        $http->no_user_logged_in();
+        $SEO->set('Login');
+        ob_start("ob_html_compress");
+            require './public/templates/header.php';
+            require './public/example-of-login.php';
+            require './public/templates/footer.php';
+        ob_end_flush();
+        break;
     case '/example-of-user-page' :
-        $http->user_logged_in();
+        $http->need_user_logged_in();
         $SEO->set('Example of User Page');
         ob_start("ob_html_compress");
             require './public/templates/header.php';

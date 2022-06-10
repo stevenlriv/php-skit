@@ -15,6 +15,7 @@ require './config/Web3.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
+require './src/Classes/encryption.php';
 
 require './src/MySQL/insert.php';
 require './src/MySQL/select.php';
@@ -23,9 +24,11 @@ require './src/MySQL/delete.php';
 
 require './src/Functions/htmlCompress.php';
 require './src/Functions/randomString.php';
-require './src/Functions/textMessage.php';
 
-require './src/Classes/encryption.php';
+require './src/Cookies/newCookie.php';
+require './src/Cookies/getCookie.php';
+require './src/Cookies/deleteCookie.php';
+
 require './src/Classes/date.php';
 require './src/Classes/httpURI.php';
 require './src/Classes/pagination.php';
@@ -35,12 +38,6 @@ require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 require './src/Classes/QR.php';
 require './src/Classes/OTP.php';
-require './src/Classes/user.php';
-require './src/Core/classes.php';
-
-require './src/Cookies/newCookie.php';
-require './src/Cookies/getCookie.php';
-require './src/Cookies/deleteCookie.php';
 
 require './src/Records/newRecord.php';
 require './src/Records/getRecord.php';
@@ -57,6 +54,9 @@ require './src/Forms/validation.php';
 
 require './src/Emails/standardTemplate.php';
 require './src/Emails/sendEmail.php';
+require './src/Emails/sendLoginCode.php';
+
+require './src/TextMessages/sendText.php';
 
 require './src/ExternalAPICalls/getJson.php';
 require './src/ExternalAPICalls/getHtmlElement.php';
@@ -74,4 +74,7 @@ require './src/UsersMetadata/newUsersMetadata.php';
 require './src/UsersMetadata/getUsersMetadata.php';
 require './src/UsersMetadata/updateUsersMetadata.php';
 require './src/UsersMetadata/deleteUsersMetadata.php';
+
+require './src/Classes/user.php';
+require './src/Core/classes.php';
 ?>

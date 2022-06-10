@@ -11,10 +11,10 @@ putenv('SMTP=true');
 putenv('SMTP_TLS=true');
 putenv('SMTP_HOST=smtp.sendgrid.net');
 putenv('SMTP_USERNAME=apikey');
-putenv('SMTP_PASSWORD=');
+putenv('SMTP_PASSWORD=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');
 putenv('SMTP_PORT=587');
 
-// twilio
+ // Your Account SID and Auth Token from twilio.com/console
 putenv('TWILIO_SID=');
 putenv('TWILIO_TOKEN=');
 

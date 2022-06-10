@@ -73,7 +73,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Missing
 
-- Users Infrastructure (classes/users.php)
+- Users Infrastructure (classes/user.php)
 
 ## Future Integrations
 
