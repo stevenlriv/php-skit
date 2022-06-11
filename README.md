@@ -2,28 +2,27 @@
 
 A simple php toolset to launch almost any project in less than 24 hours.
 
-## Folder/Files Structure
-
-- config/ script configuration before deployment. Most are enviroment variables
-- public/ php/html files that are included from index.php and templates for some classes
-- src/ all php files required for the toolset to work
-- index.php web server router
-
 ## Installation
 
 ### For production installation
 
-Install php-skit on an app deploment enviroment like Digital Ocean. Follow the steps below:
+Install php-skit on an app deployment enviroment like Digital Ocean. Follow the steps below:
 
 1. Set debug to false on "config/debug.php"
 
 2. Generate new private keys. You can learn below how to do it.
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
+3. Update the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-4. Make sure to add every single enviroment variable to that app enviroment. All required enviroment variables can be found in "config/_debugEnviromentVariables.php". On production this file will not work.
+4. Upload MySQL.sql to your database 
 
-5. Upload MySQL.sql to your database & remove "config/_debugEnviromentVariables.php"
+5. Remove "config/_debugEnviromentVariables.php"
+
+6. Deploy to Digital Ocean
+
+7. Make sure to add every single enviroment variable to Digital Ocean app. Examples of all required enviroment variables can be found in "config/_debugEnviromentVariables.php".
+
+8. Done!
 
 ### For local installation
 
@@ -31,11 +30,13 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 1. Install all required libraries running "composer install" on the root server
 
-2. Edit all the enviroment variables on "config/_debugEnviromentVariables.php"
+2. Update the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-3. Update the rest of the configuration variables that are not enviroment variables. They can be found on "config/general.php"
+3. Upload MySQL.sql to your database
 
-4. Upload MySQL.sql to your database & remove "config/_debugEnviromentVariables.php"
+4. Edit all the enviroment variables on "config/_debugEnviromentVariables.php"
+
+5. Done!
 
 ## How to generate new keys
 
@@ -50,7 +51,14 @@ Key generation must be done in a local server and added directly to your product
     echo $key_hex;
 ```
 
-Then take the key generated and use it for one of them. You will need to do this 3 times.
+Then take the key generated and use it for one of them. You will need to do this 3 times, 1 for every single key needed.
+
+## Folder/Files Structure
+
+- config/: script configuration before deployment, most are enviroment variables
+- public/: php/html files that are included from index.php and templates for some classes
+- src/: all php files required for the toolset to work
+- index.php: web server router
 
 ## MySQL
 
