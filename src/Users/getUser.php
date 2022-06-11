@@ -1,4 +1,11 @@
 <?php
+function get_user_by_referral($value) {
+    $encryption = new Encryption(GENERAL_KEY);
+    $value = $encryption->text_decrypt($value);
+
+    return get_user('id_user', $value);
+}
+
 function get_user_by_sol_address($value) {
     return get_user('sol_address', $value);
 }

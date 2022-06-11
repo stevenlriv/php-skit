@@ -54,6 +54,12 @@ function new_user(  $status = 1,
 
     $encryption = new Encryption(USER_KEY);
 
+    $referred_by = 0;
+    $cookie_referral = get_cookie('USRF');
+    if($cookie_referral) {
+        $referred_by = $cookie_referral;
+    }
+
     if($phone_number!='') {
         $phone_number = clean_phone_number($phone_number);
     }
@@ -100,7 +106,7 @@ function new_user(  $status = 1,
         $nonce = generate_not_secure_random_numbers(6).'|'.time();
         $nonce = $encryption->text_encrypt($nonce);
     }
-    
+
     $array = array(
         0 => array('column' => 'status', 'value' => $status),
         1 => array('column' => 'first_name', 'value' => $first_name),
@@ -114,6 +120,7 @@ function new_user(  $status = 1,
         9 => array('column' => 'password', 'value' => $password),
         10 => array('column' => 'nonce', 'value' => $nonce),
         11 => array('column' => 'two_factor_verification', 'value' => $two_factor_verification),
+        12 => array('column' => 'referred_by', 'value' => $referred_by)
     );
 
     if(insert_mysql_data('users', $array)) {

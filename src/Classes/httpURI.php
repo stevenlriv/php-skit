@@ -5,9 +5,11 @@ class HttpURI {
     private $user;
 
     public function __construct() {
+        global $user;
+
         $this->full_uri = $_SERVER['REQUEST_URI'];
         $this->uri = $this->full_uri;
-        $this->user = new User();
+        $this->user = $user;
 
         if (substr_count($this->uri, "?") > 0) {
             $pieces = explode("?", $this->uri);

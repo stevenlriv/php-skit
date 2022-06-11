@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 10, 2022 at 04:59 AM
+-- Generation Time: Jun 11, 2022 at 02:50 AM
 -- Server version: 5.7.34
 -- PHP Version: 8.0.8
 
@@ -327,7 +327,14 @@ INSERT INTO `records` (`id_record`, `short_description`, `value`, `date`) VALUES
 (273, 'Text record for pagination', 'This is a test', '2022-06-10 04:58:46'),
 (274, 'Text record for pagination', 'This is a test', '2022-06-10 04:58:46'),
 (275, 'Text record for pagination', 'This is a test', '2022-06-10 04:58:46'),
-(276, 'Text record for pagination', 'This is a test', '2022-06-10 04:58:46');
+(276, 'Text record for pagination', 'This is a test', '2022-06-10 04:58:46'),
+(277, 'New 404 Page Visit', '/favicon.ico', '2022-06-10 09:52:12'),
+(278, 'Email Was Successfully Sent', '[\"from name=localhost\",\"from email=info@neftify.com\",\"to email=steven@neftify.com\",\"to name=puzzle\",\"subject=localhost Login Verification (code: \\\"746813\\\")\",\"body=Hello puzzle, <br \\/>We have received a login attempt with the following code:\"]', '2022-06-10 13:05:15'),
+(279, 'Email Was Successfully Sent', '[\"from name=localhost\",\"from email=info@neftify.com\",\"to email=steven@neftify.com\",\"to name=puzzle\",\"subject=localhost Login Verification (code: \\\"769512\\\")\",\"body=Hello puzzle, <br \\/><br \\/>We have received a login attempt with the following code:\"]', '2022-06-10 13:06:35'),
+(280, 'Email Was Successfully Sent', '[\"from name=localhost\",\"from email=info@neftify.com\",\"to email=steven@neftify.com\",\"to name=puzzle\",\"subject=localhost Login Verification (code: \\\"182394\\\")\",\"body=Hello puzzle, <br \\/><br \\/>We have received a login attempt with the following code:\"]', '2022-06-10 13:09:53'),
+(281, 'Email Was Successfully Sent', '[\"from name=localhost\",\"from email=info@neftify.com\",\"to email=steven@neftify.com\",\"to name=puzzle\",\"subject=localhost Login Verification (code: \\\"204951\\\")\",\"body=Hello puzzle, <br \\/><br \\/>We have received a login attempt with the following code:\"]', '2022-06-10 13:10:32'),
+(282, 'New 404 Page Visit', '/login?email=steven@neftify.com&token=MUIEAA8SyBex6s5BGPApmGPqR6H1FHAnIkENkbUbhy5M5VF2PqtLBdT7GVL9GeKGPuin8W8CGDtyiiDIziniFAXzKd8qWbBSyI0zXuxugdJ87hcXiF6lkxLFUhVBkvDih7RHGDGLiWspRKdf2KovbtLXWkkE63ng236GmWcLxCcVobExjnCPxst4kQR3CgG1YkEuVci_IteCnqOwTq4M5bYSv59mLI7gDnBgdJnNNAMRyPQ1O96Mp6TMUZndE6bf7cktCrQ8mZRqcJd8fK8pUBd2rdXFSYZkc8pOR2YGIwVXVeY8n8m62sGx-lBJh_0RCF6fq-G_KHCYgyNyMbPXnLETaGvz6V7MkhT-TdIFEzLcXfTSa2Hp_oIQISrxBoYagMKIMTy7QjTNvhNP3gcHsORaoiKyGWfT', '2022-06-10 13:11:45'),
+(283, 'Email Was Successfully Sent', '[\"from name=localhost\",\"from email=info@neftify.com\",\"to email=steven@neftify.com\",\"to name=puzzle\",\"subject=localhost Login Verification (code: \\\"246079\\\")\",\"body=Hello puzzle, <br \\/><br \\/>We have received a login attempt with the following code:\"]', '2022-06-10 13:14:54');
 
 -- --------------------------------------------------------
 
@@ -349,6 +356,7 @@ CREATE TABLE `users` (
   `password` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `nonce` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `two_factor_verification` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `referred_by` bigint(20) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -408,7 +416,7 @@ ALTER TABLE `configs`
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `id_record` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
+  MODIFY `id_record` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
 
 --
 -- AUTO_INCREMENT for table `users`

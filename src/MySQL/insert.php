@@ -111,8 +111,10 @@ function insert_mysql_data($table_name, $query = '') {
     if($q->execute()) {
         return true;
     }
+	echo $q->error;
 	$q->close();
 
+	
 	return false;
 }
 ?>

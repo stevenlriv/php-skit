@@ -57,6 +57,7 @@ Then take the key generated and use it for one of them. You will need to do this
 - users
         - status:
                 - 1: active users
+        - refered_by: id user that refered this person
 - users_meta: metadata for the users
         - cookies_track: used to track messages hidden showed to users
         - time_zone: users time zone
@@ -73,9 +74,8 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- Referal system for users [table update]
 - PHP REST API for json connections to backend like from react native
-- Metrics, track clicks on links and buttons and visitors, etc
+- Track every action as a new record and try to get their location
 - 12 failed login 24 hour reset
 - Login with Solana wallet
 - Stripe

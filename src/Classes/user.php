@@ -10,6 +10,7 @@ class User {
     private $encryption_key = USER_KEY;
     private $is_logged_in = false;
     private $cookie = 'UEMP';
+    private $cookie_referral = 'USRF';
     private $array;
     private $encryption;
 
@@ -40,6 +41,16 @@ class User {
             $code = $pieces[0];
 
             $this->login_with_email_code($_GET['email'], $code);
+        }
+
+        if(!$this->is_logged_in && isset($_GET['referrer'])) {
+            $user = get_user_by_referral($_GET['referrer']);
+
+            if($user) {
+                if(!get_cookie($this->cookie_referral)) {
+                    new_cookie($this->cookie_referral, $user['id_user'], time()+60*60*24*30);
+                }
+            }
         }
     }
 
