@@ -73,7 +73,7 @@ switch ($http->get_uri()) {
         break;
     default :
         http_response_code(404);
-        new_record('New 404 Page Visit', $http->get_full_uri());
+        new_record('404 Page Visit', $http->get_full_uri());
 
         $SEO->set('Oops! Page not found');
         ob_start("ob_html_compress");

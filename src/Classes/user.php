@@ -48,6 +48,7 @@ class User {
 
             if($user) {
                 if(!get_cookie($this->cookie_referral)) {
+                    new_record('Visitor referred by user', $user['id_user']);
                     new_cookie($this->cookie_referral, $user['id_user'], time()+60*60*24*30);
                 }
             }
@@ -94,6 +95,8 @@ class User {
                 $this->encryption->rehash_password($user['id_user'], $password, $user['password']);
 
 				if(new_cookie($this->cookie, 'by_password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
+                    new_record('User login with password', $user['id_user']);
+
                     $this->array = $user;
                     $this->set_user_data();
                     $this->is_logged_in = true;
@@ -114,6 +117,8 @@ class User {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
 				if(new_cookie($this->cookie, 'by_email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    new_record('User login with email and code', $user['id_user']);
+
                     $this->array = $user;
                     $this->set_user_data();
                     $this->is_logged_in = true;
@@ -134,6 +139,8 @@ class User {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
 				if(new_cookie($this->cookie, 'by_phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    new_record('User login with phone and code', $user['id_user']);
+
                     $this->array = $user;
                     $this->set_user_data();
                     $this->is_logged_in = true;
@@ -157,6 +164,8 @@ class User {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
 				if(new_cookie($this->cookie, 'by_eth_address|'.$user['eth_address'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    new_record('User login with eth_address', $user['id_user']);
+
                     $this->array = $user;
                     $this->set_user_data();
                     $this->is_logged_in = true;
@@ -239,6 +248,7 @@ class User {
             $otp = new OTP();
             if($otp->verify($secret, $input)) {
                 if(update_two_factor_verification($user['id_user'], $secret)) {
+                    new_record('User set two factor verification', $user['id_user']);
                     return true;
                 }
             }
@@ -272,6 +282,7 @@ class User {
 
 			if($this->validate_code($user['nonce'], $code)) {
                 if(update_password($user['id_user'], $new_password)) {
+                    new_record('User reset password', $user['id_user']);
 				    return true;
                 }
             }
@@ -286,6 +297,7 @@ class User {
 		if($user) {
             if($this->encryption->validate_user_password($old_password, $user['password'])) {
                 if(update_password($user['id_user'], $new_password)) {
+                    new_record('User change password', $user['id_user']);
                     return true;
                 }
 			} 
@@ -297,6 +309,7 @@ class User {
     public function logout() {
 		if($this->is_logged_in) {
 			if(delete_cookie($this->cookie)) {
+                new_record('User logout', $user['id_user']);
 				return true;
 			}
 		}

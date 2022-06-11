@@ -24,7 +24,7 @@ if(isset($submit)) {
     }
 
     if(!$alert_messages->is_error()) {
-        if(new_record('New message was recorded!', 'The message was '.$message)) {
+        if(new_record('Message was recorded', $message)) {
             $alert_messages->new_success('Well done! Your message was sent!');
         }
         else {

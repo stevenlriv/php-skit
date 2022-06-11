@@ -117,6 +117,23 @@ function update_user(   $id_user = '',
     $array[] = array('column' => 'id_user', 'value' => $id_user);
 
     if(update_mysql_data('users', '', $array)) {
+        $record = json_encode(
+            array(  "id_user=$id_user", 
+                    "status=$status", 
+                    "first_name=$first_name",
+                    "last_name=$last_name", 
+                    "display_name=$display_name",
+                    "username=$username", 
+                    "email=$email",
+                    "eth_address=$eth_address", 
+                    "sol_address=$sol_address",
+                    "phone_number=$phone_number", 
+                    "password=$password",
+                    "nonce=$nonce", 
+                    "two_factor_verification=$two_factor_verification"
+                )
+        );
+        new_record('Update user', $record);
         return true;
     }
 

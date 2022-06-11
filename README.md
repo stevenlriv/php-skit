@@ -74,9 +74,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- Track every action as a new record and try to get their location
 - PHP REST API for json connections to backend like from react native
-- 12 failed login 24 hour reset
 - Stripe
 - Coinbase Commerce
 - Login with Solana wallet

@@ -13,7 +13,6 @@ if(isset($submit)) {
 
     if(!$alert_messages->is_error()) {
         if($file->upload_file($_FILES['file_data'], 'example-folder-name')) {
-            new_record('A new image was uploaded!', 'URL is '.$file->get_last_file_url());
             $alert_messages->new_success('Well done! Your image was uploaded!');
         }
         else {

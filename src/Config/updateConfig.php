@@ -9,6 +9,8 @@ function update_config($id_config, $short_description = '', $value = '') {
     $array[] = array('column' => 'id_config', 'value' => $id_config);
 
     if(update_mysql_data('configs', '', $array)) {
+        $record = json_encode(array("id_config=$id_config", "short_description=$short_description", "value=$value"));
+        new_record('Update config', $record);
         return true;
     }
 

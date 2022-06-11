@@ -12,8 +12,9 @@ function send_text_message($to_number, $from_number, $body) {
     $sid = TWILIO_SID;
     $token = TWILIO_TOKEN;
 
+    $record = json_encode(array("from number=$from_number", "to number=$to_number", "body=$body"));
+    
     $client = new Client($sid, $token);
-
     if($client->messages->create( $to_number,
         [
             // A Twilio phone number you purchased at twilio.com/console
@@ -21,9 +22,11 @@ function send_text_message($to_number, $from_number, $body) {
             'body' => $body
         ]
     )) {
+        new_record('Phone Text Sent', $record);
         return true;
     }
 
+    new_record('Phone Text Failed To Be Sent', $record);
     return false;
 }
 ?>

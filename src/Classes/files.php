@@ -58,6 +58,7 @@ class Files {
     
         $this->filesystem->writeStream($this->upload_path, fopen($file_data['tmp_name'], 'r+'), ['visibility' => 'public']);
         if($this->filesystem->has($this->upload_path)) {
+            new_record('File uploaded', $this->get_last_file_url());
             $this->upload_status = true;
             return true;
         }
@@ -71,7 +72,7 @@ class Files {
 
         $this->filesystem->delete($path);
         if(!$this->filesystem->has($path)) {
-            $this->upload_status = true;
+            new_record('File deleted', $file_url);
             return true;
         }
         

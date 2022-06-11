@@ -35,7 +35,7 @@ class HttpURI {
     }
 
     public function get_full_uri() {
-        return $this->full_uri;
+        return $this->get_domain_url().'/'.$this->full_uri;
     }
 
     public function get_uri() {
