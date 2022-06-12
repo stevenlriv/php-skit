@@ -6,6 +6,10 @@ function send_email_password_reset($to_email, $to_name, $nonce, $code) {
 
     $url = $http->get_domain_url().'/reset-password?email='.$to_email.'&token='.$token;
 
+    if(isset($_GET['redirrect'])) {
+        $url = $url.'&redirrect='.$_GET['redirrect'];
+    }
+
     $subject = SITE_NAME.' Password Reset';
     $body = array(
         'content' => 'Hello '.$to_name.', <br /><br />We have received a password reset attempt. Click the button below to reset your password.',

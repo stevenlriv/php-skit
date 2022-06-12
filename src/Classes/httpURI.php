@@ -24,13 +24,21 @@ class HttpURI {
 
     public function no_user_logged_in() {
         if($this->user->is_logged_in()) {
-            header('Location: /');
+            if(isset($_GET['redirrect'])) {
+                header('Location: '.$this->get_domain_url.$_GET['redirrect']);
+            }
+            else {
+                header('Location: /');
+            }
         }
     }
 
     public function need_user_logged_in() {
         if(!$this->user->is_logged_in()) {
-            header('Location: /');
+            header('Location: /login?redirrect='.$this->full_uri);
+        }
+        elseif(isset($_GET['redirrect']) && $this->user->is_logged_in()) {
+            header('Location: '.$this->get_domain_url.$_GET['redirrect']);
         }
     }
 

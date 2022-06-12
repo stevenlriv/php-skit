@@ -112,7 +112,9 @@ function delete_mysql_data($table_name, $extra = '', $query = '') {
 	}
 
     if($q->execute()) {
-        return true;
+		if($q->affected_rows) {
+        	return true;
+		}
     }
 	$q->close();
 

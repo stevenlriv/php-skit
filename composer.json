@@ -9,6 +9,7 @@
     "require": {
         "php": ">=8",
         "ext-imagick": "*",
+        "ext-memcached": "*",
         "phpmailer/phpmailer": "^6.5",
         "paragonie/halite": "^4",
         "web3p/web3.php": "dev-master",

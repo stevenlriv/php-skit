@@ -4,6 +4,7 @@ class RestAPI {
     private $http;
     private $key_tables = array();
     private $allowed_tables = array();
+    private $_actions_allowed;
     private $actions_allowed = array();
 
     public function __construct() {
@@ -14,14 +15,22 @@ class RestAPI {
         $request = str_replace('/api/', '', $this->http->get_uri());
         $split_request = explode('/', $request);
 
-        $table_public_name = $split_request[0];
+        $table_public_name = '';
         $value = '';
+        if(!empty($split_request[0])) {
+            $table_public_name = $split_request[0];
+        }
         if(!empty($split_request[1])) {
             $value = $split_request[1];
         }
 
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Max-Age: 3600");
+
         if(!empty($this->allowed_tables[$table_public_name])) {
-            header('Content-Type: application/json');
+            header("Access-Control-Allow-Methods: {$this->_actions_allowed}");
+            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
             switch($_SERVER['REQUEST_METHOD']) {
                 case ("GET"):
@@ -67,6 +76,8 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(201);
+                        new_record('REST API POST', json_encode($array));
+
                         $response = array();
                         $response['success'] =  array(
                             'status' => '201',
@@ -104,6 +115,8 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(200);
+                        new_record('REST API PUT', json_encode($array));
+
                         $response = array();
                         $response['success'] =  array(
                             'status' => '200',
@@ -136,6 +149,8 @@ class RestAPI {
                     $response = delete_mysql_data($this->allowed_tables[$table_public_name], '', $array);
                     if($response) {
                         http_response_code(200);
+                        new_record('REST API DELETE', json_encode($array));
+
                         $response = array();
                         $response['success'] =  array(
                             'status' => '200',
@@ -158,29 +173,37 @@ class RestAPI {
             }
         }
         else {
-            $this->http->redirect_home();
+            http_response_code(400);
+            header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+
+            $response['errors'] =  array(
+                'status' => '400',
+                'title' => 'Invalid Syntax',
+                'detail' => 'Mistyping of the API endpoint'
+            );
+            echo json_encode($response);
         }
     }
 
-    public function add_allow_tables($public_name, $table, $key_get, $key_delete = '', $actions_allowed = 1) {
-        if($actions_allowed==2) {
+    public function add_allow_tables($actions_allowed, $public_name, $table, $key_get, $key_delete = '') {
+        if((substr_count($actions_allowed, "GET") > 0)) {
             $this->actions_allowed[$public_name]['GET'] = true;
-            $this->actions_allowed[$public_name]['POST'] = true;
+            $this->_actions_allowed = $this->_actions_allowed.'GET,';
         }
-        elseif($actions_allowed==3) {
-            $this->actions_allowed[$public_name]['GET'] = true;
+        if((substr_count($actions_allowed, "POST") > 0)) {
             $this->actions_allowed[$public_name]['POST'] = true;
-            $this->actions_allowed[$public_name]['PUT'] = true;
+            $this->_actions_allowed = $this->_actions_allowed.'POST,';
         }
-        elseif($actions_allowed==4) {
-            $this->actions_allowed[$public_name]['GET'] = true;
-            $this->actions_allowed[$public_name]['POST'] = true;
+        if((substr_count($actions_allowed, "PUT") > 0)) {
             $this->actions_allowed[$public_name]['PUT'] = true;
+            $this->_actions_allowed = $this->_actions_allowed.'PUT,';
+        }
+        if((substr_count($actions_allowed, "DELETE") > 0)) {
             $this->actions_allowed[$public_name]['DELETE'] = true;
+            $this->_actions_allowed = $this->_actions_allowed.'DELETE,';
         }
-        else {
-            $this->actions_allowed[$public_name]['GET'] = true;
-        }
+        $this->_actions_allowed = substr($this->_actions_allowed, 0, -1);
+
         $this->allowed_tables[$public_name] = $table;
         $this->key_tables[$public_name]['GET'] = $key_get;
         $this->key_tables[$public_name]['DELETE'] = $key_delete;
