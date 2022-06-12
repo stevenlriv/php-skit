@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Etc/UTC');
 
-class DATE {
+class Date {
     private $format = 'Y-m-d H:i:s';
     private $timezone = 'UTC';
 

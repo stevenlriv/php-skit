@@ -38,6 +38,7 @@ require './src/Classes/formCache.php';
 require './src/Classes/files.php';
 require './src/Classes/QR.php';
 require './src/Classes/OTP.php';
+require './src/Classes/restAPI.php';
 
 require './src/Records/newRecord.php';
 require './src/Records/getRecord.php';

@@ -82,7 +82,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- PHP REST API for json connections to backend like from react native
+- PHP REST API tokens
 - Stripe
 - Coinbase Commerce
 - Login with Solana wallet

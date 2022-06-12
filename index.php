@@ -71,6 +71,10 @@ switch ($http->get_uri()) {
     case '/logout' :
         $http->user_logout();
         break;
+    case (substr_count($http->get_uri(), "/api/") > 0) :
+        $api->add_allow_tables('usr_meta', 'users_meta', 'id_user', 1);
+        $api->run();
+        break;
     default :
         http_response_code(404);
         new_record('404 Page Visit', $http->get_full_uri());
