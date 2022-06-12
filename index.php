@@ -72,7 +72,7 @@ switch ($http->get_uri()) {
         $http->user_logout();
         break;
     case (substr_count($http->get_uri(), "/api/") > 0) :
-        $api->add_allow_tables('usr_meta', 'users_meta', 'id_user', 1);
+        $api->add_allow_tables('usr_meta', 'users_meta', 'id_user', 'id_meta', 4);
         $api->run();
         break;
     default :

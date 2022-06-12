@@ -34,10 +34,6 @@ class HttpURI {
         }
     }
 
-    public function redirect_home() {
-        header('Location: /');
-    }
-
     public function get_full_uri() {
         return $this->get_domain_url().'/'.$this->full_uri;
     }

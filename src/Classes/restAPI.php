@@ -15,15 +15,23 @@ class RestAPI {
         $split_request = explode('/', $request);
 
         $table_public_name = $split_request[0];
-        $value = $split_request[1];
+        $value = '';
+        if(!empty($split_request[1])) {
+            $value = $split_request[1];
+        }
 
-        if(!empty($this->allowed_tables[$table_public_name]) && !empty($value)) {
+        if(!empty($this->allowed_tables[$table_public_name])) {
             header('Content-Type: application/json');
 
             switch($_SERVER['REQUEST_METHOD']) {
-                case ("GET" && !empty($this->actions_allowed[$table_public_name]['GET'])):
+                case ("GET"):
+                    // curl 'https://host2:8890/api/usr_meta/1'  
+                    if(empty($this->actions_allowed[$table_public_name]['GET'])) {
+                        break;
+                    }
+
                     $array = array(
-                        0 => array('column' => $this->key_tables[$table_public_name], 'condition' => 'AND', 'command' => '=', 'value' => $value)
+                        0 => array('column' => $this->key_tables[$table_public_name]['GET'], 'condition' => 'AND', 'command' => '=', 'value' => $value)
                     );
                     $response = select_mysql_data($this->allowed_tables[$table_public_name], 'all', '', $array);
 
@@ -32,6 +40,7 @@ class RestAPI {
                     }
                     else {
                         http_response_code(404);
+                        $response = array();
                         $response['errors'] =  array(
                             'status' => '404',
                             'title' => 'Not found',
@@ -41,10 +50,16 @@ class RestAPI {
             
                     echo json_encode($response);
                     break;
-                case ("POST" && !empty($this->actions_allowed[$table_public_name]['POST'])):
-                    $post = json_decode(file_get_contents('php://input'), true);
+                case ("POST"):
+                    // curl -X POST 'https://host2:8890/api/usr_meta' -d "id_user=2&meta_key=example2&meta_value=lol"  
+                    if(empty($this->actions_allowed[$table_public_name]['POST'])) {
+                        break;
+                    }
+
+                    $post = array();
+                    parse_str(file_get_contents('php://input'), $post);
+
                     $array = array();
-        
                     foreach($post as $id => $value) {
                         $array[] = array('column' => $id, 'value' => $value);
                     }
@@ -52,6 +67,7 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(201);
+                        $response = array();
                         $response['success'] =  array(
                             'status' => '201',
                             'title' => 'Created',
@@ -60,6 +76,7 @@ class RestAPI {
                     }
                     else {
                         http_response_code(400);
+                        $response = array();
                         $response['errors'] =  array(
                             'status' => '400',
                             'title' => 'Failed',
@@ -70,10 +87,16 @@ class RestAPI {
                     echo json_encode($response);
                     break;
             
-                case ("PUT" && !empty($this->actions_allowed[$table_public_name]['PUT'])):
-                    $post = json_decode(file_get_contents('php://input'), true);
+                case ("PUT"):
+                    // curl -X PUT 'https://host2:8890/api/usr_meta' -d "id_user=8&meta_key=santa&meta_value=claus&id_meta=2"  
+                    if(empty($this->actions_allowed[$table_public_name]['PUT'])) {
+                        break;
+                    }
+
+                    $post = array();
+                    parse_str(file_get_contents('php://input'), $post);
+
                     $array = array();
-        
                     foreach($post as $id => $value) {
                         $array[] = array('column' => $id, 'value' => $value);
                     }
@@ -81,6 +104,7 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(200);
+                        $response = array();
                         $response['success'] =  array(
                             'status' => '200',
                             'title' => 'Success',
@@ -89,6 +113,7 @@ class RestAPI {
                     }
                     else {
                         http_response_code(404);
+                        $response = array();
                         $response['errors'] =  array(
                             'status' => '404',
                             'title' => 'Not found',
@@ -99,14 +124,19 @@ class RestAPI {
                     echo json_encode($response);
                     break;
             
-                case ("DELETE" && !empty($this->actions_allowed[$table_public_name]['DELETE'])):
+                case ("DELETE"):
+                    // curl -X DELETE 'https://host2:8890/api/usr_meta/9' 
+                    if(empty($this->actions_allowed[$table_public_name]['DELETE'])) {
+                        break;
+                    }
+
                     $array = array(
-                        0 => array('column' => $this->key_tables[$table_public_name], 'condition' => 'AND', 'command' => '=', 'value' => $value)
+                        0 => array('column' => $this->key_tables[$table_public_name]['DELETE'], 'condition' => 'AND', 'command' => '=', 'value' => $value)
                     );
                     $response = delete_mysql_data($this->allowed_tables[$table_public_name], '', $array);
-
                     if($response) {
                         http_response_code(200);
+                        $response = array();
                         $response['success'] =  array(
                             'status' => '200',
                             'title' => 'Success',
@@ -115,6 +145,7 @@ class RestAPI {
                     }
                     else {
                         http_response_code(404);
+                        $response = array();
                         $response['errors'] =  array(
                             'status' => '404',
                             'title' => 'Not found',
@@ -131,7 +162,7 @@ class RestAPI {
         }
     }
 
-    public function add_allow_tables($public_name, $table, $key, $actions_allowed = 1) {
+    public function add_allow_tables($public_name, $table, $key_get, $key_delete = '', $actions_allowed = 1) {
         if($actions_allowed==2) {
             $this->actions_allowed[$public_name]['GET'] = true;
             $this->actions_allowed[$public_name]['POST'] = true;
@@ -151,7 +182,8 @@ class RestAPI {
             $this->actions_allowed[$public_name]['GET'] = true;
         }
         $this->allowed_tables[$public_name] = $table;
-        $this->key_tables[$public_name] = $key;
+        $this->key_tables[$public_name]['GET'] = $key_get;
+        $this->key_tables[$public_name]['DELETE'] = $key_delete;
     }
 }
 ?>
