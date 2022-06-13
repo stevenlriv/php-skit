@@ -10,6 +10,10 @@ class Cache {
         $this->memcached->setOption(Memcached::OPT_PREFIX_KEY, $prefix);
 
         $this->memcached->addServer($ip_server, 11211);
+
+        if(MEMCACHED_DELETE_ALL) {
+            $this->delete_all();
+        }
     }
 
     public function get($name) {

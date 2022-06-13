@@ -82,7 +82,8 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- PHP REST API tokens
+- Test cron class with an example page & allow to send emails if needed
+- PHP REST API tokens with OAUTH
 - Cron Jobs Pub/Pub System
         - different servers submit actions to be performed by 100s of workers 
         - those actions stays there until the workers are able to perform them successfully 
@@ -94,6 +95,7 @@ Then take the key generated and use it for one of them. You will need to do this
         - analytics/sent—finished sending and is viewable in analytics (analytics checking has its own state machine)
         - Publish(topic, message)
         - Subscribe(topic) stream<message>
+- New MySQL backup
 - Stripe
 - Coinbase Commerce
 - Login with Solana wallet

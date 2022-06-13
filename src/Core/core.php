@@ -80,6 +80,11 @@ require './src/UsersMetadata/getUsersMetadata.php';
 require './src/UsersMetadata/updateUsersMetadata.php';
 require './src/UsersMetadata/deleteUsersMetadata.php';
 
+require './src/Cron/newCron.php';
+require './src/Cron/getCron.php';
+require './src/Cron/updateCron.php';
+
 require './src/Classes/user.php';
+require './src/Classes/cron.php';
 require './src/Core/classes.php';
 ?>

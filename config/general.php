@@ -21,4 +21,7 @@ define( 'EMAIL_LOGO_URL', 'https://assets.bootstrapemail.com/logos/light/square.
 
 // text messages
 define( 'TWILIO_CUSTOM_PHONE_NUMBER', '19706488523' );
+
+// cron jobs
+define( 'EMAIL_FOR_REPORTS', 'info@neftify.com' );
 ?>

@@ -2,10 +2,13 @@
 date_default_timezone_set('Etc/UTC');
 
 class Date {
+	public $current_time;
     private $format = 'Y-m-d H:i:s';
     private $timezone = 'UTC';
 
     public function __construct() {
+		$date = new DateTime();
+		$this->current_time = $date->getTimestamp();
     }
 
     public function get_from_unix($unix, $date_format = '') {
