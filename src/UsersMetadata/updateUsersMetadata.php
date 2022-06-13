@@ -14,7 +14,7 @@ function update_users_metadata_by_id($id_meta, $meta_value, $id_user = '') {
     $array[] = array('column' => 'id_meta', 'value' => $id_meta);
 
     if(update_mysql_data('users_meta', '', $array)) {
-        $record = json_encode(array("id_user=$id_user", "meta_key=$meta_key", "meta_value=$meta_value"));
+        $record = array("id_user=$id_user", "meta_key=$meta_key", "meta_value=$meta_value");
         new_record('Update user metadata', $record);
         return true;
     }

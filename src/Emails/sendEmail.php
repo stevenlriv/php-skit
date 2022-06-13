@@ -63,7 +63,7 @@ function send_email($from_name, $from_email, $to_email, $to_name, $subject, $bod
         $mail->addAttachment($attachment);
     }
     
-    $record = json_encode(array("from name=$from_name", "from email=$from_email", "to email=$to_email", "to name=$to_name", "subject=$subject", "body=$mail->AltBody"));
+    $record = array("from name=$from_name", "from email=$from_email", "to email=$to_email", "to name=$to_name", "subject=$subject", "body=$mail->AltBody");
 
     if($mail->send()) {
         new_record('Email Sent', $record);

@@ -23,6 +23,7 @@ require './src/MySQL/select.php';
 require './src/MySQL/update.php';
 require './src/MySQL/delete.php';
 
+require './src/Functions/getIPRequester.php';
 require './src/Functions/htmlCompress.php';
 require './src/Functions/randomString.php';
 

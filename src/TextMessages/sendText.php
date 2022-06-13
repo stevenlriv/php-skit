@@ -12,7 +12,7 @@ function send_text_message($to_number, $from_number, $body) {
     $sid = TWILIO_SID;
     $token = TWILIO_TOKEN;
 
-    $record = json_encode(array("from number=$from_number", "to number=$to_number", "body=$body"));
+    $record = array("from number=$from_number", "to number=$to_number", "body=$body");
     
     $client = new Client($sid, $token);
     if($client->messages->create( $to_number,

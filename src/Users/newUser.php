@@ -124,8 +124,8 @@ function new_user(  $status = 1,
     );
 
     if(insert_mysql_data('users', $array)) {
-        $record = json_encode(
-            array(  "status=$status", 
+        $record = array(  
+                    "status=$status", 
                     "first_name=$first_name",
                     "last_name=$last_name", 
                     "display_name=$display_name",
@@ -137,7 +137,6 @@ function new_user(  $status = 1,
                     "password=$password",
                     "nonce=$nonce", 
                     "two_factor_verification=$two_factor_verification"
-                )
         );
         new_record('New user', $record);
         return true;

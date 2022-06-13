@@ -76,7 +76,7 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(201);
-                        new_record('REST API POST', json_encode($array));
+                        new_record('REST API POST', $array);
 
                         $response = array();
                         $response['success'] =  array(
@@ -115,7 +115,7 @@ class RestAPI {
 
                     if($response) {
                         http_response_code(200);
-                        new_record('REST API PUT', json_encode($array));
+                        new_record('REST API PUT', $array);
 
                         $response = array();
                         $response['success'] =  array(
@@ -149,7 +149,7 @@ class RestAPI {
                     $response = delete_mysql_data($this->allowed_tables[$table_public_name], '', $array);
                     if($response) {
                         http_response_code(200);
-                        new_record('REST API DELETE', json_encode($array));
+                        new_record('REST API DELETE', $array);
 
                         $response = array();
                         $response['success'] =  array(
