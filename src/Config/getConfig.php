@@ -1,4 +1,8 @@
 <?php
+function get_config_by_key($value, $memcached_expiration = '') {
+    return get_record('config_key', $value, $memcached_expiration);
+}
+
 function get_config_by_id($value, $memcached_expiration = '') {
     return get_record('id_config', $value, $memcached_expiration);
 }

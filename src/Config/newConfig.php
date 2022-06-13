@@ -1,7 +1,11 @@
 <?php
-function new_config($short_description, $value) {
+function new_config($config_key, $value) {
+    if(get_config_by_key($config_key)) {
+        return false;
+    }
+
     $array = array(
-        0 => array('column' => 'short_description', 'value' => $short_description),
+        0 => array('column' => 'config_key', 'value' => $config_key),
         1 => array('column' => 'value', 'value' => $value),
     );
 

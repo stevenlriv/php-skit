@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `configs` (
   `id_config` bigint(20) NOT NULL,
-  `short_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `config_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
