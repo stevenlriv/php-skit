@@ -84,7 +84,6 @@ Then take the key generated and use it for one of them. You will need to do this
 
 - add usser IP to new records - json decode for array then encode with two arrays: data, iprequest
 - PHP REST API tokens
-- php memcache
 - Cron Jobs Pub/Pub System
         - different servers submit actions to be performed by 100s of workers 
         - those actions stays there until the workers are able to perform them successfully 

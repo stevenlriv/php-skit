@@ -31,6 +31,7 @@ require './src/Cookies/deleteCookie.php';
 
 require './src/Classes/date.php';
 require './src/Classes/httpURI.php';
+require './src/Classes/cache.php';
 require './src/Classes/pagination.php';
 require './src/Classes/alertMessages.php';
 require './src/Classes/SEO.php';
