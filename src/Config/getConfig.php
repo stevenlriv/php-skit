@@ -1,17 +1,17 @@
 <?php
-function get_config_by_id($value) {
-    return get_record('id_config', $value);
+function get_config_by_id($value, $memcached_expiration = '') {
+    return get_record('id_config', $value, $memcached_expiration);
 }
 
-function get_config($column, $value) {
+function get_config($column, $value, $memcached_expiration = '') {
     $array = array(
         0 => array('column' => $column, 'condition' => 'AND', 'command' => '=', 'value' => $value)
     );
 
-    return get_all_configs('', 'LIMIT 1', $array);
+    return get_all_configs('', 'LIMIT 1', $array, $memcached_expiration);
 }
 
-function get_all_configs($type = 'all', $extra = '', $query = '') {
-    return select_mysql_data('configs', $type, $extra, $query);
+function get_all_configs($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
+    return select_mysql_data('configs', $type, $extra, $query, $memcached_expiration);
 }
 ?>

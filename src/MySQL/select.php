@@ -19,7 +19,7 @@
  *				0 => array('column' => 'short_description', 'condition' => 'AND', 'command' => '=', 'value' => $short_description, 'loose' => false)
  *			)
  */
-function select_mysql_data($table_name, $type = '', $extra = '', $query = '') {
+function select_mysql_data($table_name, $type = '', $extra = '', $query = '', $memcached_expiration = '') {
 	global $db;
 
 	$bind_param_type = '';
@@ -50,7 +50,20 @@ function select_mysql_data($table_name, $type = '', $extra = '', $query = '') {
 		    array_push($bind_param_values, $value['value']);
 	    }
     }
-	$q = $db->prepare ( "SELECT * FROM $table_name $build_query $extra" );
+	$query_string = "SELECT * FROM $table_name $build_query $extra";
+
+	if($memcached_expiration!='') {
+		$cache = new Cache('select_mysql_data', 'sm_');
+
+		$memcache_key = $query_string.$bind_param_type.implode('_', $bind_param_values);
+		$data = $cache->get($memcache_key);
+
+		if($data) {
+			return $data;
+		}
+	}
+
+	$q = $db->prepare($query_string);
 
 	$array_count = count($bind_param_values);
 	if($array_count == 1) {
@@ -120,16 +133,23 @@ function select_mysql_data($table_name, $type = '', $extra = '', $query = '') {
 	$q->execute();
 	$result = $q->get_result();
 
+	$sql_data = '';
     if($type=='all') {
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $sql_data = $result->fetch_all(MYSQLI_ASSOC);
     }
     elseif($type=='count') {
-		return $result->num_rows;
+		$sql_data = $result->num_rows;
 	}
     else {
-        return $result->fetch_array(MYSQLI_ASSOC);
+        $sql_data = $result->fetch_array(MYSQLI_ASSOC);
     }
 
+	if($sql_data && $sql_data!='') {
+		if($memcached_expiration!='') {
+			$cache->set($memcache_key, $sql_data, $memcached_expiration);
+		}
+		return $sql_data;
+	}
 	$q->close();
 
 	return false;

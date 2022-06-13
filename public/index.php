@@ -17,4 +17,5 @@ Home Page!
 <br />
 <br />
 <?php
+print_r( get_record_by_id(4, 180) );
 ?>

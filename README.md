@@ -82,7 +82,6 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- memcache for mysql get query
 - add usser IP to new records - json decode for array then encode with two arrays: data, iprequest
 - PHP REST API tokens
 - Cron Jobs Pub/Pub System
@@ -94,7 +93,6 @@ Then take the key generated and use it for one of them. You will need to do this
         - pending—picked off by the cronjob and added to SQS to be scheduled
         - processing—picked off by a worker and currently being processed
         - analytics/sent—finished sending and is viewable in analytics (analytics checking has its own state machine)
-
         - Publish(topic, message)
         - Subscribe(topic) stream<message>
 - Stripe
