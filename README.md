@@ -82,6 +82,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
+- memcache for mysql get query
 - add usser IP to new records - json decode for array then encode with two arrays: data, iprequest
 - PHP REST API tokens
 - Cron Jobs Pub/Pub System
