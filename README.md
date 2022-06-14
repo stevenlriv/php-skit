@@ -63,7 +63,7 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## MySQL
 
-- users
+- users:
         - status:
                 - 1: active users
         - refered_by: id user that refered this person

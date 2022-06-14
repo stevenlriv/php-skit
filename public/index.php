@@ -20,5 +20,4 @@ Home Page!
 <br />
 <br />
 <?php
-$cron = new Cron();
 ?>
