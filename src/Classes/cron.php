@@ -13,8 +13,8 @@ class Cron {
         $this->set_up_cron($name);
         if($this->current_time>$this->cron_array[$name]['next_run']) {
             $start_time = time();
-            update_cron($name, $start_time+($run_every_minutes*60));
             $this->print_debug('Start Cron Jobs: '.$name, $start_time);
+            update_cron($name, $start_time+($run_every_minutes*60));
 
             foreach($this->array_includes[$name] as $id => $value) {
                 require_once $_SERVER['DOCUMENT_ROOT'].$value;
@@ -24,10 +24,8 @@ class Cron {
             $this->print_debug('Minutes it took Cron Jobs: '.$name, $this->how_many_minutes($start_time, $end_time));
             $this->print_debug('End Cron Jobs: '.$name, $end_time);
 
-            //send email with info of the cronjobs
-            //if enabled
             if($send_email==true) {
-                
+                send_email_cron($name, $this->debug_email_text);
             }
         }
     }
@@ -38,22 +36,22 @@ class Cron {
 
     private function print_debug($text, $value = '') {
         if($value!='') {
-            $this->$debug_email_text = $this->$debug_email_text.'- '.$text.' - '.$value.'<br /><br />';
+            $this->debug_email_text = $this->debug_email_text.'- '.$text.' - '.$value.'<br /><br />';
         }
         else {
-            $this->$debug_email_text = $this->$debug_email_text.'- '.$text.'<br /><br />';
+            $this->debug_email_text = $this->debug_email_text.'- '.$text.'<br /><br />';
         }
         new_record($text, $value);
 
         if(DEBUG==true) {
-            echo "--- --- --- --- --- --- --- ---\n";
+            echo "--- --- --- --- --- --- --- ---<br />";
             if($value!='') {
-                echo "{$text} - {$value} \n";
+                echo "{$text} - {$value} <br />";
             }
             else {
-                echo "{$text} \n";
+                echo "{$text} <br />";
             }
-            echo "--- --- --- --- --- --- --- ---\n\n\n";
+            echo "--- --- --- --- --- --- --- ---<br /><br />";
         }
     }
 

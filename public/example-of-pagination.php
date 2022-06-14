@@ -6,8 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/src/Core/required.php';
 Example of pagination! <br /><br />
 
 <?php
-foreach($pagination->get_query() as $id => $value) {
-    echo "{$value['id_record']} is {$value['short_description']}<br />";
+if(is_array($pagination->get_query())) {
+    foreach($pagination->get_query() as $id => $value) {
+        echo "{$value['id_record']} is {$value['short_description']}<br />";
+    }
 }
 
 $pagination->print(); 

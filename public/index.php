@@ -16,6 +16,9 @@ Home Page!
 <a href="/example-of-user-page">Go to Example of User Page (if not logged in, will take you back to home page)</a>
 <br />
 <br />
+<a href="/login">Go to Example of Login Page</a>
+<br />
+<br />
 <?php
 $cron = new Cron();
 ?>

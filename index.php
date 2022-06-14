@@ -71,6 +71,11 @@ switch ($http->get_uri()) {
     case '/logout' :
         $http->user_logout();
         break;
+    case '/example-of-cron' :
+        ob_start("ob_html_compress");
+            require './public/example-of-cron.php';
+        ob_end_flush();
+        break;
     case (substr_count($http->get_uri(), "/api/") > 0) :
         $api->add_allow_tables('GET|POST|PUT', 'usr_meta', 'users_meta', 'id_user');
         $api->run();

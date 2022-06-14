@@ -82,7 +82,6 @@ Then take the key generated and use it for one of them. You will need to do this
 
 ## Next Integrations
 
-- Test cron class with an example page & allow to send emails if needed
 - PHP REST API tokens with OAUTH
 - Cron Jobs Pub/Pub System
         - different servers submit actions to be performed by 100s of workers 

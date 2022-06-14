@@ -59,6 +59,7 @@ require './src/Emails/standardTemplate.php';
 require './src/Emails/sendEmail.php';
 require './src/Emails/sendEmailLoginCode.php';
 require './src/Emails/sendEmailPasswordReset.php';
+require './src/Emails/sendEmailCron.php';
 
 require './src/TextMessages/sendText.php';
 require './src/TextMessages/sendTextLoginCode.php';
