@@ -56,6 +56,7 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Folder/Files Structure
 
 - config/: script configuration before deployment, most are enviroment variables
+- cron/: possible cron files
 - public/: php/html files that are included from index.php and templates for some classes
 - src/: all php files required for the toolset to work
 - index.php: web server router
