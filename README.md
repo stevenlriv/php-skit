@@ -75,6 +75,7 @@ Then take the key generated and use it for one of them. You will need to do this
         - phone_number_verified: used to get the status of the user phone verification on demand
 - configs: script configuration that could be updated using an UI in the frontend
 - records: records any data action in the script
+- crons: cronjobs created
 
 ## Other Tools
 
