@@ -83,18 +83,6 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Next Integrations
 
 - PHP REST API tokens with OAUTH
-- Cron Jobs Pub/Pub System
-        - different servers submit actions to be performed by 100s of workers 
-        - those actions stays there until the workers are able to perform them successfully 
-        - once a worker grab one, they lock it and if they cant do it they unlock it again to let it available for other workers 
-        - once the action is perform the right data is stored in the pertinent database and the metadata of the action is send to Schedulers metadata
-        - buffer — currently in the buffer
-        - pending—picked off by the cronjob and added to SQS to be scheduled
-        - processing—picked off by a worker and currently being processed
-        - analytics/sent—finished sending and is viewable in analytics (analytics checking has its own state machine)
-        - Publish(topic, message)
-        - Subscribe(topic) stream<message>
-- New MySQL backup
 - Stripe
 - Coinbase Commerce
 - Login with Solana wallet
