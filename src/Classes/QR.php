@@ -5,32 +5,13 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 
 class QR {
-    private $qr_image_uri;
-    private $upload_path;
-    private $dirname;
+    private $qr_image_base64;
 
     public function __construct() {
-        $this->dirname = 'public/_temp/QR';
-        $this->upload_path = $this->dirname.'/'.generate_not_secure_random_string(75).'_qrcode.png';
-
-        if(!is_dir($this->dirname)) {
-            mkdir($this->dirname, 0755, true);
-        }
-        $this->reset_folder();
     }
 
-    public function get_image_uri() {
-        return $this->qr_image_uri;
-    }
-
-    public function reset_folder() {
-        $files = glob($this->dirname.'/*'); 
-   
-        foreach($files as $file) {
-            if(is_file($file)) {
-                unlink($file); 
-            }
-        }
+    public function get_image_base64() {
+        return $this->qr_image_base64;
     }
 
     public function create($string) {
@@ -42,12 +23,12 @@ class QR {
         );
         
         $writer = new Writer($renderer);
-        $writer->writeFile($string, $this->upload_path);
-    
-        if(file_exists($this->upload_path)) {
-            $this->qr_image_uri = $http->get_domain_url().'/'.$this->upload_path;
-            
-            return $this->qr_image_uri;
+        $base64 = base64_encode($writer->writeString($string));
+
+        if($base64) {
+            //<img src="data:image/png;base64, '.$this->get_image_base64().'" />
+            $this->qr_image_base64 = $base64;
+            return true;
         }
 
         return false;

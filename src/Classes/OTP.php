@@ -4,7 +4,7 @@ use OTPHP\TOTP;
 class OTP {
     private $encryption_key = USER_KEY;
     private $encryption;
-    private $qr_image_uri;
+    private $qr_image_base64;
     private $secret;
     private $site_name = SITE_NAME;
 
@@ -16,8 +16,8 @@ class OTP {
         return $this->secret;
     }
 
-    public function get_image_uri() {
-        return $this->qr_image_uri;
+    public function get_image_base64() {
+        return $this->qr_image_base64;
     }
 
     public function verify_user_login($secret, $input) {
@@ -50,7 +50,7 @@ class OTP {
         $otp->setIssuer($this->site_name);
     
         if($qr->create($otp->getProvisioningUri())) {
-            $this->qr_image_uri = $qr->get_image_uri();
+            $this->qr_image_base64 = $qr->get_image_base64();
             return true;
         }
 
