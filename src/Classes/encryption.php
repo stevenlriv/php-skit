@@ -51,7 +51,7 @@ class Encryption {
     }
     
     public function verify_sol_signature($message, $signature, $address) {
-        //$$message = pack("c*", ...$message);
+        //$message = pack("c*", ...$message);
         //$address = unpack('c*', $address); //address to bytes
 
         if(sodium_crypto_sign_verify_detached($message, $signature, $address)) {
