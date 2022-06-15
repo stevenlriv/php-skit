@@ -85,6 +85,7 @@ Then take the key generated and use it for one of them. You will need to do this
 ## Next Integrations
 
 - PHP REST API tokens with OAUTH
+- Phone Push Notifications
 - Stripe
 - Coinbase Commerce
 - Login with Solana wallet

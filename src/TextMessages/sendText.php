@@ -9,12 +9,9 @@ function send_text_default_settings($to_number, $body) {
 }
 
 function send_text_message($to_number, $from_number, $body) {
-    $sid = TWILIO_SID;
-    $token = TWILIO_TOKEN;
-
     $record = array("from number=$from_number", "to number=$to_number", "body=$body");
     
-    $client = new Client($sid, $token);
+    $client = new Client(TWILIO_SID, TWILIO_TOKEN);
     if($client->messages->create( $to_number,
         [
             // A Twilio phone number you purchased at twilio.com/console
