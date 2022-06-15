@@ -179,6 +179,28 @@ class User {
     }
 
     public function login_with_sol_address($sol_address, $signature) {
+        $user = get_user_by_sol_address($sol_address);
+
+		if($user) {
+            $pieces = $this->get_nonce($user['nonce']);
+            $code = $pieces[0];
+
+            if($encryption->verify_sol_signature($code, $signature, $sol_address)) {
+                update_nonce($user['id_user']);
+                $user = get_user_by_id($user['id_user']); // get new nonce for cookie
+				if(new_cookie($this->cookie, 'by_sol_address|'.$user['sol_address'].'|'.$user['nonce'], time()+60*60*24*45)) {
+                    new_record('User login with sol_address', $user['id_user']);
+
+                    $this->array = $user;
+                    $this->set_user_data();
+                    $this->is_logged_in = true;
+
+					return true;
+                }
+            }
+		}
+
+		return false;
     }
 
     public function send_email_with_code($email) {
@@ -353,6 +375,10 @@ class User {
             }
             elseif($login_method=='by_eth_address') {
                 $user = get_user_by_eth_address($login_method_id);
+                $verification = $user['nonce'];     
+            }
+            elseif($login_method=='by_sol_address') {
+                $user = get_user_by_sol_address($login_method_id);
                 $verification = $user['nonce'];     
             }
 

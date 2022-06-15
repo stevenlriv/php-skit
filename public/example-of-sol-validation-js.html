@@ -1,0 +1,33 @@
+<a href="#" onclick="sol()">Solana Connect</a>
+
+<script>
+    async function sol() {
+        const provider = window.solana.isPhantom;
+
+        if(provider) {
+            const resp = await window.solana.connect();
+            const publicKey = resp.publicKey;
+
+            const message = 'To avoid digital dognappers, sign below to authenticate with CryptoCorgis';
+            const encodedMessage = new TextEncoder().encode(message);
+
+            const signedMessage = await window.solana.signMessage(encodedMessage, "utf8");
+            const signature = signedMessage.signature;
+
+            const verifiedSessionData = nacl.sign.detached.verify(encodedMessage, signature, publicKey.toBytes());
+            if (verifiedSessionData) {
+                console.log('Valid signature');
+            }
+            else {
+                console.log('Failed to validate signature');
+            }
+        }
+        else {
+            console.log('Install your wallet');
+        }
+    }
+</script>
+
+
+<script src="https://tweetnacl.js.org/nacl.min.js"></script>
+<script src="https://tweetnacl.js.org/nacl-util.min.js"></script>

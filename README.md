@@ -88,4 +88,3 @@ Then take the key generated and use it for one of them. You will need to do this
 - Phone Push Notifications
 - Stripe
 - Coinbase Commerce
-- Login with Solana wallet

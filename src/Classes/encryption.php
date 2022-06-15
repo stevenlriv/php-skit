@@ -50,6 +50,18 @@ class Encryption {
         return $text->getString();
     }
     
+    public function verify_sol_signature($message, $signature, $address) {
+        //$packed = pack("c*", ...$message);
+        //$address_to_bytes = unpack('c*', $address);
+        //$address = $address_to_bytes;
+
+        if(sodium_crypto_sign_verify_detached($message, $signature, $address)) {
+            return true;
+        }
+        
+        return false;
+    }
+
     public function verify_ethereum_signature($message, $signature, $address) {
         $msglen = strlen($message);
         $hash   = Keccak::hash("\x19Ethereum Signed Message:\n{$msglen}{$message}", 256);

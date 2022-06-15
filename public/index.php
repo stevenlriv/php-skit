@@ -19,5 +19,6 @@ Home Page!
 <a href="/login">Go to Example of Login Page</a>
 <br />
 <br />
+<a href="/public/example-of-sol-validation-js.html">Go To Sol JS Validation</a>
 <?php
 ?>
