@@ -1,7 +1,8 @@
 <?php
 // @ https://jsonapi.org/format/
-class RestAPI {
+class MySQLRestAPI {
     private $http;
+    private $http_uri;
     private $key_tables = array();
     private $allowed_tables = array();
     private $_actions_allowed;
@@ -11,8 +12,12 @@ class RestAPI {
         $this->http = new HttpURI();
     }
 
+    public function set_uri($uri) {
+        $this->http_uri = $uri;
+    }
+
     public function run() {
-        $request = str_replace('/api/', '', $this->http->get_uri());
+        $request = str_replace($this->http_uri, '', $this->http->get_uri());
         $split_request = explode('/', $request);
 
         $table_public_name = '';

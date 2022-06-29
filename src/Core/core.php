@@ -6,17 +6,12 @@ require './src/Core/debug.php';
 require './src/vendor/autoload.php';
 
 require './config/general.php';
-require './config/privateKeys.php';
-require './config/database.php';
-require './config/SMTP.php';
-require './config/Twilio.php';
-require './config/DigitalOcean.php';
-require './config/Web3.php';
+require './src/Core/config.php';
 
 require './src/Core/privateKeys.php';
 require './src/Core/MySQL.php';
-require './src/Classes/encryption.php';
-require './src/Classes/cache.php';
+require './src/Encryption/encryption.php';
+require './src/Cache/cache.php';
 
 require './src/MySQL/insert.php';
 require './src/MySQL/select.php';
@@ -31,16 +26,11 @@ require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
 require './src/Cookies/deleteCookie.php';
 
-require './src/Classes/date.php';
-require './src/Classes/httpURI.php';
-require './src/Classes/pagination.php';
-require './src/Classes/alertMessages.php';
-require './src/Classes/SEO.php';
-require './src/Classes/formCache.php';
-require './src/Classes/files.php';
-require './src/Classes/QR.php';
-require './src/Classes/OTP.php';
-require './src/Classes/restAPI.php';
+require './src/Date/date.php';
+require './src/HTTP/httpURI.php';
+require './src/HTTP/RestAPI.php';
+require './src/HTTP/MySQLRestAPI.php';
+require './src/HTTP/SEO.php';
 
 require './src/Records/newRecord.php';
 require './src/Records/getRecord.php';
@@ -52,6 +42,8 @@ require './src/Config/getConfig.php';
 require './src/Config/updateConfig.php';
 require './src/Config/deleteConfig.php';
 
+require './src/Forms/alertMessages.php';
+require './src/Forms/formCache.php';
 require './src/Forms/sanitation.php';
 require './src/Forms/validation.php';
 
@@ -72,6 +64,8 @@ require './src/Web3/ChainLink.php';
 require './src/Web3/decimals.php';
 require './src/Web3/ethereumSmartContract.php';
 
+require './src/Users/QR.php';
+require './src/Users/OTP.php';
 require './src/Users/newUser.php';
 require './src/Users/getUser.php';
 require './src/Users/updateUser.php';
@@ -85,7 +79,11 @@ require './src/Cron/newCron.php';
 require './src/Cron/getCron.php';
 require './src/Cron/updateCron.php';
 
-require './src/Classes/user.php';
-require './src/Classes/cron.php';
+require './src/Pagination/pagination.php';
+
+require './src/Files/files.php';
+
+require './src/Users/user.php';
+require './src/Cron/cron.php';
 require './src/Core/classes.php';
 ?>

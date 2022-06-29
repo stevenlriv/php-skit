@@ -3,6 +3,7 @@ $date = new Date();
 $user = new User();
 $http = new HttpURI();
 $api = new RestAPI();
+$mysql_api = new MySQLRestAPI();
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();
 $SEO = new SEO(SITE_NAME, $http->get_domain_url(), $http->get_uri());

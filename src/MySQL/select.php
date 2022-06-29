@@ -12,6 +12,7 @@
  * 			- 'command' which its the type of query like '=' or 'LIKE'
  * 			- 'value' which its the value to be searched
  * 			- 'loose' whis is used to add '%value%' to create a loose match in sql
+ * $memcached_expiration is the time in seconds in which the data will be kept in cache
  * 
  * 		Example:
  * 			
