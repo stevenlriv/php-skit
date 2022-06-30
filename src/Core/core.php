@@ -8,30 +8,30 @@ require './src/vendor/autoload.php';
 require './config/general.php';
 require './src/Core/config.php';
 
-require './src/Core/privateKeys.php';
-require './src/Core/MySQL.php';
-require './src/Encryption/encryption.php';
 require './src/Cache/cache.php';
+require './src/Core/MySQL.php';
+require './src/Core/privateKeys.php';
+
+require './src/Encryption/encryption.php';
+require './src/Encryption/randomString.php';
 
 require './src/MySQL/insert.php';
 require './src/MySQL/select.php';
 require './src/MySQL/update.php';
 require './src/MySQL/delete.php';
 
-require './src/Functions/getIPRequester.php';
-require './src/Functions/htmlCompress.php';
-require './src/Functions/randomString.php';
-
 require './src/Cookies/newCookie.php';
 require './src/Cookies/getCookie.php';
 require './src/Cookies/deleteCookie.php';
 
 require './src/Date/date.php';
+
 require './src/HTTP/httpURI.php';
 require './src/HTTP/RestAPI.php';
 require './src/HTTP/MySQLRestAPI.php';
 require './src/HTTP/SEO.php';
 
+require './src/Records/getIPRequester.php';
 require './src/Records/newRecord.php';
 require './src/Records/getRecord.php';
 require './src/Records/updateRecord.php';
@@ -66,6 +66,7 @@ require './src/Web3/ethereumSmartContract.php';
 
 require './src/Users/QR.php';
 require './src/Users/OTP.php';
+require './src/Users/user.php';
 require './src/Users/newUser.php';
 require './src/Users/getUser.php';
 require './src/Users/updateUser.php';
@@ -75,14 +76,15 @@ require './src/UsersMetadata/getUsersMetadata.php';
 require './src/UsersMetadata/updateUsersMetadata.php';
 require './src/UsersMetadata/deleteUsersMetadata.php';
 
+require './src/Cron/cron.php';
 require './src/Cron/newCron.php';
 require './src/Cron/getCron.php';
 require './src/Cron/updateCron.php';
 
-require './src/Pagination/pagination.php';
+require './src/PublicHelper/pagination.php';
+require './src/PublicHelper/htmlCompress.php';
+
 require './src/Files/files.php';
 
-require './src/Users/user.php';
-require './src/Cron/cron.php';
 require './src/Core/classes.php';
 ?>

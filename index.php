@@ -2,9 +2,6 @@
 require './src/Core/core.php';
 
 switch ($http->get_uri()) {
-    case '/' :
-        header('Location: /api/');
-        break;
     case (substr_count($http->get_uri(), "/api/db/") > 0) :
         $mysql_api->set_uri("/api/db/");
         $mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record', 'id_record');

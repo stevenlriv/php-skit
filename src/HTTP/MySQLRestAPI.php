@@ -1,5 +1,4 @@
 <?php
-// @ https://jsonapi.org/format/
 class MySQLRestAPI extends RestAPI {
     public function add_allow_tables($actions_allowed, $public_name, $table, $key_get, $key_delete = '') {
         $this->add_allow_routes($actions_allowed, $public_name, $table);
