@@ -7,8 +7,8 @@ switch ($http->get_uri()) {
         break;
     case (substr_count($http->get_uri(), "/api/db/") > 0) :
         $mysql_api->set_uri("/api/db/");
-        //$mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record');
-        //$mysql_api->run();
+        $mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record', 'id_record');
+        $mysql_api->run();
         break;
     case (substr_count($http->get_uri(), "/api/") > 0) :
         $api->set_uri("/api/");

@@ -36,6 +36,16 @@ class RestAPI {
         if(!empty($split_request[1])) {
             $value = $split_request[1];
         }
+        elseif($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT') {
+            $post = array();
+            parse_str(file_get_contents('php://input'), $post);
+
+            $array = array();
+            foreach($post as $id => $value) {
+                $array[] = array('column' => $id, 'value' => $value);
+            }
+            $value = $array;
+        }
 
         $this->route = $route;
         $this->route_value = $value;
@@ -83,13 +93,9 @@ class RestAPI {
                         break;
                     }
 
-                    $post = array();
-                    parse_str(file_get_contents('php://input'), $post);
-
-                    $array = array();
-                    foreach($post as $id => $value) {
-                        $array[] = array('column' => $id, 'value' => $value);
-                    }
+                    $array = array(
+                        0 => array('route' => $this->route, 'value' => $this->route_value)
+                    );
 
                     $response = $this->responses[$this->route]['POST'];
                     if($response) {
@@ -122,13 +128,9 @@ class RestAPI {
                         break;
                     }
 
-                    $post = array();
-                    parse_str(file_get_contents('php://input'), $post);
-
-                    $array = array();
-                    foreach($post as $id => $value) {
-                        $array[] = array('column' => $id, 'value' => $value);
-                    }
+                    $array = array(
+                        0 => array('route' => $this->route, 'value' => $this->route_value)
+                    );
 
                     $response = $this->responses[$this->route]['PUT'];
                     if($response) {

@@ -81,5 +81,4 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 
 - PHP REST API tokens with OAUTH
 - Stripe
-- Coinbase Commerce
 - Phone Push Notifications
