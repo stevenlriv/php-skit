@@ -53,8 +53,8 @@ require './src/Emails/sendEmailLoginCode.php';
 require './src/Emails/sendEmailPasswordReset.php';
 require './src/Emails/sendEmailCron.php';
 
-require './src/TextMessages/sendText.php';
-require './src/TextMessages/sendTextLoginCode.php';
+require './src/Phone/sendTextMessages.php';
+require './src/Phone/sendTextLoginCode.php';
 
 require './src/ExternalAPICalls/getJson.php';
 require './src/ExternalAPICalls/getHtmlElement.php';
@@ -80,7 +80,6 @@ require './src/Cron/getCron.php';
 require './src/Cron/updateCron.php';
 
 require './src/Pagination/pagination.php';
-
 require './src/Files/files.php';
 
 require './src/Users/user.php';
