@@ -17,6 +17,20 @@ class HttpURI {
         }
     }
 
+    public function match_uri($uri) {
+        if($this->compare_uri($uri, false)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function flexible_uri($uri) {
+        if($this->compare_uri($uri, true)) {
+            return true;
+        }
+        return false;
+    }
+
     public function user_logout() {
         $this->user->logout();
         header('Location: /');
@@ -63,6 +77,17 @@ class HttpURI {
 	    return $url;
     }
 
+    private function compare_uri($uri, $remainder_left) {
+        $request = str_replace($uri, '', $this->uri);
+
+        if(substr_count($this->get_uri(), $uri) > 0) {
+            if(!$remainder_left && $request!='') {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
     /**
      * Get the base URL
      *

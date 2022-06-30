@@ -81,7 +81,7 @@ switch ($http->get_uri()) {
             require './public/example-of-new-keys.php';
         ob_end_flush();
         break;
-    case (substr_count($http->get_uri(), "/api/db/") > 0) :
+    case $http->flexible_uri("/api/db/") :
         $mysql_api->set_uri("/api/db/");
         $mysql_api->add_allow_tables('GET', 'rcs', 'records', 'id_record');
         $mysql_api->run();

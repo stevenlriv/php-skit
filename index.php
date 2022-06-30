@@ -2,12 +2,15 @@
 require './src/Core/core.php';
 
 switch ($http->get_uri()) {
-    case (substr_count($http->get_uri(), "/api/db/") > 0) :
+    case '/api/login' :
+        echo 'login';
+        break;
+    case $http->flexible_uri("/api/db/") :
         $mysql_api->set_uri("/api/db/");
         $mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record', 'id_record');
         $mysql_api->run();
         break;
-    case (substr_count($http->get_uri(), "/api/") > 0) :
+    case $http->flexible_uri("/api/") :
         $api->set_uri("/api/");
         $api->add_allow_routes('GET', 'records', 'internal_records');
             $response['records']['GET'] = false;
