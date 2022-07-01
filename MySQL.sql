@@ -80,6 +80,8 @@ CREATE TABLE `users` (
   `password` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `nonce` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `two_factor_verification` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `referred_by` bigint(20) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

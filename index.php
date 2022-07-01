@@ -3,12 +3,35 @@ require './src/Core/core.php';
 
 switch ($http->get_uri()) {
     case '/api/login' :
-        echo 'login';
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Max-Age: 3600");
+        header("Access-Control-Allow-Methods: POST");
+
+        $response = array();
+        if(!empty($_POST['email']) && !empty($_POST['password']) && $user->login_with_password($_POST['email'], $_POST['password'])) {
+            $response['success'] =  array(
+                'status' => '200',
+                'title' => 'Success',
+                'detail' => $jwt->encode($user->email, $user->password_hash)
+            );
+        }
+        else {
+            http_response_code(400);
+            $response['errors'] =  array(
+                'status' => '400',
+                'title' => 'Failed',
+                'detail' => 'Failed to log in'
+            );
+        }
+
+        echo json_encode($response);
         break;
     case $http->flexible_uri("/api/db/") :
         $mysql_api->set_uri("/api/db/");
         $mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record', 'id_record');
-        $mysql_api->run();
+        $mysql_api->run(true);
         break;
     case $http->flexible_uri("/api/") :
         $api->set_uri("/api/");
@@ -20,7 +43,7 @@ switch ($http->get_uri()) {
                 }
             }
             $api->set_responses('GET', 'records', $response['records']['GET']);
-        $api->run();
+        $api->run(true);
         break;
     default :
         header('Location: /api/');

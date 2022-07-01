@@ -81,11 +81,6 @@ switch ($http->get_uri()) {
             require './public/example-of-new-keys.php';
         ob_end_flush();
         break;
-    case $http->flexible_uri("/api/db/") :
-        $mysql_api->set_uri("/api/db/");
-        $mysql_api->add_allow_tables('GET', 'rcs', 'records', 'id_record');
-        $mysql_api->run();
-        break;
     default :
         http_response_code(404);
         new_record('404 Page Visit', $http->get_full_uri());

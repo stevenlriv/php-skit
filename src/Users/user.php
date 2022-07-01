@@ -24,7 +24,7 @@ class User {
     public $eth_address;
     public $sol_address;
     public $phone_number;
-    public $password;
+    public $password_hash;
     public $nonce;
     public $two_factor_verification;
     public $date;
@@ -405,7 +405,7 @@ class User {
             $this->eth_address = $this->array['eth_address'];
             $this->sol_address = $this->array['sol_address'];
             $this->phone_number = $this->array['phone_number'];
-            $this->password = $this->array['password'];
+            $this->password_hash = $this->array['password'];
             $this->nonce = $this->array['nonce'];
             $this->two_factor_verification = $this->array['two_factor_verification'];
             $this->date = $this->array['date'];

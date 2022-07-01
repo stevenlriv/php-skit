@@ -56,6 +56,22 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 - src/: all php files required for the toolset to work
 - index.php: web server router
 
+## How to work with the API
+
+- To create a new user use the new_user_with_password
+
+- To get a new token send a POST request to /api/login with your user email and password.
+
+```
+curl -X POST 'https://host2:8890/api/login' -d "email=example2&password=lol" 
+```
+
+- To access the API include the token in the header for every request
+
+```
+curl 'https://host2:8890/api/records/1' -H "Authorization: Bearer {token}"
+```
+
 ## MySQL
 
 - users:
@@ -79,6 +95,5 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 
 ## Next Integrations
 
-- PHP REST API tokens with OAUTH
 - Stripe
 - Phone Push Notifications

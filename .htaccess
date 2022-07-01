@@ -19,6 +19,9 @@ ErrorDocument 403 /not-found
 # REWRITES
 RewriteEngine On
 
+# JWT Tokens
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 # Routing Control
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -29,6 +29,7 @@ require './src/Date/date.php';
 require './src/HTTP/httpURI.php';
 require './src/HTTP/RestAPI.php';
 require './src/HTTP/MySQLRestAPI.php';
+require './src/HTTP/JWT.php';
 require './src/HTTP/SEO.php';
 
 require './src/Records/getIPRequester.php';

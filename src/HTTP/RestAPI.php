@@ -1,5 +1,6 @@
 <?php
 // @ https://jsonapi.org/format/
+
 class RestAPI {
     protected $http;
     protected $http_uri;
@@ -12,6 +13,7 @@ class RestAPI {
 
     public function __construct() {
         $this->http = new HttpURI();
+        $this->jwt = new SkitJWT();
     }
 
     function get_current_route() {
@@ -55,14 +57,27 @@ class RestAPI {
         $this->responses[$route][$method] = $response;
     }
 
-    public function run() {
+    public function run($require_auth = false) {
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Max-Age: 3600");
 
+        if($require_auth && !$this->jwt->is_authenticated()) {
+            http_response_code(403);
+
+            $response['errors'] =  array(
+                'status' => '403',
+                'title' => 'Forbidden',
+                'detail' => 'Wrong credentials'
+            );
+            echo json_encode($response);
+
+            return;
+        }
+
         if(!empty($this->allowed_routes[$this->route])) {
             header("Access-Control-Allow-Methods: {$this->_actions_allowed}");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
             switch($_SERVER['REQUEST_METHOD']) {
                 case ("GET"):
@@ -195,7 +210,6 @@ class RestAPI {
         }
         else {
             http_response_code(400);
-            header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
             $response['errors'] =  array(
                 'status' => '400',

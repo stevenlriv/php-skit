@@ -50,7 +50,8 @@ function new_user(  $status = 1,
                     $phone_number = '',
                     $password = '',
                     $nonce = '',
-                    $two_factor_verification = '') {
+                    $two_factor_verification = '',
+                    $permission = '') {
 
     $encryption = new Encryption(USER_KEY);
 
@@ -119,8 +120,9 @@ function new_user(  $status = 1,
         8 => array('column' => 'phone_number', 'value' => $phone_number),
         9 => array('column' => 'password', 'value' => $password),
         10 => array('column' => 'nonce', 'value' => $nonce),
-        11 => array('column' => 'two_factor_verification', 'value' => $two_factor_verification),
-        12 => array('column' => 'referred_by', 'value' => $referred_by)
+        11 => array('column' => 'two_factor_verification', 'value' => $two_factor_verification), 
+        12 => array('column' => 'permission', 'value' => $permission), 
+        13 => array('column' => 'referred_by', 'value' => $referred_by)
     );
 
     if(insert_mysql_data('users', $array)) {
@@ -136,7 +138,9 @@ function new_user(  $status = 1,
                     "phone_number=$phone_number", 
                     "password=$password",
                     "nonce=$nonce", 
-                    "two_factor_verification=$two_factor_verification"
+                    "two_factor_verification=$two_factor_verification",
+                    "permission=$permission",
+                    "referred_by=$referred_by"
         );
         new_record('New user', $record);
         return true;
