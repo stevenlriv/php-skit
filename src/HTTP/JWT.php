@@ -43,16 +43,24 @@ class SkitJWT {
         if(empty($matches[1])) {
             return false;
         }
-        $array = $this->decode($matches[1]);
 
-        if( $array['iss'] !== $this->http->get_domain_no_http_url() || 
-            $array['nbf'] > time() || 
-            $array['exp'] < time()) {
-            return false;
-        }
+        try {
+            $array = $this->decode($matches[1]);
 
-        if($this->user->login($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
-            return true;
+            if( 
+                $array['iss'] !== $this->http->get_domain_no_http_url() || 
+                $array['nbf'] > time() || 
+                $array['exp'] < time()
+            ) {
+                return false;
+            }
+
+            if($this->user->login($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
+                return true;
+            }
+        } 
+        catch (Exception $e) {
+            //echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
 
         return false;
