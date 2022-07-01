@@ -10,7 +10,7 @@ switch ($http->get_uri()) {
             $response['success'] =  array(
                 'status' => '200',
                 'title' => 'Success',
-                'detail' => $jwt->encode($user->email, $user->password_hash)
+                'detail' => $jwt->encode('by_password', $user->email, $user->password_hash)
             );
         }
         else {

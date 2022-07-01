@@ -328,6 +328,39 @@ class User {
 		return false;
     }
 
+    public function login_validation($login_method, $login_method_id, $login_verification) {
+        if($login_method=='by_password') {
+            $user = get_user_by_email($login_method_id);
+            $verification = $user['password'];
+        }
+        elseif($login_method=='by_email_code') {
+            $user = get_user_by_email($login_method_id);
+            $verification = $user['nonce'];
+        }
+        elseif($login_method=='by_phone_code') {
+            $user = get_user_by_phone_number($login_method_id);
+            $verification = $user['nonce'];
+        }
+        elseif($login_method=='by_eth_address') {
+            $user = get_user_by_eth_address($login_method_id);
+            $verification = $user['nonce'];     
+        }
+        elseif($login_method=='by_sol_address') {
+            $user = get_user_by_sol_address($login_method_id);
+            $verification = $user['nonce'];     
+        }
+
+        if($login_verification==$verification) {
+            $this->array = $user;
+            $this->set_user_data();
+            $this->is_logged_in = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function logout() {
 		if($this->is_logged_in) {
 			if(delete_cookie($this->cookie)) {
@@ -359,34 +392,9 @@ class User {
 
 			$login_method = $pieces[0];
 			$login_method_id = $pieces[1];
-            $login_hash = $pieces[2];
+            $login_verification = $pieces[2];
 
-            if($login_method=='by_password') {
-                $user = get_user_by_email($login_method_id);
-                $verification = $user['password'];
-            }
-            elseif($login_method=='by_email_code') {
-                $user = get_user_by_email($login_method_id);
-                $verification = $user['nonce'];
-            }
-            elseif($login_method=='by_phone_code') {
-                $user = get_user_by_phone_number($login_method_id);
-                $verification = $user['nonce'];
-            }
-            elseif($login_method=='by_eth_address') {
-                $user = get_user_by_eth_address($login_method_id);
-                $verification = $user['nonce'];     
-            }
-            elseif($login_method=='by_sol_address') {
-                $user = get_user_by_sol_address($login_method_id);
-                $verification = $user['nonce'];     
-            }
-
-            if($login_hash==$verification) {
-                $this->array = $user;
-                $this->set_user_data();
-                $this->is_logged_in = true;
-
+            if($this->login_validation($login_method, $login_method_id, $login_verification)) {
                 return true;
             }
 		}

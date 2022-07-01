@@ -18,8 +18,8 @@ class SkitJWT {
         $this->encryption = new Encryption(USER_KEY);
     }
 
-    public function encode($user_email, $password_hash, $expiration_in_minutes = 60*24*30) {
-        $this->payload($user_email, $password_hash, $expiration_in_minutes);
+    public function encode($login_method, $login_method_id, $login_verification, $expiration_in_minutes = 60*24*30) {
+        $this->payload($login_method, $login_method_id, $login_verification, $expiration_in_minutes);
 
         if($token = JWT::encode($this->payload, base64_encode(GENERAL_KEY), 'HS512')) {
             return $token;
@@ -51,7 +51,7 @@ class SkitJWT {
             return false;
         }
 
-        if($array['password_hash']==(get_user_by_email($array['user_email'])['password'])) {
+        if($this->user->login_validation($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
             return true;
         }
 
@@ -61,15 +61,16 @@ class SkitJWT {
     private function decode($token) {
         if($object = JWT::decode($token, new Key(base64_encode(GENERAL_KEY), 'HS512'))) {
             $array = (array) $object;
-            $array['user_email'] = $this->encryption->text_decrypt($array['user_email']);
-            $array['password_hash'] = $this->encryption->text_decrypt($array['password_hash']);
+            $array['login_method'] = $this->encryption->text_decrypt($array['login_method']);
+            $array['login_method_id'] = $this->encryption->text_decrypt($array['login_method_id']);
+            $array['login_verification'] = $this->encryption->text_decrypt($array['login_verification']);
 
             return $array;
         }
         return false;
     }
 
-    private function payload($user_email, $password_hash, $expiration_in_minutes = '') {
+    private function payload($login_method, $login_method_id, $login_verification, $expiration_in_minutes = '') {
         if($expiration_in_minutes=='') {
             $expiration_in_minutes = 60*24; // 24 hours by default
         }
@@ -79,8 +80,9 @@ class SkitJWT {
             'iat'  => time(),           
             'nbf'  => time(),   
             'exp'  => time()+(60*$expiration_in_minutes),                          
-            'user_email' => $this->encryption->text_encrypt($user_email),                   
-            'password_hash' => $this->encryption->text_encrypt($password_hash),          
+            'login_method' => $this->encryption->text_encrypt($login_method),  
+            'login_method_id' => $this->encryption->text_encrypt($login_method_id),                     
+            'login_verification' => $this->encryption->text_encrypt($login_verification),          
         ];
     }
 }
