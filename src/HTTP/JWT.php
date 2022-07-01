@@ -51,7 +51,7 @@ class SkitJWT {
             return false;
         }
 
-        if($this->user->login_validation($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
+        if($this->user->login($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
             return true;
         }
 

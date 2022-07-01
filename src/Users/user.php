@@ -328,7 +328,7 @@ class User {
 		return false;
     }
 
-    public function login_validation($login_method, $login_method_id, $login_verification) {
+    public function login($login_method, $login_method_id, $login_verification) {
         if($login_method=='by_password') {
             $user = get_user_by_email($login_method_id);
             $verification = $user['password'];
@@ -394,7 +394,7 @@ class User {
 			$login_method_id = $pieces[1];
             $login_verification = $pieces[2];
 
-            if($this->login_validation($login_method, $login_method_id, $login_verification)) {
+            if($this->login($login_method, $login_method_id, $login_verification)) {
                 return true;
             }
 		}
