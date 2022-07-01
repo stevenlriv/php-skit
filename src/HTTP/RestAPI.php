@@ -4,7 +4,7 @@
 class RestAPI {
     protected $http;
     protected $http_uri;
-    protected $_actions_allowed;
+    protected $_actions_allowed = array();
     protected $allowed_routes = array();
     protected $actions_allowed = array();
     protected $responses = array();
@@ -22,6 +22,17 @@ class RestAPI {
 
     function get_current_route_value() {
         return $this->route_value;
+    }
+
+    public function set_headers($methods = '') {
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Max-Age: 3600");
+
+        if($methods!='') {
+            header("Access-Control-Allow-Methods: $methods");
+        }
     }
 
     public function set_uri($uri) {
@@ -58,10 +69,11 @@ class RestAPI {
     }
 
     public function run($require_auth = false) {
-        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
-        header("Access-Control-Max-Age: 3600");
+        $methods = '';
+        if(!empty($this->_actions_allowed[$this->route])) {
+            $methods = $this->_actions_allowed[$this->route];
+        }
+        $this->set_headers($methods);
 
         if($require_auth && !$this->jwt->is_authenticated()) {
             http_response_code(403);
@@ -77,8 +89,6 @@ class RestAPI {
         }
 
         if(!empty($this->allowed_routes[$this->route])) {
-            header("Access-Control-Allow-Methods: {$this->_actions_allowed}");
-
             switch($_SERVER['REQUEST_METHOD']) {
                 case ("GET"):
                     // curl 'https://host2:8890/api/usr_meta/1'  
@@ -221,23 +231,25 @@ class RestAPI {
     }
 
     public function add_allow_routes($actions_allowed, $public_name, $route) {
+        $this->_actions_allowed[$public_name] = '';
+        
         if((substr_count($actions_allowed, "GET") > 0)) {
             $this->actions_allowed[$public_name]['GET'] = true;
-            $this->_actions_allowed = $this->_actions_allowed.'GET,';
+            $this->_actions_allowed[$public_name] = $this->_actions_allowed[$public_name].'GET,';
         }
         if((substr_count($actions_allowed, "POST") > 0)) {
             $this->actions_allowed[$public_name]['POST'] = true;
-            $this->_actions_allowed = $this->_actions_allowed.'POST,';
+            $this->_actions_allowed[$public_name] = $this->_actions_allowed[$public_name].'POST,';
         }
         if((substr_count($actions_allowed, "PUT") > 0)) {
             $this->actions_allowed[$public_name]['PUT'] = true;
-            $this->_actions_allowed = $this->_actions_allowed.'PUT,';
+            $this->_actions_allowed[$public_name] = $this->_actions_allowed[$public_name].'PUT,';
         }
         if((substr_count($actions_allowed, "DELETE") > 0)) {
             $this->actions_allowed[$public_name]['DELETE'] = true;
-            $this->_actions_allowed = $this->_actions_allowed.'DELETE,';
+            $this->_actions_allowed[$public_name] = $this->_actions_allowed[$public_name].'DELETE,';
         }
-        $this->_actions_allowed = substr($this->_actions_allowed, 0, -1);
+        $this->_actions_allowed[$public_name] = substr($this->_actions_allowed[$public_name], 0, -1);
         $this->allowed_routes[$public_name] = $route;
     }
 }

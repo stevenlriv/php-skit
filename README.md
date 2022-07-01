@@ -95,5 +95,5 @@ curl 'https://host2:8890/api/records/1' -H "Authorization: Bearer {token}"
 
 ## Next Integrations
 
-- Stripe
+- Stripe (Payments & Recurrent Subscriptions)
 - Phone Push Notifications

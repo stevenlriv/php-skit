@@ -3,11 +3,7 @@ require './src/Core/core.php';
 
 switch ($http->get_uri()) {
     case '/api/login' :
-        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
-        header("Access-Control-Max-Age: 3600");
-        header("Access-Control-Allow-Methods: POST");
+        $api->set_headers('POST');
 
         $response = array();
         if(!empty($_POST['email']) && !empty($_POST['password']) && $user->login_with_password($_POST['email'], $_POST['password'])) {
