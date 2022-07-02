@@ -89,6 +89,12 @@ curl 'https://host2:8890/api/records/1' -H "Authorization: Bearer {token}"
 - records: records any data action in the script
 - crons: cronjobs created
 
+## User referrals
+
+- ?referrer=[encrypted_id_user]
+- To show the id you will call $user->get_referral_code()
+- To get the referrer user data use get_user_by_referral()
+
 ## Other Tools
 
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)

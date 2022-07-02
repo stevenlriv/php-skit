@@ -10,6 +10,7 @@ class SkitJWT {
     private $payload;
     private $user;
     private $encryption;
+    private $expiration_in_seconds = 60*60*24*30;
 
     public function __construct() {
         $this->http = new HttpURI();
@@ -18,8 +19,8 @@ class SkitJWT {
         $this->encryption = new Encryption(USER_KEY);
     }
 
-    public function encode($login_method, $login_method_id, $login_verification, $expiration_in_minutes = 60*24*30) {
-        $this->payload($login_method, $login_method_id, $login_verification, $expiration_in_minutes);
+    public function encode($login_method, $login_method_id, $login_verification) {
+        $this->payload($login_method, $login_method_id, $login_verification, $this->expiration_in_seconds);
 
         if($token = JWT::encode($this->payload, base64_encode(GENERAL_KEY), 'HS512')) {
             return $token;
@@ -62,7 +63,6 @@ class SkitJWT {
         catch (Exception $e) {
             //echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-
         return false;
     }
 
@@ -78,16 +78,16 @@ class SkitJWT {
         return false;
     }
 
-    private function payload($login_method, $login_method_id, $login_verification, $expiration_in_minutes = '') {
-        if($expiration_in_minutes=='') {
-            $expiration_in_minutes = 60*24; // 24 hours by default
+    private function payload($login_method, $login_method_id, $login_verification, $expiration_in_seconds = '') {
+        if($expiration_in_seconds=='') {
+            $expiration_in_seconds = 60*60*24;
         }
 
         $this->payload = [
             'iss'  => $this->http->get_domain_no_http_url(),          
             'iat'  => time(),           
             'nbf'  => time(),   
-            'exp'  => time()+(60*$expiration_in_minutes),                          
+            'exp'  => time()+$expiration_in_seconds,                          
             'login_method' => $this->encryption->text_encrypt($login_method),  
             'login_method_id' => $this->encryption->text_encrypt($login_method_id),                     
             'login_verification' => $this->encryption->text_encrypt($login_verification),          

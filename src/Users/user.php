@@ -11,6 +11,7 @@ class User {
     private $is_logged_in = false;
     private $cookie = 'UEMP';
     private $cookie_referral = 'USRF';
+    private $cookie_expiration = 60*60*24*45;
     private $array;
     private $encryption;
 
@@ -32,8 +33,10 @@ class User {
     public function __construct($id_user = '') {
         $this->encryption = new Encryption($this->encryption_key);
 
+        // Lets check if the user is already logged in
         $this->is_user_cookie();
 
+        // If not logged in, and the url is an email + token
         if(!$this->is_logged_in && isset($_GET['email']) && isset($_GET['token'])) {
             $encryption = new Encryption(GENERAL_KEY);
             $nonce = $encryption->text_decrypt($_GET['token']);
@@ -43,13 +46,14 @@ class User {
             $this->login_with_email_code($_GET['email'], $code);
         }
 
+        // Lets set up a referrer cookie
         if(!$this->is_logged_in && isset($_GET['referrer'])) {
             $user = get_user_by_referral($_GET['referrer']);
 
             if($user) {
                 if(!get_cookie($this->cookie_referral)) {
                     new_record('Visitor referred by user', $user['id_user']);
-                    new_cookie($this->cookie_referral, $user['id_user'], time()+60*60*24*30);
+                    new_cookie($this->cookie_referral, $user['id_user'], time()+$this->cookie_expiration);
                 }
             }
         }
@@ -94,12 +98,9 @@ class User {
             if($this->encryption->validate_user_password($password, $user['password'])) {
                 $this->encryption->rehash_password($user['id_user'], $password, $user['password']);
 
-				if(new_cookie($this->cookie, 'by_password|'.$user['email'].'|'.$user['password'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_password|'.$user['email'].'|'.$user['password'], time()+$this->cookie_expiration)) {
                     new_record('User login with password', $user['id_user']);
-
-                    $this->array = $user;
-                    $this->set_user_data();
-                    $this->is_logged_in = true;
+                    $this->login_house_keeping($user);
 
 					return true;
                 }
@@ -116,12 +117,9 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_email_code|'.$user['email'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_email_code|'.$user['email'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
                     new_record('User login with email and code', $user['id_user']);
-
-                    $this->array = $user;
-                    $this->set_user_data();
-                    $this->is_logged_in = true;
+                    $this->login_house_keeping($user);
 
 					return true;
                 }
@@ -138,12 +136,9 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
                     new_record('User login with phone and code', $user['id_user']);
-
-                    $this->array = $user;
-                    $this->set_user_data();
-                    $this->is_logged_in = true;
+                    $this->login_house_keeping($user);
 
 					return true;
                 }
@@ -163,12 +158,9 @@ class User {
             if($encryption->verify_ethereum_signature($code, $signature, $eth_address)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_eth_address|'.$user['eth_address'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_eth_address|'.$user['eth_address'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
                     new_record('User login with eth_address', $user['id_user']);
-
-                    $this->array = $user;
-                    $this->set_user_data();
-                    $this->is_logged_in = true;
+                    $this->login_house_keeping($user);
 
 					return true;
                 }
@@ -188,12 +180,9 @@ class User {
             if($encryption->verify_sol_signature($code, $signature, $sol_address)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_sol_address|'.$user['sol_address'].'|'.$user['nonce'], time()+60*60*24*45)) {
+				if(new_cookie($this->cookie, 'by_sol_address|'.$user['sol_address'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
                     new_record('User login with sol_address', $user['id_user']);
-
-                    $this->array = $user;
-                    $this->set_user_data();
-                    $this->is_logged_in = true;
+                    $this->login_house_keeping($user);
 
 					return true;
                 }
@@ -328,6 +317,17 @@ class User {
 		return false;
     }
 
+    public function get_referral_code($id_user = '') {
+        if($id_user == '' && $this->is_logged_in) {
+            $id_user = $this->id_user;
+        }
+
+        $encryption = new Encryption(GENERAL_KEY);
+        $encrypted_id_user = $encryption->text_encrypt($id_user);
+
+        return $encrypted_id_user;
+    }
+
     public function login($login_method, $login_method_id, $login_verification) {
         if($login_method=='by_password') {
             $user = get_user_by_email($login_method_id);
@@ -351,10 +351,7 @@ class User {
         }
 
         if($login_verification==$verification) {
-            $this->array = $user;
-            $this->set_user_data();
-            $this->is_logged_in = true;
-
+            $this->login_house_keeping($user);
             return true;
         }
 
@@ -370,6 +367,12 @@ class User {
 		}
 
 		return false;
+    }
+
+    private function login_house_keeping($user) {
+        $this->array = $user;
+        $this->set_user_data();
+        $this->is_logged_in = true;
     }
 
     private function validate_code($nonce, $input) {
