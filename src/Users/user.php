@@ -170,28 +170,6 @@ class User {
 		return false;
     }
 
-    public function login_with_sol_address($sol_address, $signature) {
-        $user = get_user_by_sol_address($sol_address);
-
-		if($user) {
-            $pieces = $this->get_nonce($user['nonce']);
-            $code = $pieces[0];
-
-            if($encryption->verify_sol_signature($code, $signature, $sol_address)) {
-                update_nonce($user['id_user']);
-                $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_sol_address|'.$user['sol_address'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
-                    new_record('User login with sol_address', $user['id_user']);
-                    $this->login_house_keeping($user);
-
-					return true;
-                }
-            }
-		}
-
-		return false;
-    }
-
     public function send_email_with_code($email) {
         $user = get_user_by_email($email);
 

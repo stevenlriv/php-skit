@@ -49,17 +49,6 @@ class Encryption {
     
         return $text->getString();
     }
-    
-    public function verify_sol_signature($message, $signature, $address) {
-        //$message = pack("c*", ...$message);
-        //$address = unpack('c*', $address); //address to bytes
-
-        if(sodium_crypto_sign_verify_detached($message, $signature, $address)) {
-            return true;
-        }
-        
-        return false;
-    }
 
     public function verify_ethereum_signature($message, $signature, $address) {
         $msglen = strlen($message);
