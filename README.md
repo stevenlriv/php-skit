@@ -63,13 +63,13 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 - To get a new token send a POST request to /api/login with your user email and password.
 
 ```
-curl -X POST 'https://host2:8890/api/login' -d "email=example2&password=lol" 
+curl -X POST 'https://host2:8890/api/v1/login' -d "email=example2&password=lol" 
 ```
 
 - To access the API include the token in the header for every request
 
 ```
-curl 'https://host2:8890/api/records/1' -H "Authorization: Bearer {token}"
+curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 ```
 
 ## MySQL

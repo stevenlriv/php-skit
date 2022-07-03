@@ -27,6 +27,17 @@ class Cache {
         return false;
     }
 
+    public function get_string($name) {
+        $key = $this->generate_key($name);
+        $string = $this->memcached->get($key);
+
+        if($string) {
+            return $string;
+        }
+
+        return false;
+    }
+
     public function set($name, $array, $duration_in_seconds) {
         $key = $this->generate_key($name);
         $json = json_encode($array);
@@ -36,6 +47,28 @@ class Cache {
         }
 
         return false;
+    }
+
+    public function set_string($name, $string, $duration_in_seconds) {
+        $key = $this->generate_key($name);
+
+        if($this->memcached->set($key, $string, $duration_in_seconds)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function increment($name) {
+        $key = $this->generate_key($name);
+
+        $this->memcached->increment($key);
+    }
+
+    public function delete($name) {
+        $key = $this->generate_key($name);
+
+        $this->memcached->delete($key);
     }
 
     public function delete_all() {

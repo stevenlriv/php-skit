@@ -11,6 +11,7 @@ class SkitJWT {
     private $user;
     private $encryption;
     private $expiration_in_seconds = 60*60*24*30;
+    public $array_token = array();
 
     public function __construct() {
         $this->http = new HttpURI();
@@ -46,17 +47,17 @@ class SkitJWT {
         }
 
         try {
-            $array = $this->decode($matches[1]);
+            $this->array_token = $this->decode($matches[1]);
 
             if( 
-                $array['iss'] !== $this->http->get_domain_no_http_url() || 
-                $array['nbf'] > time() || 
-                $array['exp'] < time()
+                $this->array_token['iss'] !== $this->http->get_domain_no_http_url() || 
+                $this->array_token['nbf'] > time() || 
+                $this->array_token['exp'] < time()
             ) {
                 return false;
             }
 
-            if($this->user->login($array['login_method'], $array['login_method_id'], $array['login_verification'])) {
+            if($this->user->login($this->array_token['login_method'], $this->array_token['login_method_id'], $this->array_token['login_verification'])) {
                 return true;
             }
         } 
