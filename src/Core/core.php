@@ -1,6 +1,5 @@
 <?php
 define ( 'CORE', true );
-if(!isset($_SESSION)) { session_start(); }
 
 require './src/Core/debug.php';
 require './src/vendor/autoload.php';
