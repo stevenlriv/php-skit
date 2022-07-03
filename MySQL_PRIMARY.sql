@@ -50,19 +50,6 @@ CREATE TABLE `crons` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `records`
---
-
-CREATE TABLE `records` (
-  `id_record` bigint(20) NOT NULL,
-  `short_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -115,12 +102,6 @@ ALTER TABLE `crons`
   ADD PRIMARY KEY (`id_cron`);
 
 --
--- Indexes for table `records`
---
-ALTER TABLE `records`
-  ADD PRIMARY KEY (`id_record`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -147,12 +128,6 @@ ALTER TABLE `configs`
 --
 ALTER TABLE `crons`
   MODIFY `id_cron` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `records`
---
-ALTER TABLE `records`
-  MODIFY `id_record` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

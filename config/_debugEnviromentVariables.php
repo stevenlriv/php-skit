@@ -1,10 +1,17 @@
 <?php
-// Mysql database connection details
+// Primary Mysql database connection details
 putenv('MYSQL_HOST=localhost');
 putenv('MYSQL_USER=root');
 putenv('MYSQL_PASSWORD=root');
 putenv('MYSQL_DATABASE=new_db');
 putenv('MYSQL_PORT=8889');
+
+// Secondary Mysql database connection details
+putenv('MYSQL_HOST_SECONDARY=localhost');
+putenv('MYSQL_USER_SECONDARY=root');
+putenv('MYSQL_PASSWORD_SECONDARY=root');
+putenv('MYSQL_DATABASE_SECONDARY=secondary_db');
+putenv('MYSQL_PORT_SECONDARY=8889');
 
 // Send grid or any other SMTP provider
 putenv('SMTP=true');

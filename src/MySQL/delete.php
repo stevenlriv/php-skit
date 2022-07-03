@@ -18,7 +18,11 @@
  *			)
  */
 function delete_mysql_data($table_name, $extra = '', $query = '') {
-	global $db;
+	global $db, $db_secondary, $use_db_secondary;
+
+	if($use_db_secondary) {
+		$db = $db_secondary;
+	}
 
 	$bind_param_type = '';
 	$bind_param_values = array();

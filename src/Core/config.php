@@ -5,6 +5,12 @@ define ( 'MYSQL_PASSWORD', getenv('MYSQL_PASSWORD') );
 define ( 'MYSQL_DATABASE', getenv('MYSQL_DATABASE') );
 define ( 'MYSQL_PORT', getenv('MYSQL_PORT') );
 
+define ( 'MYSQL_HOST_SECONDARY', getenv('MYSQL_HOST_SECONDARY') );
+define ( 'MYSQL_USER_SECONDARY', getenv('MYSQL_USER_SECONDARY') );
+define ( 'MYSQL_PASSWORD_SECONDARY', getenv('MYSQL_PASSWORD_SECONDARY') );
+define ( 'MYSQL_DATABASE_SECONDARY', getenv('MYSQL_DATABASE_SECONDARY') );
+define ( 'MYSQL_PORT_SECONDARY', getenv('MYSQL_PORT_SECONDARY') );
+
 define( 'DO_KEY', getenv('DO_KEY') );
 define( 'DO_SECRETS', getenv('DO_SECRETS') );
 define( 'DO_REGION', getenv('DO_REGION') );

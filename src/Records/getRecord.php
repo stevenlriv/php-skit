@@ -12,6 +12,9 @@ function get_record($column, $value, $memcached_expiration = '') {
 }
 
 function get_all_records($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
+    global $use_db_secondary;
+
+    $use_db_secondary = true;
     return select_mysql_data('records', $type, $extra, $query, $memcached_expiration);
 }
 ?>

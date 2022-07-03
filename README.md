@@ -14,7 +14,7 @@ Install php-skit on an app deployment enviroment like Digital Ocean. Follow the 
 
 3. Update the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-4. Upload MySQL.sql to your database 
+4. Upload MySQL_PRIMARY.sql to your primary database and MySQL_SECONDARY.sql to your secondary database
 
 5. Remove "config/_debugEnviromentVariables.php" from the repo
 
@@ -34,7 +34,7 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 2. Update the configuration variables that are not enviroment variables. They can be found on "config/general.php"
 
-3. Upload MySQL.sql to your database
+3. Upload MySQL_PRIMARY.sql to your primary database and MySQL_SECONDARY.sql to your secondary database
 
 4. Edit all the enviroment variables on "config/_debugEnviromentVariables.php"
 
@@ -56,6 +56,28 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 - src/: all php files required for the toolset to work
 - index.php: web server router
 
+### MySQL Structure
+
+Primary Database
+
+- users:
+        - status:
+                - 1: active users
+        - refered_by: id user that refered this person
+- users_meta: metadata for the users
+        - cookies_track: used to track messages hidden showed to users
+        - time_zone: users time zone
+        - profile_bio
+        - profile_image
+        - email_verified: used to verify the user email verification on demand
+        - phone_number_verified: used to get the status of the user phone verification on demand
+- configs: script configuration that could be updated using an UI in the frontend
+- crons: cronjobs created
+
+Secondary Database
+
+- records: records any data action in the script. This section is added to the secondary database to avoid data load in the first one.
+
 ### For an API Project you will need to remove
 
 - Folders
@@ -67,7 +89,7 @@ Key generation code is in public/example-of-new-keys.php and you can access them
         - MySQL.sql
         - README.md
 - MySQL
-        - crons
+        - remove 'crons' from main database
 
 ## How to work with the API
 
@@ -84,23 +106,6 @@ curl -X POST 'https://host2:8890/api/v1/login' -d "email=example2&password=lol"
 ```
 curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 ```
-
-## MySQL
-
-- users:
-        - status:
-                - 1: active users
-        - refered_by: id user that refered this person
-- users_meta: metadata for the users
-        - cookies_track: used to track messages hidden showed to users
-        - time_zone: users time zone
-        - profile_bio
-        - profile_image
-        - email_verified: used to verify the user email verification on demand
-        - phone_number_verified: used to get the status of the user phone verification on demand
-- configs: script configuration that could be updated using an UI in the frontend
-- records: records any data action in the script
-- crons: cronjobs created
 
 ## User referrals
 
@@ -119,6 +124,11 @@ curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
 ## Next Integrations
+
+- memcache for get request 5-10 seconds
+
+- audit all my encryption resources for authentication, not just encryption
+- double check my user auth verification proccess
 
 - Stripe (Payments & Recurrent Subscriptions)
 - Phone Push Notifications

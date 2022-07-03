@@ -2,14 +2,6 @@
 require './src/Core/core.php';
 
 switch ($http->get_uri()) {
-    case '/' :
-        if(new_user_with_phone_code('+17875183880')) {
-            echo 'yes';
-        }
-        else {
-            echo 'no';
-        }
-        break;
     case $http->flexible_uri("/api/v1/logins") :
         $api->no_auth_needed();
         $api->set_uri("/api/v1/logins");

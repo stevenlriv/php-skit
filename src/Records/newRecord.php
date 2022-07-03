@@ -1,5 +1,7 @@
 <?php
 function new_record($short_description, $value) {
+    global $use_db_secondary;
+    
     $json = json_encode( 
         array(
             'ip_requester' => get_ip_requester(),
@@ -11,6 +13,7 @@ function new_record($short_description, $value) {
         1 => array('column' => 'value', 'value' => $json),
     );
 
+    $use_db_secondary = true;
     if(insert_mysql_data('records', $array)) {
         return true;
     }

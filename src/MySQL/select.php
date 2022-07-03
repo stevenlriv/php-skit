@@ -21,7 +21,11 @@
  *			)
  */
 function select_mysql_data($table_name, $type = '', $extra = '', $query = '', $memcached_expiration = '') {
-	global $db;
+	global $db, $db_secondary, $use_db_secondary;
+
+	if($use_db_secondary) {
+		$db = $db_secondary;
+	}
 
 	$bind_param_type = '';
 	$bind_param_values = array();
