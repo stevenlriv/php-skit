@@ -15,7 +15,8 @@ function get_html_element_by_id($website_url, $html_id) {
     $page->loadHTML($html);
 
     $text = $page->getElementById($html_id);
+    $text = xss_prevention($text->nodeValue);
 
-    return $text->nodeValue;
+    return $text;
 }
 ?>

@@ -23,11 +23,12 @@ class User {
     public $username;
     public $email;
     public $eth_address;
-    public $sol_address;
     public $phone_number;
     public $password_hash;
     public $nonce;
     public $two_factor_verification;
+    public $permission;
+    public $referred_by;
     public $date;
 
     public function __construct($id_user = '') {
@@ -323,10 +324,6 @@ class User {
             $user = get_user_by_eth_address($login_method_id);
             $verification = $user['nonce'];     
         }
-        elseif($login_method=='by_sol_address') {
-            $user = get_user_by_sol_address($login_method_id);
-            $verification = $user['nonce'];     
-        }
 
         if($login_verification==$verification) {
             $this->login_house_keeping($user);
@@ -392,11 +389,12 @@ class User {
             $this->username = $this->array['username'];
             $this->email = $this->array['email'];
             $this->eth_address = $this->array['eth_address'];
-            $this->sol_address = $this->array['sol_address'];
             $this->phone_number = $this->array['phone_number'];
             $this->password_hash = $this->array['password'];
             $this->nonce = $this->array['nonce'];
             $this->two_factor_verification = $this->array['two_factor_verification'];
+            $this->permission = $this->array['permission'];
+            $this->referred_by = $this->array['referred_by'];
             $this->date = $this->array['date'];
         }
     }

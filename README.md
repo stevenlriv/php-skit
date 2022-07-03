@@ -42,7 +42,7 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 6. Done!
 
-## How to generate new keys
+### How to generate new keys
 
 Key generation must be done in a local server and added directly to your production app development enviroment. 
 
@@ -55,6 +55,19 @@ Key generation code is in public/example-of-new-keys.php and you can access them
 - public/: php/html files that are included from index.php and templates for some classes
 - src/: all php files required for the toolset to work
 - index.php: web server router
+
+### For an API Project you will need to remove
+
+- Folders
+        - cron/
+        - public/: all inside of it and leave it empty for your API codes
+- Files
+        - index-back-front.php
+        - LICENSE
+        - MySQL.sql
+        - README.md
+- MySQL
+        - crons
 
 ## How to work with the API
 
@@ -90,6 +103,12 @@ curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 - crons: cronjobs created
 
 ## User referrals
+
+### Using API
+
+- on the function new_user you can indicate the referral as an id_user
+
+### Using non-API way
 
 - ?referrer=[encrypted_id_user]
 - To show the id you will call $user->get_referral_code()

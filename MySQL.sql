@@ -75,7 +75,6 @@ CREATE TABLE `users` (
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `eth_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sol_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `nonce` text COLLATE utf8mb4_unicode_ci NOT NULL,

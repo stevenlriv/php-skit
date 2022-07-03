@@ -15,6 +15,14 @@ Encryption/encryption.php
 
 <!--
 Users/user.php
+    public $sol_address;
+
+        elseif($login_method=='by_sol_address') {
+            $user = get_user_by_sol_address($login_method_id);
+            $verification = $user['nonce'];     
+        }
+
+                    $this->sol_address = $this->array['sol_address'];
 
     public function login_with_sol_address($sol_address, $signature) {
         $user = get_user_by_sol_address($sol_address);
@@ -37,6 +45,29 @@ Users/user.php
 
 		return false;
     }
+-->
+
+<!--
+    User/getUser.php
+
+function get_user_by_sol_address($value, $memcached_expiration = '') {
+    return get_user('sol_address', $value, $memcached_expiration);
+}
+-->
+
+<!--
+    User/newUser.php
+
+
+-->
+
+<!--
+    User/updateUser.php
+
+
+
+                    "sol_address=$sol_address",
+
 -->
 
 <a href="#" onclick="sol()">Solana Connect</a>

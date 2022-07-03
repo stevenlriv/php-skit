@@ -8,7 +8,7 @@ function remove_two_factor($id_user) {
 }
 
 function update_two_factor_verification($id_user, $two_factor_verification) {
-    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', '', $two_factor_verification)) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', $two_factor_verification)) {
         return true;
     }
 
@@ -16,7 +16,7 @@ function update_two_factor_verification($id_user, $two_factor_verification) {
 }
 
 function update_password($id_user, $password) {
-    if(update_user($id_user, '', '', '', '', '', '', '', '', '', $password, '', '')) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', $password, '', '')) {
         return true;
     }
 
@@ -25,7 +25,7 @@ function update_password($id_user, $password) {
 
 // used for email/phone code verification and web3 wallets login
 function update_nonce($id_user) {
-    if(update_user($id_user, '', '', '', '', '', '', '', '', '', '', generate_not_secure_random_numbers(6), '')) {
+    if(update_user($id_user, '', '', '', '', '', '', '', '', '', generate_not_secure_random_numbers(6), '')) {
         return true;
     }
 
@@ -40,7 +40,6 @@ function update_user(   $id_user = '',
                         $username = '', 
                         $email = '', 
                         $eth_address = '',
-                        $sol_address = '',
                         $phone_number = '',
                         $password = '',
                         $nonce = '',
@@ -83,12 +82,6 @@ function update_user(   $id_user = '',
         }
         $array[] = array('column' => 'eth_address', 'value' => $eth_address);
     }
-    if($sol_address!='') {
-        if(get_user_by_sol_address($sol_address) && get_user_by_sol_address($sol_address)['id_user']!=$id_user) {
-            return false;
-        }
-        $array[] = array('column' => 'sol_address', 'value' => $sol_address);
-    }
     if($phone_number!='') {
         $phone_number = clean_phone_number($phone_number);
         if(get_user_by_phone_number($phone_number) && get_user_by_phone_number($phone_number)['id_user']!=$id_user) {
@@ -126,7 +119,6 @@ function update_user(   $id_user = '',
                     "username=$username", 
                     "email=$email",
                     "eth_address=$eth_address", 
-                    "sol_address=$sol_address",
                     "phone_number=$phone_number", 
                     "password=$password",
                     "nonce=$nonce", 

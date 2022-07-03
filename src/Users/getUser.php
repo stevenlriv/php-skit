@@ -6,10 +6,6 @@ function get_user_by_referral($value, $memcached_expiration = '') {
     return get_user('id_user', $value, $memcached_expiration);
 }
 
-function get_user_by_sol_address($value, $memcached_expiration = '') {
-    return get_user('sol_address', $value, $memcached_expiration);
-}
-
 function get_user_by_eth_address($value, $memcached_expiration = '') {
     return get_user('eth_address', $value, $memcached_expiration);
 }

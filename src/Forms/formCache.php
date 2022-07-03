@@ -7,12 +7,21 @@ class FormCache {
         $this->form_name = $form_name;
 
         echo '<script>
+        function htmlEncode(str){
+            return String(str).replace(/[^\w. ]/gi, function(c){
+                return "&#"+c.charCodeAt(0)+";";
+            });
+        }
+
         function storeData(input_name, data) {
+            data = htmlEncode(data);
             window.localStorage.setItem(input_name, data);
         }
 
         function getData(input_name) {
-            return window.localStorage.getItem(input_name); 
+            data = window.localStorage.getItem(input_name); 
+            data = htmlEncode(data);
+            return data;
         }
 
         function removeData(input_name) { 
