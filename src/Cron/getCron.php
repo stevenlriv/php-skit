@@ -12,6 +12,9 @@ function get_cron($column, $value, $memcached_expiration = '') {
 }
 
 function get_all_crons($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
+    global $use_db_secondary;
+
+    $use_db_secondary = true;
     return select_mysql_data('crons', $type, $extra, $query, $memcached_expiration);
 }
 ?>

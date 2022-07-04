@@ -1,5 +1,7 @@
 <?php
 function new_cron($name, $next_run) {
+    global $use_db_secondary;
+    
     if(get_cron_by_name($name)) {
         return false;
     }
@@ -9,6 +11,7 @@ function new_cron($name, $next_run) {
         1 => array('column' => 'next_run', 'value' => $next_run),
     );
 
+    $use_db_secondary = true;
     if(insert_mysql_data('crons', $array)) {
         return true;
     }

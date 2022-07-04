@@ -87,12 +87,12 @@ function new_user(  $status = 1,
         $password = $encryption->generate_user_password($password);
     }
     if($two_factor_verification!='') {
-        $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
+        $two_factor_verification = $encryption->encrypt($two_factor_verification);
     }
 
     if($nonce=='') {
         $nonce = generate_not_secure_random_numbers(6).'|'.time();
-        $nonce = $encryption->text_encrypt($nonce);
+        $nonce = $encryption->encrypt($nonce);
     }
 
     $array = array(

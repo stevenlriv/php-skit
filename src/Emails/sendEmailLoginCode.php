@@ -1,8 +1,8 @@
 <?php
 function send_email_login_code($to_email, $to_name, $nonce, $code) {
     $http = new HttpURI();
-    $encryption = new Encryption(GENERAL_KEY);
-    $token = $encryption->text_encrypt($nonce);
+    $encryption = new Encryption();
+    $token = $encryption->encrypt($nonce);
 
     $url = $http->get_domain_url().'/login?email='.$to_email.'&token='.$token;
 

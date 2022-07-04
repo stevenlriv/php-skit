@@ -34,6 +34,17 @@ CREATE TABLE `records` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `crons`
+--
+
+CREATE TABLE `crons` (
+  `id_cron` bigint(20) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `next_run` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -43,10 +54,22 @@ ALTER TABLE `records`
   ADD PRIMARY KEY (`id_record`);
 
 --
+-- Indexes for table `crons`
+--
+ALTER TABLE `crons`
+  ADD PRIMARY KEY (`id_cron`);
+
+--
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
   MODIFY `id_record` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `crons`
+--
+ALTER TABLE `crons`
+  MODIFY `id_cron` bigint(20) NOT NULL AUTO_INCREMENT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

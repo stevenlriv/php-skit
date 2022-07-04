@@ -6,6 +6,7 @@ class RestAPI {
     protected $http;
     protected $http_uri;
     protected $cache;
+    protected $cache_duration_in_seconds = 5;
     protected $_actions_allowed = array();
     protected $allowed_routes = array();
     protected $actions_allowed = array();
@@ -22,6 +23,10 @@ class RestAPI {
         $this->http = new HttpURI();
         $this->jwt = new SkitJWT();
         $this->cache = new Cache('rest_api', 'api_');
+    }
+
+    public function no_auth_needed() {
+        $this->require_auth = false;
     }
 
     function get_current_route() {
@@ -67,15 +72,17 @@ class RestAPI {
         $this->route_value = $value;
     }
 
-    public function set_responses($method, $route, $response, $message_success = '', $message_errors = '') {
+    public function set_messages($method, $route, $success, $errors) {
+        $this->responses_messages[$route][$method]['success'] = $success;
+        $this->responses_messages[$route][$method]['errors'] = $errors;
+    }
+    
+    public function set_responses($method, $route, $response) {
         $this->responses[$route][$method] = $response;
 
-        $this->responses_messages[$route][$method]['success'] = $message_success;
-        $this->responses_messages[$route][$method]['errors'] = $message_errors;
-    }
-
-    public function no_auth_needed() {
-        $this->require_auth = false;
+        if(!empty($this->responses_messages[$route][$method]['success']) && $this->responses_messages[$route][$method]['success']=='[response]') {
+            $this->responses_messages[$route][$method]['success'] = $this->responses[$route][$method];
+        }
     }
 
     public function run() {
@@ -83,7 +90,7 @@ class RestAPI {
 
         ob_start('ob_gzhandler');
 
-        if(!$this->is_https() || !$this->is_auth() || $this->is_rate_limitting()) {
+        if(!$this->is_https() || $this->is_rate_limitting() || !$this->is_auth()) {
             return;
         }
 
@@ -99,7 +106,16 @@ class RestAPI {
                         break;
                     }
 
-                    $response = $this->responses[$this->route]['GET'];
+                    $response = false;
+                    $id_cache = $this->route.'_'.$this->route_value;
+                    if($this->cache->get($id_cache)) {
+                        $response = $this->cache->get($id_cache);
+                    }
+                    elseif(!empty($this->responses[$this->route]['GET'])) {
+                        $response = $this->responses[$this->route]['GET'];
+                        $this->cache->set($id_cache, $response, $this->cache_duration_in_seconds);
+                    }
+
                     if($response) {
                         http_response_code(200);
                         new_record('REST API GET | SUCCESS', $array_record);
@@ -128,7 +144,11 @@ class RestAPI {
                         break;
                     }
 
-                    $response = $this->responses[$this->route]['POST'];
+                    $response = false;
+                    if(!empty($this->responses[$this->route]['POST'])) {
+                        $response = $this->responses[$this->route]['POST'];
+                    }
+                    
                     if($response) {
                         http_response_code(201);
                         new_record('REST API POST | SUCCESS', $array_record);
@@ -169,7 +189,11 @@ class RestAPI {
                         break;
                     }
 
-                    $response = $this->responses[$this->route]['PUT'];
+                    $response = false;
+                    if(!empty($this->responses[$this->route]['PUT'])) {
+                        $response = $this->responses[$this->route]['PUT'];
+                    }
+
                     if($response) {
                         http_response_code(200);
                         new_record('REST API PUT | SUCCESS', $array_record);
@@ -210,7 +234,11 @@ class RestAPI {
                         break;
                     }
 
-                    $response = $this->responses[$this->route]['DELETE'];
+                    $response = false;
+                    if(!empty($this->responses[$this->route]['DELETE'])) {
+                        $response = $this->responses[$this->route]['DELETE'];
+                    }
+
                     if($response) {
                         http_response_code(200);
                         new_record('REST API DELETE | SUCCESS', $array_record);
@@ -294,6 +322,7 @@ class RestAPI {
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: $methods");
         header("Access-Control-Max-Age: 3600");
+        header("Cache-Control: max-age=3600");
         header("Content-Type: application/json; charset=UTF-8");
 
         header("X-Rate-Limit-Limit: {$this->rate_limit_limit}");

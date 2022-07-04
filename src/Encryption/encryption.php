@@ -12,7 +12,11 @@ use \ParagonIE\Halite\{
 class Encryption {
     private $halite_key;
 
-    public function __construct($private_key = GENERAL_KEY) {
+    public function __construct($private_key = '') {
+        if($private_key=='') {
+            $private_key = GENERAL_KEY;
+        }
+
         $this->halite_key = KeyFactory::importEncryptionKey(new HiddenString($private_key));
     }
 
@@ -36,7 +40,7 @@ class Encryption {
         return $password;
     }
     
-    public function text_encrypt($text) {
+    public function encrypt($text) {
         $text = new HiddenString($text);
     
         $cipher = Symmetric::encrypt($text, $this->halite_key);
@@ -44,7 +48,7 @@ class Encryption {
         return $cipher;
     }
     
-    public function text_decrypt($cipher) {
+    public function decrypt($cipher) {
         $text = Symmetric::decrypt($cipher, $this->halite_key);
     
         return $text->getString();

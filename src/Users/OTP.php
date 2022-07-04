@@ -21,7 +21,7 @@ class OTP {
     }
 
     public function verify_user_login($secret, $input) {
-        $secret = $this->encryption->text_decrypt($secret);
+        $secret = $this->encryption->decrypt($secret);
 
         if($this->verify($secret, $input)) {
             return true;

@@ -1,7 +1,7 @@
 <?php
 function get_user_by_referral($value, $memcached_expiration = '') {
-    $encryption = new Encryption(GENERAL_KEY);
-    $value = $encryption->text_decrypt($value);
+    $encryption = new Encryption();
+    $value = $encryption->decrypt($value);
 
     return get_user('id_user', $value, $memcached_expiration);
 }

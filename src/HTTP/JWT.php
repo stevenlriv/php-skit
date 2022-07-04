@@ -70,9 +70,9 @@ class SkitJWT {
     private function decode($token) {
         if($object = JWT::decode($token, new Key(base64_encode(GENERAL_KEY), 'HS512'))) {
             $array = (array) $object;
-            $array['login_method'] = $this->encryption->text_decrypt($array['login_method']);
-            $array['login_method_id'] = $this->encryption->text_decrypt($array['login_method_id']);
-            $array['login_verification'] = $this->encryption->text_decrypt($array['login_verification']);
+            $array['login_method'] = $this->encryption->decrypt($array['login_method']);
+            $array['login_method_id'] = $this->encryption->decrypt($array['login_method_id']);
+            $array['login_verification'] = $this->encryption->decrypt($array['login_verification']);
 
             return $array;
         }
@@ -89,9 +89,9 @@ class SkitJWT {
             'iat'  => time(),           
             'nbf'  => time(),   
             'exp'  => time()+$expiration_in_seconds,                          
-            'login_method' => $this->encryption->text_encrypt($login_method),  
-            'login_method_id' => $this->encryption->text_encrypt($login_method_id),                     
-            'login_verification' => $this->encryption->text_encrypt($login_verification),          
+            'login_method' => $this->encryption->encrypt($login_method),  
+            'login_method_id' => $this->encryption->encrypt($login_method_id),                     
+            'login_verification' => $this->encryption->encrypt($login_verification),          
         ];
     }
 }

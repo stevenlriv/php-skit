@@ -72,33 +72,54 @@ Primary Database
         - email_verified: used to verify the user email verification on demand
         - phone_number_verified: used to get the status of the user phone verification on demand
 - configs: script configuration that could be updated using an UI in the frontend
+
+Secondary Database: This section is added to the secondary database to avoid data load in the first one.
+
 - crons: cronjobs created
+- records: records any data action in the script. 
 
-Secondary Database
+If you want to disable the use of the secondary database, add that MySQL_SECONDARY.sql to the primary database, and remove from Cron/ and records/:
 
-- records: records any data action in the script. This section is added to the secondary database to avoid data load in the first one.
+```
+global $use_db_secondary;
+$use_db_secondary = true;
+```
+
+You will also have to remove from MySQL/:
+
+```
+global $db_secondary, $use_db_secondary;
+
+if($use_db_secondary) {
+        $db = $db_secondary;
+}
+```
 
 ### For an API Project you will need to remove
 
 - Folders
         - cron/
-        - public/: all inside of it and leave it empty for your API codes
+        - public/: remove all inside of it and leave it empty for your API codes
 - Files
         - index-back-front.php
         - LICENSE
         - MySQL.sql
         - README.md
 - MySQL
-        - remove 'crons' from main database
+        - crons
 
 ## How to work with the API
+
+- Currently 10 calls every 10 seconds
+
+- It caches GET request for 5 seconds
 
 - To create a new user use the new_user_with_password
 
 - To get a new token send a POST request to /api/login with your user email and password.
 
 ```
-curl -X POST 'https://host2:8890/api/v1/login' -d "email=example2&password=lol" 
+curl -X POST 'https://host2:8890/api/v1/login/password' -d "email=example2&password=lol" 
 ```
 
 - To access the API include the token in the header for every request
@@ -125,9 +146,6 @@ curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 
 ## Next Integrations
 
-- memcache for get request 5-10 seconds
-
-- audit all my encryption resources for authentication, not just encryption
 - double check my user auth verification proccess
 
 - Stripe (Payments & Recurrent Subscriptions)

@@ -40,7 +40,7 @@ class User {
         // If not logged in, and the url is an email + token
         if(!$this->is_logged_in && isset($_GET['email']) && isset($_GET['token'])) {
             $encryption = new Encryption(GENERAL_KEY);
-            $nonce = $encryption->text_decrypt($_GET['token']);
+            $nonce = $encryption->decrypt($_GET['token']);
             $pieces = $this->get_nonce($nonce);
             $code = $pieces[0];
 
@@ -264,7 +264,7 @@ class User {
         $user = get_user_by_email($email);
 
         $encryption = new Encryption(GENERAL_KEY);
-        $token = $encryption->text_decrypt($token);
+        $token = $encryption->decrypt($token);
 
 		if($user) {
             $pieces = $this->get_nonce($user['nonce']);
@@ -302,7 +302,7 @@ class User {
         }
 
         $encryption = new Encryption(GENERAL_KEY);
-        $encrypted_id_user = $encryption->text_encrypt($id_user);
+        $encrypted_id_user = $encryption->encrypt($id_user);
 
         return $encrypted_id_user;
     }
@@ -400,7 +400,7 @@ class User {
     }
 
     private function get_nonce($hash) {
-        $nonce = $this->encryption->text_decrypt($hash);
+        $nonce = $this->encryption->decrypt($hash);
 
         return explode('|', $nonce);
     }

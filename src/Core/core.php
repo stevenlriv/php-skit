@@ -12,7 +12,7 @@ require './src/Core/MySQL.php';
 require './src/Core/privateKeys.php';
 
 require './src/Encryption/encryption.php';
-require './src/Encryption/randomString.php';
+require './src/Encryption/random.php';
 
 require './src/MySQL/insert.php';
 require './src/MySQL/select.php';

@@ -95,7 +95,7 @@ function update_user(   $id_user = '',
     }
     if($nonce!='') {
         $nonce = $nonce.'|'.time();
-        $nonce = $encryption->text_encrypt($nonce);
+        $nonce = $encryption->encrypt($nonce);
         $array[] = array('column' => 'nonce', 'value' => $nonce);
     }
     if($two_factor_verification!='') {
@@ -103,7 +103,7 @@ function update_user(   $id_user = '',
             $two_factor_verification = '';
         }
         else {
-            $two_factor_verification = $encryption->text_encrypt($two_factor_verification);
+            $two_factor_verification = $encryption->encrypt($two_factor_verification);
         }
         $array[] = array('column' => 'two_factor_verification', 'value' => $two_factor_verification);
     }
