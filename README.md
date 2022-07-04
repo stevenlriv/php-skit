@@ -88,7 +88,7 @@ If you want to disable the use of the secondary database, add that MySQL_SECONDA
 - Files
         - index-back-front.php
         - LICENSE
-        - MySQL.sql
+        - MySQL_*.sql
         - README.md
 - MySQL
         - crons
@@ -117,7 +117,7 @@ curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 
 ### Using API
 
-- on the function new_user you can indicate the referral as an id_user
+- On the function new_user you can indicate the referral as an id_user
 
 ### Using non-API way
 
