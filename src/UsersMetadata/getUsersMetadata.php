@@ -25,6 +25,8 @@ function get_all_metadata_by_id_user($value, $memcached_expiration = '') {
 }
 
 function get_all_users_metadata($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
-    return select_mysql_data('users_meta', $type, $extra, $query, $memcached_expiration);
+    global $db;
+
+    return select_mysql_data($db, 'users_meta', $type, $extra, $query, $memcached_expiration);
 }
 ?>

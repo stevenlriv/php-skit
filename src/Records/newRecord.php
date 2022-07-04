@@ -1,6 +1,6 @@
 <?php
 function new_record($short_description, $value) {
-    global $use_db_secondary;
+    global $db_secondary;
     
     $json = json_encode( 
         array(
@@ -13,8 +13,7 @@ function new_record($short_description, $value) {
         1 => array('column' => 'value', 'value' => $json),
     );
 
-    $use_db_secondary = true;
-    if(insert_mysql_data('records', $array)) {
+    if(insert_mysql_data($db_secondary, 'records', $array)) {
         return true;
     }
 

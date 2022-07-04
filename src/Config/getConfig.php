@@ -16,6 +16,8 @@ function get_config($column, $value, $memcached_expiration = '') {
 }
 
 function get_all_configs($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
-    return select_mysql_data('configs', $type, $extra, $query, $memcached_expiration);
+    global $db;
+
+    return select_mysql_data($db, 'configs', $type, $extra, $query, $memcached_expiration);
 }
 ?>

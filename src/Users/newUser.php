@@ -44,6 +44,7 @@ function new_user(  $status = 1,
                     $two_factor_verification = '',
                     $permission = '',
                     $referred_by = 0) {
+    global $db;
 
     $encryption = new Encryption(USER_KEY);
 
@@ -111,7 +112,7 @@ function new_user(  $status = 1,
         13 => array('column' => 'referred_by', 'value' => $referred_by)
     );
 
-    if(insert_mysql_data('users', $array)) {
+    if(insert_mysql_data($db, 'users', $array)) {
         $record = array(  
                     "status=$status", 
                     "first_name=$first_name",

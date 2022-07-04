@@ -1,5 +1,7 @@
 <?php
 function new_config($config_key, $value) {
+    global $db;
+
     if(get_config_by_key($config_key)) {
         return false;
     }
@@ -9,7 +11,7 @@ function new_config($config_key, $value) {
         1 => array('column' => 'value', 'value' => $value),
     );
 
-    if(insert_mysql_data('configs', $array)) {
+    if(insert_mysql_data($db, 'configs', $array)) {
         return true;
     }
 

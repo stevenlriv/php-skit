@@ -2,9 +2,6 @@
 require './src/Core/core.php';
 
 switch ($http->get_uri()) {
-    case '/' :
-        echo generate_not_secure_random_numbers(10).'<br /><br />';
-        break;
     case $http->flexible_uri("/api/v1/login") :
         $api->no_auth_needed();
         $api->set_uri("/api/v1/login");
@@ -33,11 +30,6 @@ switch ($http->get_uri()) {
                 }
             }
         $api->run();
-        break;
-    case $http->flexible_uri("/api/v1/db/") :
-        $mysql_api->set_uri("/api/v1/db/");
-            $mysql_api->add_allow_tables('GET', 'records', 'records', 'id_record', 'id_record');
-        $mysql_api->run();
         break;
     case $http->flexible_uri("/api/v1/") :
         $api->set_uri("/api/v1/");

@@ -314,15 +314,18 @@ class User {
         }
         elseif($login_method=='by_email_code') {
             $user = get_user_by_email($login_method_id);
-            $verification = $user['nonce'];
+            $verification = $this->get_nonce($user['nonce'])[0];
+            $login_verification = $this->get_nonce($login_verification)[0];
         }
         elseif($login_method=='by_phone_code') {
             $user = get_user_by_phone_number($login_method_id);
-            $verification = $user['nonce'];
+            $verification = $this->get_nonce($user['nonce'])[0];
+            $login_verification = $this->get_nonce($login_verification)[0];
         }
         elseif($login_method=='by_eth_address') {
             $user = get_user_by_eth_address($login_method_id);
-            $verification = $user['nonce'];     
+            $verification = $this->get_nonce($user['nonce'])[0];
+            $login_verification = $this->get_nonce($login_verification)[0]; 
         }
 
         if($login_verification==$verification) {

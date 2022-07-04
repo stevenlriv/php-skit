@@ -38,6 +38,8 @@ function get_user($column, $value, $memcached_expiration = '') {
 }
 
 function get_all_users($type = 'all', $extra = '', $query = '', $memcached_expiration = '') {
-    return select_mysql_data('users', $type, $extra, $query, $memcached_expiration);
+    global $db;
+
+    return select_mysql_data($db, 'users', $type, $extra, $query, $memcached_expiration);
 }
 ?>

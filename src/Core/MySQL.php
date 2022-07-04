@@ -8,7 +8,6 @@ if($db->connect_errno) {
 }
 
 // Secondary Mysql database connection
-$use_db_secondary = false;
 if(!empty(MYSQL_HOST_SECONDARY) && !empty(MYSQL_USER_SECONDARY) && !empty(MYSQL_PASSWORD_SECONDARY) && !empty(MYSQL_DATABASE_SECONDARY) && !empty(MYSQL_PORT_SECONDARY)) {
     $db_secondary = new mysqli(MYSQL_HOST_SECONDARY, MYSQL_USER_SECONDARY, MYSQL_PASSWORD_SECONDARY, MYSQL_DATABASE_SECONDARY, MYSQL_PORT_SECONDARY);
     $db_secondary->set_charset('utf8mb4');

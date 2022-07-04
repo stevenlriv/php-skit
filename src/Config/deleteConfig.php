@@ -8,11 +8,13 @@ function delete_config_by_id($value) {
 }
 
 function delete_config($column, $value) {
+    global $db;
+
     $array = array(
         0 => array('column' => $column, 'condition' => 'AND', 'command' => '=', 'value' => $value)
     );
 
-    if(delete_mysql_data('configs', '', $array)) {
+    if(delete_mysql_data($db, 'configs', '', $array)) {
         return true;
     }
 

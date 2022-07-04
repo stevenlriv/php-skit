@@ -3,7 +3,6 @@ $date = new Date();
 $user = new User();
 $http = new HttpURI();
 $api = new RestAPI();
-$mysql_api = new MySQLRestAPI();
 $jwt = new SkitJWT();
 $form_cache = new FormCache();
 $alert_messages = new AlertMessages();

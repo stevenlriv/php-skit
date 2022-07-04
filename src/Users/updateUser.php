@@ -45,6 +45,7 @@ function update_user(   $id_user = '',
                         $nonce = '',
                         $two_factor_verification = '') {
                             
+    global $db;
     $encryption = new Encryption(USER_KEY);
 
     if($status!='') {
@@ -109,7 +110,7 @@ function update_user(   $id_user = '',
     }
     $array[] = array('column' => 'id_user', 'value' => $id_user);
 
-    if(update_mysql_data('users', '', $array)) {
+    if(update_mysql_data($db, 'users', '', $array)) {
         $record = array(  
                     "id_user=$id_user", 
                     "status=$status", 

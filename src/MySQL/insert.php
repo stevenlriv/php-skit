@@ -14,13 +14,7 @@
  *				0 => array('column' => 'short_description', 'value' => $short_description)
  *			)
  */
-function insert_mysql_data($table_name, $query = '') {
-	global $db, $db_secondary, $use_db_secondary;
-
-	if($use_db_secondary) {
-		$db = $db_secondary;
-	}
-
+function insert_mysql_data($db, $table_name, $query = '') {
 	$bind_param_type = '';
 	$bind_param_values = array();
 	$build_query = '';

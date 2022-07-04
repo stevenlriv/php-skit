@@ -78,22 +78,7 @@ Secondary Database: This section is added to the secondary database to avoid dat
 - crons: cronjobs created
 - records: records any data action in the script. 
 
-If you want to disable the use of the secondary database, add that MySQL_SECONDARY.sql to the primary database, and remove from Cron/ and records/:
-
-```
-global $use_db_secondary;
-$use_db_secondary = true;
-```
-
-You will also have to remove from MySQL/:
-
-```
-global $db_secondary, $use_db_secondary;
-
-if($use_db_secondary) {
-        $db = $db_secondary;
-}
-```
+If you want to disable the use of the secondary database, add that MySQL_SECONDARY.sql to the primary database, and change from Cron/ and records/ $db_secondary to $db:
 
 ### For an API Project you will need to remove
 
@@ -145,8 +130,6 @@ curl 'https://host2:8890/api/v1/records/1' -H "Authorization: Bearer {token}"
 - Generate Favicons for your header on [RealFaviconGenerator](https://realfavicongenerator.net/)
 
 ## Next Integrations
-
-- double check my user auth verification proccess
 
 - Stripe (Payments & Recurrent Subscriptions)
 - Phone Push Notifications
