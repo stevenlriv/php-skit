@@ -13,7 +13,9 @@ class User {
     private $cookie_referral = 'USRF';
     private $cookie_expiration = 60*60*24*45;
     private $array;
-    private $encryption;
+    private $encryption_general;
+    private $use_cookies; // REST API level we do not want to use cookies
+    public $encryption;
 
     public $id_user;
     public $status;
@@ -33,28 +35,37 @@ class User {
 
     public function __construct($id_user = '') {
         $this->encryption = new Encryption($this->encryption_key);
+        $this->encryptio_general = new Encryption();
 
-        // Lets check if the user is already logged in
-        $this->is_user_cookie();
-
-        // If not logged in, and the url is an email + token
-        if(!$this->is_logged_in && isset($_GET['email']) && isset($_GET['token'])) {
-            $encryption = new Encryption(GENERAL_KEY);
-            $nonce = $encryption->decrypt($_GET['token']);
-            $pieces = $this->get_nonce($nonce);
-            $code = $pieces[0];
-
-            $this->login_with_email_code($_GET['email'], $code);
+        if(SITE_IS_API==true) {
+            $this->use_cookies = false;
+        }
+        else {
+            $this->use_cookies = true;
         }
 
-        // Lets set up a referrer cookie
-        if(!$this->is_logged_in && isset($_GET['referrer'])) {
-            $user = get_user_by_referral($_GET['referrer']);
+        if($this->use_cookies==true) {
+            // Lets check if the user is already logged in
+            $this->is_user_cookie();
 
-            if($user) {
-                if(!get_cookie($this->cookie_referral)) {
-                    new_record('Visitor referred by user', $user['id_user']);
-                    new_cookie($this->cookie_referral, $user['id_user'], time()+$this->cookie_expiration);
+            // If not logged in, and the url is an email + token
+            if(!$this->is_logged_in && isset($_GET['email']) && isset($_GET['token'])) {
+                $nonce = $this->encryption_general->decrypt($_GET['token']);
+                $pieces = $this->get_nonce($nonce);
+                $code = $pieces[0];
+
+                $this->login_with_email_code($_GET['email'], $code);
+            }
+
+            // Lets set up a referrer cookie
+            if(!$this->is_logged_in && isset($_GET['referrer'])) {
+                $user = get_user_by_referral($_GET['referrer']);
+
+                if($user) {
+                    if(!get_cookie($this->cookie_referral)) {
+                        new_record('Visitor referred by user', $user['id_user']);
+                        new_cookie($this->cookie_referral, $user['id_user'], time()+$this->cookie_expiration);
+                    }
                 }
             }
         }
@@ -99,7 +110,7 @@ class User {
             if($this->encryption->validate_user_password($password, $user['password'])) {
                 $this->encryption->rehash_password($user['id_user'], $password, $user['password']);
 
-				if(new_cookie($this->cookie, 'by_password|'.$user['email'].'|'.$user['password'], time()+$this->cookie_expiration)) {
+				if($this->new_login_cookie('by_password|'.$user['email'].'|'.$user['password'])) {
                     new_record('User login with password', $user['id_user']);
                     $this->login_house_keeping($user);
 
@@ -118,7 +129,7 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_email_code|'.$user['email'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
+				if($this->new_login_cookie('by_email_code|'.$user['email'].'|'.$user['nonce'])) {
                     new_record('User login with email and code', $user['id_user']);
                     $this->login_house_keeping($user);
 
@@ -137,7 +148,7 @@ class User {
             if($this->validate_code($user['nonce'], $code)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_phone_code|'.$user['phone_number'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
+				if($this->new_login_cookie('by_phone_code|'.$user['phone_number'].'|'.$user['nonce'])) {
                     new_record('User login with phone and code', $user['id_user']);
                     $this->login_house_keeping($user);
 
@@ -159,7 +170,7 @@ class User {
             if($encryption->verify_ethereum_signature($code, $signature, $eth_address)) {
                 update_nonce($user['id_user']);
                 $user = get_user_by_id($user['id_user']); // get new nonce for cookie
-				if(new_cookie($this->cookie, 'by_eth_address|'.$user['eth_address'].'|'.$user['nonce'], time()+$this->cookie_expiration)) {
+				if($this->new_login_cookie('by_eth_address|'.$user['eth_address'].'|'.$user['nonce'])) {
                     new_record('User login with eth_address', $user['id_user']);
                     $this->login_house_keeping($user);
 
@@ -263,8 +274,7 @@ class User {
     public function reset_password($email, $new_password, $token) {
         $user = get_user_by_email($email);
 
-        $encryption = new Encryption(GENERAL_KEY);
-        $token = $encryption->decrypt($token);
+        $token = $this->encryption_general->decrypt($token);
 
 		if($user) {
             $pieces = $this->get_nonce($user['nonce']);
@@ -301,8 +311,7 @@ class User {
             $id_user = $this->id_user;
         }
 
-        $encryption = new Encryption(GENERAL_KEY);
-        $encrypted_id_user = $encryption->encrypt($id_user);
+        $encrypted_id_user = $this->encryption_general->encrypt($id_user);
 
         return $encrypted_id_user;
     }
@@ -345,6 +354,18 @@ class User {
 		}
 
 		return false;
+    }
+
+    private function new_login_cookie($value) {
+        if($this->use_cookies==true) {
+            if(new_cookie($this->cookie, $value, time()+$this->cookie_expiration)) {
+                return true;
+            }
+            return false;
+        }
+
+        // we verify as true as cookies are not required
+        return true;
     }
 
     private function login_house_keeping($user) {

@@ -18,7 +18,7 @@ Install php-skit on an app deployment enviroment like Digital Ocean. Follow the 
 
 5. Remove "config/_debugEnviromentVariables.php" from the repo
 
-6. If NOT connecting with ReactJs or Vue use index-back-front.php and delete the other index file.
+6. If NOT connecting with ReactJs or Vue use index-back-front.php and delete the other index file. If using index-back-front.php you will need to enable cookies to handle user login setting SITE_IS_API = false.
 
 7. Deploy to Digital Ocean
 
@@ -38,7 +38,7 @@ Make sure these files are in a php server like MAMP PRO and follow the steps bel
 
 4. Edit all the enviroment variables on "config/_debugEnviromentVariables.php"
 
-5. If NOT connecting with ReactJs or Vue use index-back-front.php and delete the other index file.
+5. If NOT connecting with ReactJs or Vue use index-back-front.php and delete the other index file. If using index-back-front.php you will need to enable cookies to handle user login setting SITE_IS_API = false.
 
 6. Done!
 

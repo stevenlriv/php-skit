@@ -43,10 +43,11 @@ function update_user(   $id_user = '',
                         $phone_number = '',
                         $password = '',
                         $nonce = '',
-                        $two_factor_verification = '') {
+                        $two_factor_verification = '',
+                        $permission = '',
+                        $referred_by = '') {
                             
-    global $db;
-    $encryption = new Encryption(USER_KEY);
+    global $db, $user;
 
     if($status!='') {
         $array[] = array('column' => 'status', 'value' => $status);
@@ -91,12 +92,12 @@ function update_user(   $id_user = '',
         $array[] = array('column' => 'phone_number', 'value' => $phone_number);
     }
     if($password!='') {
-        $password = $encryption->generate_user_password($password);
+        $password = $user->encryption->generate_user_password($password);
         $array[] = array('column' => 'password', 'value' => $password);
     }
     if($nonce!='') {
         $nonce = $nonce.'|'.time();
-        $nonce = $encryption->encrypt($nonce);
+        $nonce = $user->encryption->encrypt($nonce);
         $array[] = array('column' => 'nonce', 'value' => $nonce);
     }
     if($two_factor_verification!='') {
@@ -104,9 +105,15 @@ function update_user(   $id_user = '',
             $two_factor_verification = '';
         }
         else {
-            $two_factor_verification = $encryption->encrypt($two_factor_verification);
+            $two_factor_verification = $user->encryption->encrypt($two_factor_verification);
         }
         $array[] = array('column' => 'two_factor_verification', 'value' => $two_factor_verification);
+    }
+    if($permission!='') {
+        $array[] = array('column' => 'permission', 'value' => $permission);
+    }
+    if($referred_by!='') {
+        $array[] = array('column' => 'referred_by', 'value' => $referred_by);
     }
     $array[] = array('column' => 'id_user', 'value' => $id_user);
 
@@ -123,7 +130,9 @@ function update_user(   $id_user = '',
                     "phone_number=$phone_number", 
                     "password=$password",
                     "nonce=$nonce", 
-                    "two_factor_verification=$two_factor_verification"
+                    "two_factor_verification=$two_factor_verification",
+                    "permission=$permission",
+                    "referred_by=$referred_by"
         );
         new_record('Update user', $record);
         return true;

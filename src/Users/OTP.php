@@ -2,14 +2,14 @@
 use OTPHP\TOTP;
 
 class OTP {
-    private $encryption_key = USER_KEY;
     private $encryption;
     private $qr_image_base64;
     private $secret;
     private $site_name = SITE_NAME;
 
     public function __construct() {
-        $this->encryption = new Encryption($this->encryption_key);
+        $user = new User();
+        $this->encryption = $user->encryption;
     }
 
     public function get_secret() {

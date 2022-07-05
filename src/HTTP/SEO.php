@@ -9,14 +9,16 @@ class SEO {
     private $description;
     private $extra_title;
     private $imageURL;
+    private $http;
 
-    public function __construct($site_name, $site_url, $http_uri, $imageURL = '') {
-        $this->site_name = $site_name;
-        $this->site_url = $site_url;
-        $this->http_uri = $http_uri;
-        $this->imageURL = $imageURL;
+    public function __construct() {
+        $this->http = new HttpURI();
+        
+        $this->site_name = SITE_NAME;
+        $this->site_url = $this->http->get_domain_url();
+        $this->http_uri = $this->http->get_uri();
 
-        $this->canonical_url = $site_url.$http_uri;
+        $this->canonical_url = $this->site_url.$this->http_uri;
     }
 
     public function set($title = '', $description = '', $extra_title = '', $imageURL = '') {

@@ -10,6 +10,7 @@ class SkitJWT {
     private $payload;
     private $user;
     private $encryption;
+    private $jwt_encryption_key = GENERAL_KEY;
     private $expiration_in_seconds = 60*60*24*30;
     public $array_token = array();
 
@@ -17,13 +18,13 @@ class SkitJWT {
         $this->http = new HttpURI();
         $this->date = new Date();
         $this->user = new User();
-        $this->encryption = new Encryption(USER_KEY);
+        $this->encryption = $this->user->encryption;
     }
 
     public function encode($login_method, $login_method_id, $login_verification) {
         $this->payload($login_method, $login_method_id, $login_verification, $this->expiration_in_seconds);
 
-        if($token = JWT::encode($this->payload, base64_encode(GENERAL_KEY), 'HS512')) {
+        if($token = JWT::encode($this->payload, base64_encode($this->jwt_encryption_key), 'HS512')) {
             return $token;
         }
         return false;
@@ -68,7 +69,7 @@ class SkitJWT {
     }
 
     private function decode($token) {
-        if($object = JWT::decode($token, new Key(base64_encode(GENERAL_KEY), 'HS512'))) {
+        if($object = JWT::decode($token, new Key(base64_encode($this->jwt_encryption_key), 'HS512'))) {
             $array = (array) $object;
             $array['login_method'] = $this->encryption->decrypt($array['login_method']);
             $array['login_method_id'] = $this->encryption->decrypt($array['login_method_id']);

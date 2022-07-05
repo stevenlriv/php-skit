@@ -44,11 +44,9 @@ function new_user(  $status = 1,
                     $two_factor_verification = '',
                     $permission = '',
                     $referred_by = 0) {
-    global $db;
+    global $db, $user;
 
-    $encryption = new Encryption(USER_KEY);
-
-    $cookie_referral = get_cookie('USRF');
+    $cookie_referral = get_cookie($user->cookie_referral);
     if($cookie_referral) {
         $referred_by = $cookie_referral;
     }
@@ -85,15 +83,15 @@ function new_user(  $status = 1,
     }
 
     if($password!='') {
-        $password = $encryption->generate_user_password($password);
+        $password = $user->encryption->generate_user_password($password);
     }
     if($two_factor_verification!='') {
-        $two_factor_verification = $encryption->encrypt($two_factor_verification);
+        $two_factor_verification = $user->encryption->encrypt($two_factor_verification);
     }
 
     if($nonce=='') {
         $nonce = generate_not_secure_random_numbers(6).'|'.time();
-        $nonce = $encryption->encrypt($nonce);
+        $nonce = $user->encryption->encrypt($nonce);
     }
 
     $array = array(

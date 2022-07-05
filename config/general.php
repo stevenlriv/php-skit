@@ -1,6 +1,7 @@
 <?php
 // Site variables
 define( 'SITE_NAME', 'localhost' );
+define( 'SITE_IS_API', true );
 
 // only used in public/templates/footer.php
 define( 'GOOGLE_ANALYTICS_GTAG', 'G-TAG' );
